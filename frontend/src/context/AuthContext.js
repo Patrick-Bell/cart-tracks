@@ -11,10 +11,12 @@ export const AuthenticateProvider = ({ children }) => {
     const [expire, setExpire] = useState('')
     const [token, setToken] = useState('')
 
+    const apiUrl = process.env.REACT_FRONTEND || "http://localhost:3000"
+
 
     const checkAuthStatus = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/current-user', { withCredentials: true });
+        const response = await axios.get(`${apiUrl}/api/current-user`, { withCredentials: true });
         const userData = response.data;
     
         if (userData?.user) {
@@ -40,7 +42,7 @@ export const AuthenticateProvider = ({ children }) => {
     const login = async (email, password) => {
       try {
         const response = await axios.post(
-          'http://localhost:3000/api/login', 
+          `${apiUrl}/api/login`, 
           { manager: { email, password } }, 
           { withCredentials: true }
         );
@@ -68,7 +70,7 @@ export const AuthenticateProvider = ({ children }) => {
 
     const logout = async (id) => {
         try{
-            const response = await axios.delete(`http://localhost:3000/api/logout/${id}`, { withCredentials: true })
+            const response = await axios.delete(`${apiUrl}/api/logout/${id}`, { withCredentials: true })
             setAuthenticated(false)
             setUser(null)
             console.log(id)
@@ -78,9 +80,6 @@ export const AuthenticateProvider = ({ children }) => {
             console.log(e)
         }
     }
-
-
-
 
 
     return (
