@@ -24,7 +24,6 @@
     "react-helmet": "^6.1.0",
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.28.0",
-    "react-scripts": "5.0.1",
     "react-tippy": "^1.4.0",
     "sonner": "^1.7.0",
     "styled-components": "^6.1.13",
@@ -56,5 +55,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:3000"
+  "proxy": "http://localhost:3000",
+  "devDependencies": {
+    "react-scripts": "^5.0.1"
+  }
 }
