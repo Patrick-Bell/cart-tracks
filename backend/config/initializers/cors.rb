@@ -7,7 +7,7 @@
 
   Rails.application.config.middleware.insert_before 0, Rack::Cors do
     allow do
-      origins ENV['WEBSITE_URL'] || "http://localhost:3001" 
+      origins ENV['WEBSITE_URL'] || "http://localhost:3001", "https://cart-tracks.onrender.com" 
 
       resource "*",
         headers: :any,
