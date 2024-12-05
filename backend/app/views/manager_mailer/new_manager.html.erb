@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <body style="background: #f9f9f9; padding: 0; margin: 0;">
+    <div class="email-container" style="padding: 20px; border-radius: 8px; background: #ffffff; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); max-width: 600px; margin: auto;">
+      <h1 style="color: #333333; font-size: 24px; text-align: center;">Welcome <%= @manager.name %> <%= @manager.last_name %></h1>
+      
+      <p style="color: #555555; font-size: 16px; line-height: 1.5;">Hello <%= @manager.name %>,</p>
+      
+      <p style="color: #555555; font-size: 16px; line-height: 1.5;">
+        Welcome to the platform! Here, you’ll be able to log in and track games that you manage. To receive your login credentials and initial password, please reach out to your supervisor.
+      </p>
+
+      <p style="color: #555555; font-size: 16px; line-height: 1.5;">
+        <a href="https://your-platform-login-url.com" style="color: #0066cc; text-decoration: none;">Click here to log in</a>
+      </p>
+      
+      <p class="footer" style="text-align: center; color: #888888; font-size: 12px; margin-top: 20px;">
+        If you have any questions, feel free to contact us at support@yourplatform.com.
+      </p>
+    </div>
+  </body>
+</html>

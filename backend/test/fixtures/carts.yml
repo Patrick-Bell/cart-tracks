@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cart_number: MyString
+  location: MyString
+  quantities_start: 1
+  quantities_added: 1
+  quantities_minus: 1
+  final_quantity: 1
+  total_vouchers: 1
+  vouchers_value: 1.5
+  final_returns: 1
+  total_value: 1.5
+  worker: one
+  game: one
+
+two:
+  cart_number: MyString
+  location: MyString
+  quantities_start: 1
+  quantities_added: 1
+  quantities_minus: 1
+  final_quantity: 1
+  total_vouchers: 1
+  vouchers_value: 1.5
+  final_returns: 1
+  total_value: 1.5
+  worker: two
+  game: two

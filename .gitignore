@@ -1,0 +1,71 @@
+# Ignore bundler config
+/backend/.bundle
+
+# Ignore logs and temporary files
+/backend/log/*
+!/backend/log/.keep
+/backend/tmp
+!/backend/tmp/.keep
+
+# Ignore database migrations lock file
+/backend/db/schema.rb.lock
+
+# Ignore environment files
+/backend/.env
+/backend/.env.*
+
+# Ignore secret files
+/backend/config/master.key
+/backend/config/credentials.yml.enc
+
+# Ignore uploaded files
+/backend/storage/*
+!/backend/storage/.keep
+
+# Ignore compiled assets
+/backend/public/assets
+/backend/public/packs
+/backend/public/packs-test
+/backend/node_modules
+
+# Ignore Yarn integrity file
+/backend/yarn-error.log
+
+# Ignore coverage reports
+/backend/coverage/
+
+# Ignore system files
+/backend/.DS_Store
+/backend/Thumbs.db
+
+# Ignore byebug command history
+/backend/.byebug_history
+
+# Ignore spring and cache files
+/backend/spring/*.pid
+/backend/spring/commands
+
+# Ignore CI/CD config files generated during deployment
+/backend/**/.rspec
+/backend/.rspec_status
+/backend/.idea/
+
+# Ignore vendor cache
+/backend/vendor/bundle
+
+# Ignore Capistrano deployment artifacts
+/backend/revisions.log
+
+# Ignore Rails credentials files
+#/backend/config/database.yml
+
+# Ignore other system-specific files
+/backend/*.swp
+/backend/*.swo
+/backend/*.log
+
+# PostgreSQL specific
+/backend/db/*.pg
+/backend/db/*.pgsql
+/backend/db/*.pg_* # Backup files, temporary files
+/backend/*.pgpass

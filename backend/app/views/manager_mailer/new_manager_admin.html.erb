@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<body style="margin: 0; padding: 0; background-color: #2c2c2c; font-family: Arial, sans-serif, border-radius:10px;">
+<div style="background-color: #333; padding: 20px; border-radius: 8px; max-width: 600px; margin: 20px auto; color: #f0f0f0;">
+      
+  <h1 style="color: #ffffff;">Hello Admin,</h1>
+      
+      <p style="font-size: 16px; line-height: 1.5;">
+        A new manager has been created in the system. Here are the details:
+      </p>
+
+      <table style="width: 100%; font-size: 16px; line-height: 1.5; margin-top: 10px; border-collapse: collapse;">
+        <tr>
+          <td style="padding: 8px; border-bottom: 1px solid #eaeaea;">Created Date:</td>
+          <td style="padding: 8px; border-bottom: 1px solid #eaeaea;"><%= @manager.created_at.strftime("%B %d, %Y %I:%M %p") %></td>
+        </tr>
+        <tr>
+          <td style="padding: 8px; border-bottom: 1px solid #eaeaea;">Name:</td>
+          <td style="padding: 8px; border-bottom: 1px solid #eaeaea;"><%= @manager.name %> <%= @manager.last_name %></td>
+        </tr>
+        <tr>
+          <td style="padding: 8px; border-bottom: 1px solid #eaeaea;">Email:</td>
+          <td style="padding: 8px; border-bottom: 1px solid #eaeaea;"><%= @manager.email %></td>
+        </tr>
+        <tr>
+          <td style="padding: 8px; border-bottom: 1px solid #eaeaea;">Phone Number:</td>
+          <td style="padding: 8px; border-bottom: 1px solid #eaeaea;"><%= @manager.phone_number %></td>
+        </tr>
+      </table>
+      
+      <p class="footer" style="text-align: center; color: #888888; font-size: 12px; margin-top: 20px;">
+        This is an automated message. If you have any questions, please contact support.
+      </p>
+    </div>
+  </body>
+</html>
