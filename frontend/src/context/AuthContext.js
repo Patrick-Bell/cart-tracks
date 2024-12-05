@@ -11,7 +11,7 @@ export const AuthenticateProvider = ({ children }) => {
     const [expire, setExpire] = useState('')
     const [token, setToken] = useState('')
 
-    const apiUrl = process.env.REACT_FRONTEND || "http://localhost:3000"
+    const apiUrl = process.env.REACT_APP_FRONTEND_URL || "http://localhost:3000"
 
 
     const checkAuthStatus = async () => {
