@@ -132,7 +132,6 @@ const Sidebar = ({ setActiveSection, activeSection }) => {
             <Divider />
             <List sx={{ m: 2 }}>
         {[
-          { text: 'Get Help', section: 'help' },
           { text: 'Logout' }, // Add the Logout item
         ].map(({ text, section }) => (
           <ListItem 
