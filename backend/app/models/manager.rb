@@ -2,7 +2,6 @@ class Manager < ApplicationRecord
     has_many :games
     has_one_attached :picture  # This is the ActiveStorage association
     has_secure_password
-    has_many :messages
 
     after_create = :set_default_online
     

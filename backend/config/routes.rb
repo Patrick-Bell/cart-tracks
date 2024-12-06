@@ -7,7 +7,6 @@ Rails.application.routes.draw do
   resources :workers
   resources :games
   resources :fixtures
-  resources :messages
 
   post '/completed-game/:id', to: 'games#completed_game', as: 'completed_game'
   post '/mark-as-watch/:id', to: 'workers#mark_as_watch', as: 'mark_as_watch'
