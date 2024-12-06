@@ -1,17 +1,20 @@
-# Be sure to restart your server when you modify this file.
+Rails.application.config.middleware.insert_before 0, Rack::Cors do
+  allow do
+    origins 'http://localhost:3001'  # Allow frontend in development
 
-# Avoid CORS issues when API is called from the frontend app.
-# Handle Cross-Origin Resource Sharing (CORS) in order to accept cross-origin Ajax requests.
+    resource "*",
+      headers: :any,
+      methods: [:get, :post, :put, :patch, :delete, :options, :head],
+      credentials: true
+  end
 
-# Read more: https://github.com/cyu/rack-cors
+  # Production: Allow frontend to make requests from the deployed domain
+  allow do
+    origins 'https://cart-tracks.onrender.com'  # Production URL
 
- Rails.application.config.middleware.insert_before 0, Rack::Cors do
-   allow do
-     origins 'http://localhost:3001'
-
-     resource "*",
-       headers: :any,
-       methods: [:get, :post, :put, :patch, :delete, :options, :head],
-       credentials: true
-   end
- end
+    resource "*",
+      headers: :any,
+      methods: [:get, :post, :put, :patch, :delete, :options, :head],
+      credentials: true
+  end
+end
