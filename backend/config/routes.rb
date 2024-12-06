@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  get "home/index"
+  get '*path', to: 'home#index', constraints: ->(req) { !req.xhr? && req.format.html? }
+
 
   scope 'api' do 
   resources :carts
