@@ -1,6 +1,6 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins ENV['WEBSITE_URL']  # Allow frontend in development
+    origins 'http://localhost:3001'  # For development frontend
 
     resource "*",
       headers: :any,
@@ -8,4 +8,13 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
       credentials: true
   end
 
+  # Production: Allow the production frontend URL to make requests
+  allow do
+    origins 'https://cart-tracks.onrender.com'  # For production frontend
+
+    resource "*",
+      headers: :any,
+      methods: [:get, :post, :put, :patch, :delete, :options, :head],
+      credentials: true
+  end
 end
