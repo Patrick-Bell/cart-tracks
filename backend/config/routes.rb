@@ -26,8 +26,6 @@ Rails.application.routes.draw do
   get '/next-month-games', to: 'fixtures#find_fixtures_next_month', as: 'find_fixtures_next_month'
 
 
-  mount ActionCable.server => '/cable'
-
 
   end
  
