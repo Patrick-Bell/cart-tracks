@@ -12,9 +12,7 @@ root.render(
   <React.StrictMode>
     <BrowserRouter> {/* BrowserRouter should wrap everything */}
       <AuthenticateProvider>
-        <WebSocketProvider>
           <App />
-        </WebSocketProvider>
       </AuthenticateProvider>
     </BrowserRouter>
   </React.StrictMode>

@@ -9,7 +9,6 @@ import Analytics from './Analytics';
 import { Toaster, toast } from 'sonner';
 import { useAuth } from '../../context/AuthContext';
 import { useEffect, useRef } from 'react';
-import Messages from './Messages';
 
 const Dashboard = () => {
   // State to track the selected section
@@ -42,8 +41,6 @@ const Dashboard = () => {
         return <Managers />;
       case 'analytics':
         return <Analytics />
-      case 'messages':
-          return <Messages/>
       default:
         return <Box sx={{top:'50%', left:'50%', transform:'translate(-50%, -50%)', position:'absolute', textAlign:'center'}}><CircularProgress thickness={10} sx={{color:'black'}} />
         <Typography sx={{mt:2}}>Coming Soon...</Typography>

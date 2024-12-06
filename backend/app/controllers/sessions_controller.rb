@@ -29,7 +29,7 @@ class SessionsController < ApplicationController
           cookie = cookies.signed[:token] = {
             value: token,
             httponly: true,
-            same_site: :lax,
+            same_site: :none,
             expires: 1.hour.from_now,
             secure: Rails.env.production?  # Use secure cookies in production
           }

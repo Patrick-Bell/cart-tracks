@@ -1,4 +1,4 @@
-class ChatChannel < ApplicationCable::Channel
+=begin class ChatChannel < ApplicationCable::Channel
   def subscribed
     if current_user
       stream_from "chat_room"
@@ -59,3 +59,4 @@ class ChatChannel < ApplicationCable::Channel
 
   
 end
+=end

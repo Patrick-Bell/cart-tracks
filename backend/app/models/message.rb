@@ -1,3 +1,3 @@
-class Message < ApplicationRecord
-  belongs_to :manager, optional: true
-end
+#class Message < ApplicationRecord
+ # belongs_to :manager, optional: true
+#end

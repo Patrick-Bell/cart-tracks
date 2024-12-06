@@ -71,3 +71,4 @@
 /backend/db/*.pgsql
 /backend/db/*.pg_* # Backup files, temporary files
 /backend/*.pgpass
+

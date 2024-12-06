@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useRef, useEffect } from 'react';
+/*import React, { createContext, useContext, useRef, useEffect } from 'react';
 import consumer from '../components/utils/Cable'; // Adjust path as needed
 import { useAuth } from './AuthContext';
 import axios from 'axios';
@@ -69,3 +69,4 @@ export const WebSocketProvider = ({ children, setMessages }) => {
     </WebSocketContext.Provider>
   );
 };
+*/
