@@ -3,7 +3,7 @@ const apiUrl = process.env.REACT_APP_API_URL
 
 
 export const fetchAllGames = async () => {
-    const response = await axios.get(`${apiUrl}api/games`)
+    const response = await axios.get(`${apiUrl}/api/games`)
     console.log(response.data)
     return response.data
 }
