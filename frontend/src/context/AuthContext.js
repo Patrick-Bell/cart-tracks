@@ -11,7 +11,7 @@ export const AuthenticateProvider = ({ children }) => {
     const [expire, setExpire] = useState('')
     const [token, setToken] = useState('')
 
-    const apiUrl = 'http://localhost:3000'
+    const apiUrl = process.env.REACT_APP_API_URL
 
 
 

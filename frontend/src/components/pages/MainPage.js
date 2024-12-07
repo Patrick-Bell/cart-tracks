@@ -32,7 +32,7 @@ const MainPage = () => {
     const [nextMonthGames, setNextMonthGames] = useState(0)
     const [homeGames, setHomeGames] = useState(0)
     const [incompleteGames, setInCompleteGames] = useState([])
-    const [pageLoading, setPageLoading] = useState(false)
+    const [pageLoading, setPageLoading] = useState(true)
 
     const link = 'https://www.google.co.uk/maps/place/London+Stadium/@51.5386778,-0.0190346,17z/data=!3m1!4b1!4m6!3m5!1s0x48761d6975e8b559:0xe7fca44605b6ce94!8m2!3d51.5386745!4d-0.0164597!16zL20vMDZzdGxx?entry=ttu&g_ep=EgoyMDI0MTExOS4yIKXMDSoASAFQAw%3D%3D'
 
