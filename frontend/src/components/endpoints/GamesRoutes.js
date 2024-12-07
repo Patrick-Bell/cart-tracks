@@ -3,37 +3,37 @@ const apiUrl = process.env.REACT_APP_API_URL
 
 
 export const fetchAllGames = async () => {
-    const response = await axios.get(`${apiUrl}/api/games`)
+    const response = await axios.get(`${apiUrl}/api/games`, {withCredentials: true})
     console.log(response.data)
     return response.data
 }
 
 export const addCartToGame = async (cartData) => {
-    const response = await axios.post(`${apiUrl}/api/carts`, { cart: cartData})
+    const response = await axios.post(`${apiUrl}/api/carts`, { cart: cartData}, {withCredentials: true})
     console.log(response.data)
     return response.data
 }
 
 export const getOneGame = async (id) => {
-    const response = await axios.get(`${apiUrl}/api/games/${id}`)
+    const response = await axios.get(`${apiUrl}/api/games/${id}`, {withCredentials: true})
     console.log('game', response.data)
     return response.data
 }
 
 export const addNewGame = async (gameData) => {
-    const response = await axios.post(`${apiUrl}/api/games`, { game: gameData })
+    const response = await axios.post(`${apiUrl}/api/games`, { game: gameData }, {withCredentials: true})
     console.log(response.data)
     return response.data
 }
 
 export const markGameAsComplete = async (id) => {
-    const response = await axios.post(`${apiUrl}/api/completed-game/${id}`)
+    const response = await axios.post(`${apiUrl}/api/completed-game/${id}`, {withCredentials: true})
     console.log(response.data)
     return response.data
 }
 
 export const deleteSingleGame = async (id) => {
-    const response = await axios.delete(`${apiUrl}/api/games/${id}`)
+    const response = await axios.delete(`${apiUrl}/api/games/${id}`, {withCredentials: true})
     console.log(response.data)
     return response.data
 }

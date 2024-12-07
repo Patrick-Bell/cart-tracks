@@ -31,7 +31,7 @@ class SessionsController < ApplicationController
             httponly: true,
             same_site: :lax,
             expires: 1.hour.from_now,
-            secure: Rails.env.production?  # Use secure cookies in production
+            secure: Rails.env.production? ? true : false
           }
 
           @user.update(online: true)
