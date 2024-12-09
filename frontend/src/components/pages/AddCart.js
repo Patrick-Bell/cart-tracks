@@ -150,8 +150,12 @@ const cartNumbers = ["1", "2", "3", "4", "5", "7", "10", "Bridge 2", "11", "14",
       
       <DialogContent>
       <Swiper slidesPerView={1} 
-        modules={[Scrollbar]}
+        modules={[Scrollbar, Navigation]}
         scrollbar={{ draggable: true }}
+        navigation={{
+          prevEl: '.custom-swiper-button-prev',
+          nextEl: '.custom-swiper-button-next',
+        }}
         >
         <SwiperSlide>
         <Box sx={{ padding: 2 }}>
@@ -297,7 +301,7 @@ const cartNumbers = ["1", "2", "3", "4", "5", "7", "10", "Bridge 2", "11", "14",
         </Box>
         </SwiperSlide>
 
-        <SwiperSlide style={{maxHeight:'460px', overflow:'scroll'}}>
+        <SwiperSlide style={{maxHeight:'500px', overflow:'scroll'}}>
           <Typography sx={{fontWeight:800}}>Gazebo 1</Typography>
           <TableContainer>
             <Table>
@@ -349,14 +353,49 @@ const cartNumbers = ["1", "2", "3", "4", "5", "7", "10", "Bridge 2", "11", "14",
 
 
       </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose} variant='outlined' sx={{color:'gold', border:'1px solid gold'}}>
-          Cancel
-        </Button>
-        <Button sx={{background:'gold', color:'black', height:'35px'}} onClick={handleSubmit} color="primary" variant='contained' disabled={loading}>
-          {button}
-        </Button>
-      </DialogActions>
+      <DialogActions sx={{ padding: 1 }}>
+  {/* Main Container */}
+  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+    {/* Navigation Buttons on the Left */}
+    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Button
+        className="custom-swiper-button-prev"
+        variant="contained"
+        sx={{ color: 'black', background:'gold', marginRight: 1 }}
+      >
+        &#9664;
+      </Button>
+      <Button
+        className="custom-swiper-button-next"
+        variant="contained"
+        sx={{ color: 'black', background:'gold'}}
+      >
+        &#9654;
+      </Button>
+    </Box>
+
+    {/* Action Buttons on the Right */}
+    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Button
+        onClick={onClose}
+        variant="outlined"
+        sx={{ color: 'gold', border: '1px solid gold', marginRight: 1 }}
+      >
+        Cancel
+      </Button>
+      <Button
+        sx={{ background: 'gold', color: 'black', height: '35px' }}
+        onClick={handleSubmit}
+        color="primary"
+        variant="contained"
+        disabled={loading}
+      >
+        {button}
+      </Button>
+    </Box>
+  </Box>
+</DialogActions>
+
     </Dialog>
   );
 };

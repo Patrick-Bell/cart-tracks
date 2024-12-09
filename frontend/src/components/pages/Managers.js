@@ -10,7 +10,8 @@ import {
   TableRow,
   TableBody,
   Paper,
-  Tooltip
+  Tooltip,
+  CircularProgress
 } from "@mui/material";
 import { fetchAllManagers } from "../endpoints/ManagersRoutes";
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
@@ -24,6 +25,7 @@ const Managers = () => {
   const [managers, setManagers] = useState([]);
   const [selectedManager, setSelectedManager] = useState(null); // Use `null` to check if a worker is selected
   const [open, setOpen] = useState(false)
+  const [pageLoading, setPageLoading] = useState(true)
 
   const { user } = useAuth()
 
@@ -33,6 +35,7 @@ const Managers = () => {
         const response = await fetchAllManagers();
         if (response) {
           setManagers(response);
+          setPageLoading(false)
         }
       } catch (error) {
         console.error("Error fetching workers:", error);
@@ -58,6 +61,16 @@ const Managers = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+
+  if (pageLoading) {
+    return (
+      <Box sx={{top:'50%', left:'50%', transform:'translate(-50%, -50%)', position:'absolute', textAlign:'center'}}>
+        <CircularProgress sx={{color:'grey'}} thickness={10} />
+        <Typography sx={{color:'grey'}}>Fetching Data...</Typography>
+      </Box>
+    )
+  }
 
   return (
     <>

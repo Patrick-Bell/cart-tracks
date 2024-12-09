@@ -6,18 +6,23 @@ import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom'
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { Toaster, toast } from 'sonner'
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({})
   const [showPassword, setShowPassword] = useState(false)
+  const [button, setButton] = useState('Log in')
+  const [loading, setLoading] = useState(false)
 
   const navigate = useNavigate()
 
   const { login } = useAuth()
 
   const handleSubmit = async (e) => {
+    setLoading(true)
+    setButton('Logging in...')
     e.preventDefault();
     let newErrors = {}
   
@@ -27,6 +32,7 @@ const Login = () => {
   
       if (response.message === "Login Successful") {
         navigate('/dashboard'); // Redirect on successful login
+        setLoading(false)
       } 
   
       // Handle specific error cases for email and password
@@ -37,19 +43,29 @@ const Login = () => {
         // Check for email-related errors
         if (response.error.toLowerCase().includes('email')) {
           newErrors.email = 'Incorrect Email';
+          toast.error(`Error logging in, incorrect email`, {
+            description: `Today at ${new Date().toLocaleTimeString().slice(0, 5)}`,
+            duration: 3000
+          })
         }
       
         // Check for password-related errors
         if (response.error.toLowerCase().includes('password')) {
           newErrors.password = 'Incorrect Password';
+          toast.error(`Error logging in, incorrect password`, {
+            description: `Today at ${new Date().toLocaleTimeString().slice(0, 5)}`,
+            duration: 3000
+          })
         }
       
         // Set the errors to display immediately
         setErrors(newErrors);
+        setButton('Log in')
       
         // Clear errors after 3 seconds
         setTimeout(() => {
           setErrors({});
+          setLoading(false)
         }, 3000);
       }
 
@@ -118,11 +134,13 @@ const Login = () => {
             fullWidth
             variant="contained"
             sx={{ mt: 2, mb: 2, background:'gold', color:'black' }}
+            disabled={loading}
           >
-            Sign In
+            {button}
           </Button>
         </Box>
       </Box>
+      <Toaster />
     </Container>
   );
 };

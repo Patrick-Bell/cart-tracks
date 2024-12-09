@@ -237,7 +237,7 @@ const fetchFixtures = async () => {
       {!selectedGame ? (
         <>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', maxWidth:'100%' }}>
-            <Typography variant="h4" sx={{ fontWeight: '800' }}>Events</Typography>
+            <Typography variant="h4" sx={{ fontWeight: '800' }}></Typography>
             <Button variant='contained' sx={{ background: 'gold', color: 'black' }} onClick={handleOpen}>Add New Event</Button>
           </Box>
 

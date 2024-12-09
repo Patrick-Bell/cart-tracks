@@ -219,7 +219,7 @@ const Workers = () => {
       {!selectedWorker && !emailWorker ? (
         <>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Typography variant="h4" sx={{ fontWeight: '800' }}>Workers</Typography>
+            <Typography variant="h4" sx={{ fontWeight: '800' }}></Typography>
             <Button onClick={handleOpen} variant="contained" sx={{ background: 'gold', color: 'black' }}>Add New Worker</Button>
           </Box>
 

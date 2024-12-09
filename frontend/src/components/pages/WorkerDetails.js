@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Avatar, Card, CardContent, Button, Tooltip } from "@mui/material";
+import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Avatar, Card, CardContent, Button, Tooltip, Divider } from "@mui/material";
 import GameDetail from "./GameDetail";
 import { fetchAllGames } from '../endpoints/GamesRoutes';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
@@ -39,12 +39,15 @@ const WorkerDetails = ({ worker, setSelectedWorker }) => {
                   <Typography variant="h5" sx={{ fontWeight: "bold" }}>{worker.name} {worker.last_name}</Typography>
                   <Typography color="textSecondary">Joined: {formatDate(worker.created_at)}</Typography>
                 </Box>
-                <Box sx={{ flexGrow: 1 }} />
-                <Button onClick={handleClose} variant="contained" sx={{ background: 'gold', color: 'black' }}>Go Back</Button>
               </Box>
-              <Typography><strong>Email:</strong> {worker.email || "N/A"}</Typography>
-              <Typography><strong>Phone Number:</strong> {worker.phone_number || "N/A"}</Typography>
-              <Typography><strong>Address:</strong> {worker.address || "N/A"}</Typography>
+              <Typography variant='subtitle2'><strong>Email:</strong> {worker.email || "N/A"}</Typography>
+              <Typography variant='subtitle2'><strong>Phone Number:</strong> {worker.phone_number || "N/A"}</Typography>
+              <Typography variant='subtitle2'><strong>Address:</strong> {worker.address || "N/A"}</Typography>
+              <Divider />
+              <Box sx={{display:'flex', justifyContent:'space-between', mt:1}}>
+                <Typography variant='subtitle2'><strong>Actions</strong></Typography>
+              <Button onClick={handleClose} variant="contained" sx={{ background: 'gold', color: 'black' }}>Go Back</Button>
+              </Box>
             </CardContent>
           </Card>
 

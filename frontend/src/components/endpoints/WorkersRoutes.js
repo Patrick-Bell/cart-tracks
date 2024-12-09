@@ -9,7 +9,7 @@ export const fetchAllWorkers = async () => {
 }
 
 export const addNewWorker = async (workerData) => {
-    const response = await axios.post(`${apiUrl}/api/worker`, workerData, {withCredentials: true})
+    const response = await axios.post(`${apiUrl}/api/workers`, workerData, {withCredentials: true})
     console.log(response.data)
     return response.data
 }

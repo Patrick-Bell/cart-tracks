@@ -34,15 +34,18 @@ const ManagerDetails = ({ manager, setSelectedManager }) => {
                 <Typography color="textSecondary">Joined: {formatDate(manager.created_at)}</Typography>
             </Box>
             {/* This Box will take up the remaining space, pushing the button to the right */}
-            <Box sx={{ flexGrow: 1 }} />
-            <Button onClick={() => handleClose()} variant="contained" sx={{background:'gold', color:'black'}}>Go Back</Button>
             </Box>
 
 
           {/* Contact Info */}
-          <Typography><strong>Email:</strong> {manager.email}</Typography>
-          <Typography><strong>Phone Number:</strong> {manager.phone_number || "N/A"}</Typography>
-          <Typography><strong>Address:</strong> {manager.address || "N/A"}</Typography>
+          <Typography variant="subtitle2"><strong>Email:</strong> {manager.email}</Typography>
+          <Typography variant="subtitle2"><strong>Phone Number:</strong> {manager.phone_number || "N/A"}</Typography>
+          <Typography variant="subtitle2"><strong>Address:</strong> {manager.address || "N/A"}</Typography>
+          <Divider/>
+          <Box sx={{display:'flex', justifyContent:'space-between', mt:1}}>
+            <Typography variant="subtitle2"><strong>Actions</strong></Typography>
+            <Button onClick={() => handleClose()} variant="contained" sx={{background:'gold', color:'black'}}>Go Back</Button>
+          </Box>
         </CardContent>
       </Card>
 

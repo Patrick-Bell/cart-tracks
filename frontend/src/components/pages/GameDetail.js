@@ -57,23 +57,50 @@ console.log('Filtered carts with unique cart numbers:', filteredCarts);
 
 useEffect(() => {
   if (liveGame?.carts?.length) {
-    const diff = liveGame.carts.map(cart => cart.cart_number);
-    const uniqueCartNumbers = [...new Set(diff)];
+    const cartNumbers = [
+      "1", "2", "3", "4", "5", "7", "10", "Bridge 2", "11", "14", "15", "16", "17", "Gazebo 1", "Gazebo 2"
+    ];
 
-    const filteredCarts = liveGame.carts.filter((cart, index, self) => 
-      self.findIndex(c => c.cart_number === cart.cart_number) === index
-    );
+    // Create a map for quick lookup of cart_number index in cartNumbers array
+    const cartNumberIndexMap = cartNumbers.reduce((acc, cartNumber, index) => {
+      acc[cartNumber] = index;
+      return acc;
+    }, {});
 
-    const totalStartedQuantities = filteredCarts.reduce((acc, cart) => acc + cart.quantities_start, 0);
-    const totalFinalQuantites = filteredCarts.reduce((acc, cart) => acc + cart.final_quantity, 0);
-    const totalFinalReturns = filteredCarts.reduce((acc, cart) => acc + cart.final_returns, 0);
-    const finalActualValue = filteredCarts.reduce((acc, cart) => acc + cart.total_value, 0);
-    const finalWorkerValue = filteredCarts.reduce((acc, cart) => acc + cart.worker_total, 0);
-    const totalSold = filteredCarts.reduce((acc, cart) => acc + cart.sold, 0)
+    console.log('testing new ordering', cartNumberIndexMap)
 
-    setTotalQuantities({ totalStartedQuantities, totalFinalQuantites, totalFinalReturns, finalActualValue, finalWorkerValue, totalSold });
+    // Sort carts based on the custom order in cartNumbers
+    const sortedCarts = [...liveGame.carts].sort((a, b) => {
+      const indexA = cartNumberIndexMap[a.cart_number] ?? Infinity; // Default to Infinity if not found
+      const indexB = cartNumberIndexMap[b.cart_number] ?? Infinity;
+      return indexA - indexB;
+    });
+
+    // Calculate the totals as before
+    const totalStartedQuantities = sortedCarts.reduce((acc, cart) => acc + cart.quantities_start, 0);
+    const totalFinalQuantites = sortedCarts.reduce((acc, cart) => acc + cart.final_quantity, 0);
+    const totalFinalReturns = sortedCarts.reduce((acc, cart) => acc + cart.final_returns, 0);
+    const finalActualValue = sortedCarts.reduce((acc, cart) => acc + cart.total_value, 0);
+    const finalWorkerValue = sortedCarts.reduce((acc, cart) => acc + cart.worker_total, 0);
+    const totalSold = sortedCarts.reduce((acc, cart) => acc + cart.sold, 0);
+
+    // Set the totals and sorted carts
+    setTotalQuantities({
+      totalStartedQuantities,
+      totalFinalQuantites,
+      totalFinalReturns,
+      finalActualValue,
+      finalWorkerValue,
+      totalSold,
+    });
+
+    setLiveGame(prevState => ({
+      ...prevState,
+      carts: sortedCarts, // Update with sorted carts
+    }));
   }
 }, [liveGame]);
+
 
   
   useEffect(() => {
@@ -114,7 +141,7 @@ useEffect(() => {
     }
   }, [cart, openEdit]);
 
-
+ 
   // Format date as dd/mm/yyyy
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -202,13 +229,6 @@ useEffect(() => {
   const showGames = () => {
     setSelectedGame(null)
   }
-
-  const onWatchlist = (workers) => {
-    if (workers?.some(worker => worker.watching === true)) {
-      return 'red'; // Highlight in red if any worker is on the watchlist
-    }
-    return ''; // Default color otherwise
-  };
   
   const formatCurrency = (value) => {
     return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(value);
@@ -245,6 +265,7 @@ useEffect(() => {
     return workerCount;
   };
 
+
   return (
     <Box sx={{ padding: 2 }}> {/* Adjust padding of the Box component */}
       {/* Add Cart Modal */}
@@ -260,7 +281,7 @@ useEffect(() => {
       <Card sx={{ marginBottom: 3 }}>
         <CardContent>
           <Box sx={{display:'flex', alignItems:'center', justifyContent:'space-between', m:1}}>
-          <Typography variant="h6" color="textSecondary" gutterBottom>Game Information</Typography>
+          <Typography variant="h6" color="textSecondary" gutterBottom>Game Summary</Typography>
           <Button variant="contained" onClick={showGames} sx={{right:'10px', background:'gold', color:'black'}}>Go Back</Button>
           </Box>
           <Box sx={{ mt: 3, overflowX: 'auto'}}> {/* Horizontal scroll container */}
@@ -353,7 +374,7 @@ useEffect(() => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {liveGame.carts.map((cart) => (
+                {liveGame?.carts.map((cart) => (
                   <TableRow key={cart.id}>
                     <TableCell sx={{ border: 'none', position: 'sticky', left: 0, zIndex: 10, background:'white' }}>{cart.cart_number}</TableCell>
                     <TableCell sx={{ border: 'none' }}>{cart.quantities_start} ({(cart.quantities_start / 45).toFixed(2)} boxes)</TableCell>
@@ -379,11 +400,23 @@ useEffect(() => {
                     </TableCell>
 
 
-                      <TableCell sx={{ border: 'none', color: onWatchlist(cart.workers)}}>
-                      {cart.workers.length > 0 
-                        ? cart.workers.map((worker) => worker.name).join(', ')  // Join the names if there are multiple workers
-                        : "N/A"}
-                      </TableCell>
+                    <TableCell sx={{ border: 'none' }}>
+                      {cart.workers.length > 0
+                        ? cart.workers.map((worker, index) => (
+                            <span
+                              key={worker.id}
+                              style={{
+                                color: worker.watching ? 'red' : 'inherit', // Highlight in red if the worker is on the watchlist
+                                fontWeight: worker.watching ? 'bold' : 'normal', // Optional styling for watched workers
+                              }}
+                            >
+                              {worker.name}
+                              <span style={{color:'black'}}>{index < cart.workers.length - 1 ? ', ' : ''}</span>
+                            </span>
+                          ))
+                        : 'N/A'}
+                    </TableCell>
+
                       {liveGame.complete_status === false && (
                         <TableCell sx={{ border: 'none', display:'flex' }}>
                         <Tip arrow title={`Click to edit cart ${cart.cart_number}`}>

@@ -7,6 +7,8 @@ import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from 'react-router-dom'
 import CountDown from "../utils/CountDown";
 import { Toaster, toast } from "sonner";
+import { useMediaQuery } from '@mui/material';
+
 
 const drawerWidth = 240;
 
@@ -14,6 +16,8 @@ const Sidebar = ({ setActiveSection, activeSection }) => {
   // State for opening and closing the sidebar
   const [open, setOpen] = useState(true); 
   const navigate = useNavigate()
+  const isXs = useMediaQuery('(max-width:900px)');  // This doesn't require the theme
+
 
   const { user, logout, checkAuthStatus, expire } = useAuth();
 
@@ -22,8 +26,10 @@ const Sidebar = ({ setActiveSection, activeSection }) => {
   console.log('this is the user', user);
 
   const handleSectionClick = (section) => {
-    checkAuthStatus();
-    setActiveSection(section); // Update active section on click
+    if (isXs) {
+      setOpen(false);  // Close sidebar if on XS screen
+    }
+    setActiveSection(section);  // Update active section
   };
 
   // Toggle the sidebar state (open/close)
@@ -78,7 +84,7 @@ const Sidebar = ({ setActiveSection, activeSection }) => {
             boxSizing: 'border-box',
             transition: 'width 0.3s ease', // Smooth transition
           },
-          '@media (max-width:600px)': {
+          '@media (max-width:900px)': {
             '& .MuiDrawer-paper': {
                 width: open ? '100%' : 0,  // Full width on small screens
             }
