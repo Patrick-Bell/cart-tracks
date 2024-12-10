@@ -13,6 +13,9 @@ import 'swiper/css/scrollbar';
 import { gazebo_1, gazebo_2 } from '../utils/CartInformation';
 import PersonIcon from '@mui/icons-material/Person';
 import PeopleIcon from '@mui/icons-material/People';
+import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+
 
 
 const AddCart = ({ open, onClose, game }) => {
@@ -31,7 +34,7 @@ const AddCart = ({ open, onClose, game }) => {
   const [workers, setWorkers] = useState([]);
   const [errors, setErrors] = useState({})
   const [loading, setLoading] = useState(false)
-  const [button, setButton] = useState('Add Cart')
+  const [button, setButton] = useState('Add')
 
 
   const validateForm = () => {
@@ -116,7 +119,7 @@ const AddCart = ({ open, onClose, game }) => {
       resetCart()
       onClose()
       setLoading(false)
-      setButton('Add Cart')
+      setButton('Add')
     }catch(e){
       console.log(e)
     }
@@ -336,14 +339,14 @@ const cartNumbers = ["1", "2", "3", "4", "5", "7", "10", "Bridge 2", "11", "14",
                 <TableRow>
                   <TableCell>Cart</TableCell>
                   <TableCell>Boxes</TableCell>
-                  <TableCell>Busy Level</TableCell>
+                  <TableCell>Busy</TableCell>
                   <TableCell>Workers</TableCell>
                 </TableRow>
               </TableHead>
               {gazebo_2.map(cart => (
                 <TableRow key={cart.cart_number}>
                     <TableCell>{cart.cart_number}</TableCell>
-                    <TableCell>{cart.normal_boxes_start} <Typography variant='caption' component='span'>({cart.normal_boxes_start * 45} programmes)</Typography></TableCell>
+                    <TableCell>{cart.normal_boxes_start} <Typography variant='caption' component='span'>({cart.normal_boxes_start * 45})</Typography></TableCell>
                     <TableCell>{formatBusy(cart)}</TableCell>
                     <TableCell>{cart.people === 1 ? <PersonIcon/> : <PeopleIcon />}</TableCell>
                 </TableRow>
@@ -366,14 +369,14 @@ const cartNumbers = ["1", "2", "3", "4", "5", "7", "10", "Bridge 2", "11", "14",
         variant="contained"
         sx={{ color: 'black', background:'gold', marginRight: 1 }}
       >
-        &#9664;
+        <ArrowLeftIcon />
       </Button>
       <Button
         className="custom-swiper-button-next"
         variant="contained"
         sx={{ color: 'black', background:'gold'}}
       >
-        &#9654;
+        <ArrowRightIcon />
       </Button>
     </Box>
 

@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Toaster, toast } from 'sonner'
+import ReactLoading from 'react-loading'
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -22,7 +23,9 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     setLoading(true)
-    setButton('Logging in...')
+    setButton(
+      <span style={{display:'flex', alignItems:'center'}}>Logging in <ReactLoading type="bubbles" color='black' height={35} width={35} /></span>
+    );    
     e.preventDefault();
     let newErrors = {}
   

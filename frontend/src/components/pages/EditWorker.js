@@ -240,7 +240,7 @@ const EditWorker = ({ selectedWorker, openEdit, closeEdit }) => {
         </Button>
         <Button
           onClick={handleSave}
-          sx={{ background: 'gold', color: 'black' }}
+          sx={{ background: 'gold', color: 'black', height:'35px' }}
           color="primary"
           disabled={loading}
         >
