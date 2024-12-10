@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom'
 import CountDown from "../utils/CountDown";
 import { Toaster, toast } from "sonner";
 import { useMediaQuery } from '@mui/material';
+import fallbackPic from '../assets/fallback-pic.png'
+
 
 
 const drawerWidth = 240;
@@ -53,9 +55,6 @@ const Sidebar = ({ setActiveSection, activeSection }) => {
       toast.error("Logout failed");
     }
   };
-
-  // Fallback image if picture_url is not available
-  const fallbackAvatar = 'https://www.example.com/default-avatar.png'; // Replace with your default image URL
 
   return (
     <>
@@ -166,7 +165,7 @@ const Sidebar = ({ setActiveSection, activeSection }) => {
             <Divider />
             <List sx={{ m: 2, paddingBottom: '16px' }}>
               <ListItem sx={{ display: 'flex', alignItems: 'center', paddingLeft: 0 }}>
-                <Avatar sx={{ width: 40, height: 40, marginRight: 2 }} src={user?.picture_url ? user.picture_url : fallbackAvatar}
+                <Avatar sx={{ width: 40, height: 40, marginRight: 2 }} src={user?.picture_url ? user.picture_url : fallbackPic}
                 />
                 <Box sx={{ flexGrow: 2 }}>
                   <MuiTypography variant="body1">{user.user.name || 'Loading...'}</MuiTypography>

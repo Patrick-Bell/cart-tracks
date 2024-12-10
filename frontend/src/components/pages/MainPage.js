@@ -15,6 +15,8 @@ import { getNextMonthGames } from '../endpoints/Fixures';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import LogoutIcon from '@mui/icons-material/Logout';
 import GameModal from './GameModal';
+import fallbackPic from '../assets/fallback-pic.png'
+
 
 const MainPage = () => {
     const [open, setOpen] = useState(false);
@@ -156,7 +158,7 @@ const MainPage = () => {
   <Box sx={{ display: 'flex', alignItems: 'center', justifyContent:'space-between' }}>
     {/* User Avatar */}
     <Avatar 
-      src={user?.picture_url} 
+      src={user?.picture_url || fallbackPic} 
       alt={user?.user.name} 
       sx={{ width: 40, height: 40, mr: 2 }} 
     />

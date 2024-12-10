@@ -3,6 +3,7 @@ import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead
 import GameDetail from "./GameDetail";
 import { fetchAllGames } from '../endpoints/GamesRoutes';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import fallbackPic from '../assets/fallback-pic.png'
 
 const WorkerDetails = ({ worker, setSelectedWorker }) => {
   // State to keep track of the selected game object
@@ -31,7 +32,7 @@ const WorkerDetails = ({ worker, setSelectedWorker }) => {
             <CardContent>
               <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
                 <Avatar
-                  src={worker.picture_url || "https://via.placeholder.com/150"}
+                  src={worker.picture_url || fallbackPic}
                   alt={worker.name}
                   sx={{ width: 80, height: 80, mr: 3 }}
                 />

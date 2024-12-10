@@ -3,6 +3,7 @@ import { fetchOneManager } from "../endpoints/ManagersRoutes";
 import { useEffect } from "react";
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
+import fallbackPic from '../assets/fallback-pic.png'
 
 const ManagerDetails = ({ manager, setSelectedManager }) => {
   // Format date
@@ -25,7 +26,7 @@ const ManagerDetails = ({ manager, setSelectedManager }) => {
         <CardContent>
         <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
             <Avatar
-                src={manager.picture_url || "https://via.placeholder.com/150"}
+                src={manager.picture_url || fallbackPic}
                 alt={manager.name}
                 sx={{ width: 100, height: 100, mr: 3, objectFit:'contain' }}
             />

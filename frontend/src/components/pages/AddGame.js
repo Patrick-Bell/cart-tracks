@@ -34,7 +34,6 @@ const AddGame = ({ open, onClose }) => {
     const response = await getFixtures();
     const homeGames = response.filter(team => team.home_team === "West Ham United");
     setFixtures(homeGames);
-    console.log('home games', homeGames);
   };
 
   useEffect(() => {

@@ -37,29 +37,23 @@ const GameDetail = ({ game, setSelectedGame }) => {
 
 
  
-console.log("Game prop received:", liveGame);
 
 
   // Step 1: Get all cart numbers from the carts
 const diff = liveGame?.carts?.map(cart => cart.cart_number);
-console.log('All cart numbers:', diff);
 
 // Step 2: Get unique cart numbers using a Set
 const uniqueCartNumbers = [...new Set(diff)];
-console.log('Unique cart numbers:', uniqueCartNumbers);
 
 // Step 3: Filter the carts to get only the ones with unique cart numbers
 const filteredCarts = liveGame?.carts?.filter((cart, index, self) => {
   // Check if the current cart's cart_number is the first occurrence
   return self.findIndex(c => c.cart_number === cart.cart_number) === index;
 });
-console.log('Filtered carts with unique cart numbers:', filteredCarts);
 
 useEffect(() => {
   if (liveGame?.carts?.length) {
-    const cartNumbers = [
-      "1", "2", "3", "4", "5", "7", "10", "Bridge 2", "11", "14", "15", "16", "17", "Gazebo 1", "Gazebo 2"
-    ];
+    const cartNumbers = ["1", "2", "3", "4", "5", "7", "10", "Bridge 2", "11", "14", "15", "16", "17", "Gazebo 1", "Gazebo 2"];
 
     // Create a map for quick lookup of cart_number index in cartNumbers array
     const cartNumberIndexMap = cartNumbers.reduce((acc, cartNumber, index) => {
@@ -67,7 +61,6 @@ useEffect(() => {
       return acc;
     }, {});
 
-    console.log('testing new ordering', cartNumberIndexMap)
 
     // Sort carts based on the custom order in cartNumbers
     const sortedCarts = [...liveGame.carts].sort((a, b) => {
@@ -99,47 +92,35 @@ useEffect(() => {
       carts: sortedCarts, // Update with sorted carts
     }));
   }
-}, [liveGame]);
+}, [open, openSubmit, openConfirm, openEdit, loading]);
 
 
   
-  useEffect(() => {
-    if (game && game.id) {
-      const fetchSingleGame = async () => {
-        try {
-          const response = await getOneGame(game?.id);
-          setLiveGame(response);  // Assuming the API returns the game in response.data
-          console.log(response, 'is the response')
-          setLoading(false);  // Data is now loaded
-        } catch (e) {
-          setError("Failed to load game details");
-          setLoading(false);  // Stop loading even on error
-          console.log(e);
-        }
-      };
+useEffect(() => {
+  const fetchGameAndCartData = async () => {
+    if (!game?.id) return; // Exit early if game ID is undefined
 
-      fetchSingleGame();
-    }
-  }, [open, openConfirm, openEdit, openSubmit]);
+    setLoading(true);
+    try {
+      const [gameData, cartData] = await Promise.all([
+        getOneGame(game.id),
+        cart?.id ? getOneCart(cart.id) : Promise.resolve(null), // Only fetch cart if ID exists
+      ]);
 
-  useEffect(() => {
-    if (cart && cart.id) {
-      const fetchSingleCart = async () => {
-        try {
-          const response = await getOneCart(cart.id);
-          console.log('getting the cart data', response)
-          setCart(cart)
-          setLoading(false);  // Data is now loaded
-        } catch (e) {
-          setError("Failed to load game details");
-          setLoading(false);  // Stop loading even on error
-          console.log(e);
-        }
-      };
-    
-      fetchSingleCart();
+      setLiveGame(gameData); // Update game state
+      setCart(cartData || null); // Set cart to fetched data or null if not found
+    } catch (e) {
+      setError("Failed to load data");
+      console.error(e);
+    } finally {
+      setLoading(false); // Always reset loading state
     }
-  }, [cart, openEdit]);
+  };
+
+  fetchGameAndCartData();
+}, [game?.id, cart?.id, open, openSubmit, openConfirm, openEdit]);
+
+
 
  
   // Format date as dd/mm/yyyy
@@ -187,7 +168,6 @@ useEffect(() => {
 
   const handleEditOpen = (cart) => {
     setCart(cart)
-    console.log(cart, 'opening cart to edit this one')
     setOpenEdit(true)
   }
   const handleEditClose = () => {
@@ -198,7 +178,7 @@ useEffect(() => {
   const deleteOneCart = async (id) => {
     try{
       const response = await deleteCart(id)
-      console.log(response)
+      setCart(null)
       onClose()
       toast.success(`Cart Removed Successfully!`, {
         description: `Today at ${new Date().toLocaleTimeString('en-GB').slice(0, 5)}`,
@@ -269,7 +249,7 @@ useEffect(() => {
   return (
     <Box sx={{ padding: 2 }}> {/* Adjust padding of the Box component */}
       {/* Add Cart Modal */}
-      <AddCart open={open} onClose={handleClose} game={liveGame} />
+      <AddCart open={open} onClose={handleClose} game={liveGame} setLiveGame={setLiveGame} />
       <EditCart game={cart} open={openEdit} onClose={handleEditClose} gameId={liveGame}/>
 
       <ConfirmDeleteCart onClose={onClose} openConfirm={openConfirm} deleteOneCart={deleteOneCart} selectedCartId={selectedCartId} />

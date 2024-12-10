@@ -69,14 +69,8 @@ const AddManager = ({ open, onClose }) => {
     } else if (!/\S+@\S+\.\S+/.test(managerData.email)) {
       newErrors.email = 'Email is invalid';
     }
-    if (!managerData.phone_number) {
-      newErrors.phone_number = 'Phone Number is required';
-    } else if (!/^\d{11}$/.test(managerData.phone_number)) {
-      newErrors.phone_number = 'Phone Number must be 10 digits';
-    }
     if (!managerData.password) newErrors.password = 'Password is required';
     else if (managerData.password.length < 8) newErrors.password = 'Password must be at least 8 characters long';
-    if (!selectedFile) newErrors.picture = 'Profile Picture is required';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;

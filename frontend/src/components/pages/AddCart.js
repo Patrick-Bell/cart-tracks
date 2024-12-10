@@ -35,26 +35,30 @@ const AddCart = ({ open, onClose, game }) => {
 
 
   const validateForm = () => {
-    let newErrors = {}
-    const today = new Date()
-
+    let newErrors = {};
+    const today = new Date();
+  
     if (!cartData.cart_number) newErrors.cart_number = "Cart Number is required";
-    if (cartData.worker_ids.length === 0) newErrors.worker_ids = "At least 1 worker is required"
-    if (!cartData.quantities_start) newErrors.quantities_start = 'Field is required'
-    if (!cartData.quantities_added) newErrors.quantities_added = 'Field is required. If none, please put 0'
-    if (!cartData.quantities_minus) newErrors.quantities_minus = 'Field is required. If none, please put 0'
-    if (!cartData.final_returns) newErrors.final_returns = 'Field is required. If none, please put 0'
-    if (!cartData.float) newErrors.float = 'Field is required'
-    if (!cartData.worker_total) newErrors.worker_total = 'Field is required'
-
-
-
-    console.log(newErrors)
-
+    if (cartData.worker_ids.length === 0) newErrors.worker_ids = "At least 1 worker is required";
+    if (!cartData.quantities_start) newErrors.quantities_start = 'Field is required';
+    if (!cartData.quantities_added) newErrors.quantities_added = 'Field is required. If none, please put 0';
+    if (!cartData.quantities_minus) newErrors.quantities_minus = 'Field is required. If none, please put 0';
+    if (!cartData.final_returns) newErrors.final_returns = 'Field is required. If none, please put 0';
+    if (!cartData.float) newErrors.float = 'Field is required';
+    if (!cartData.worker_total) newErrors.worker_total = 'Field is required';
+  
     setErrors(newErrors);
+  
+    // Clear errors after 3 seconds
+    if (Object.keys(newErrors).length > 0) {
+      setTimeout(() => {
+        setErrors({});
+      }, 3000);
+    }
+ 
     return Object.keys(newErrors).length === 0;
-
-  }
+  };
+  
 
   const resetCart = () => {
     setCartData({
@@ -105,7 +109,6 @@ const AddCart = ({ open, onClose, game }) => {
 
     try{ 
       const response = await addCartToGame(cartData)
-      console.log(`Toast message: ${cartData.cart_number} added!`);
       toast.message(`Cart Number ${cartData.cart_number} added!`, {
         description: `Today at ${new Date().toLocaleTimeString('en-GB').slice(0, 5)}`,
         duration: 5000
@@ -309,14 +312,14 @@ const cartNumbers = ["1", "2", "3", "4", "5", "7", "10", "Bridge 2", "11", "14",
                 <TableRow>
                   <TableCell>Cart</TableCell>
                   <TableCell>Boxes</TableCell>
-                  <TableCell>Busy Level</TableCell>
+                  <TableCell>Busy</TableCell>
                   <TableCell>Workers</TableCell>
                 </TableRow>
               </TableHead>
               {gazebo_1.map(cart => (
                 <TableRow key={cart.cart_number}>
                     <TableCell>{cart.cart_number}</TableCell>
-                    <TableCell>{cart.normal_boxes_start} <Typography variant='caption' component='span'>({cart.normal_boxes_start * 45} programmes)</Typography></TableCell>
+                    <TableCell>{cart.normal_boxes_start} <Typography variant='caption' component='span'>({cart.normal_boxes_start * 45})</Typography></TableCell>
                     <TableCell>{formatBusy(cart)}</TableCell>
                     <TableCell>{cart.people === 1 ? <PersonIcon/> : <PeopleIcon />}</TableCell>
                 </TableRow>
