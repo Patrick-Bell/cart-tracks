@@ -18,6 +18,9 @@ import ConfirmSubmitGame from "./ConfirmSubmitGame";
 import Games from "./Games";
 import { useMediaQuery } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import ReactLoading from 'react-loading'
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
+import { useThemeContext } from "../../context/ThemeContext";
 
 const GameDetail = ({ game, setSelectedGame }) => {
   const [open, setOpen] = useState(false);
@@ -33,11 +36,10 @@ const GameDetail = ({ game, setSelectedGame }) => {
   const [submitBtn, setSubmitBtn] = useState("Submit")
   const [submitLoading, setSubmitLoading] = useState(false)
   const isLargeScreen = useMediaQuery('(min-width:600px)'); // This checks if the screen width is 600px or larger (adjust this to your needs)
+  const [dataLoading, setDataLoading] = useState(false)
+  const [cartOrder, setCartOrder] = useState('asc')
 
-
-
- 
-
+  const {mode} = useThemeContext()
 
   // Step 1: Get all cart numbers from the carts
 const diff = liveGame?.carts?.map(cart => cart.cart_number);
@@ -51,9 +53,67 @@ const filteredCarts = liveGame?.carts?.filter((cart, index, self) => {
   return self.findIndex(c => c.cart_number === cart.cart_number) === index;
 });
 
+
+useEffect(() => {
+  const fetchGameAndCartData = async () => {
+    if (!game?.id) return; // Exit early if game ID is undefined
+    
+    setDataLoading(true)
+
+    try {
+      const [gameData, cartData] = await Promise.all([
+        getOneGame(game.id),
+        cart?.id ? getOneCart(cart.id) : Promise.resolve(null), // Only fetch cart if ID exists
+      ]);
+
+      setLiveGame(gameData); // Update game state
+      setCart(cartData || null); // Set cart to fetched data or null if not found
+    } catch (e) {
+      setError("Failed to load data");
+      console.error(e);
+    } finally {
+      setLoading(false); // Always reset loading state
+      setDataLoading(false)
+    }
+  };
+
+  fetchGameAndCartData();
+}, [game?.id, cart?.id, open, openSubmit, openConfirm, openEdit]);
+
+
+
 useEffect(() => {
   if (liveGame?.carts?.length) {
-    const cartNumbers = ["1", "2", "3", "4", "5", "7", "10", "Bridge 2", "11", "14", "15", "16", "17", "Gazebo 1", "Gazebo 2"];
+
+  const carts = liveGame?.carts
+
+    // Calculate the totals as before
+    const totalStartedQuantities = carts.reduce((acc, cart) => acc + cart.quantities_start, 0);
+    const totalFinalQuantites = carts.reduce((acc, cart) => acc + cart.final_quantity, 0);
+    const totalFinalReturns = carts.reduce((acc, cart) => acc + cart.final_returns, 0);
+    const finalActualValue = carts.reduce((acc, cart) => acc + cart.total_value, 0);
+    const finalWorkerValue = carts.reduce((acc, cart) => acc + cart.worker_total, 0);
+    const totalSold = carts.reduce((acc, cart) => acc + cart.sold, 0);
+
+    // Set the totals and sorted carts
+    setTotalQuantities({
+      totalStartedQuantities,
+      totalFinalQuantites,
+      totalFinalReturns,
+      finalActualValue,
+      finalWorkerValue,
+      totalSold,
+    });
+
+  }
+}, [open, openSubmit, openConfirm, openEdit, loading, dataLoading]);
+
+
+useEffect(() => {
+
+  if (!liveGame?.carts) return; // Exit early if liveGame or liveGame.carts is null or undefined
+
+  const cartNumbers = ["1", "2", "3", "4", "5", "7", "10", "Bridge 2", "11", "14", "15", "16", "17", "Gazebo 1", "Gazebo 2"];
 
     // Create a map for quick lookup of cart_number index in cartNumbers array
     const cartNumberIndexMap = cartNumbers.reduce((acc, cartNumber, index) => {
@@ -69,58 +129,15 @@ useEffect(() => {
       return indexA - indexB;
     });
 
-    // Calculate the totals as before
-    const totalStartedQuantities = sortedCarts.reduce((acc, cart) => acc + cart.quantities_start, 0);
-    const totalFinalQuantites = sortedCarts.reduce((acc, cart) => acc + cart.final_quantity, 0);
-    const totalFinalReturns = sortedCarts.reduce((acc, cart) => acc + cart.final_returns, 0);
-    const finalActualValue = sortedCarts.reduce((acc, cart) => acc + cart.total_value, 0);
-    const finalWorkerValue = sortedCarts.reduce((acc, cart) => acc + cart.worker_total, 0);
-    const totalSold = sortedCarts.reduce((acc, cart) => acc + cart.sold, 0);
-
-    // Set the totals and sorted carts
-    setTotalQuantities({
-      totalStartedQuantities,
-      totalFinalQuantites,
-      totalFinalReturns,
-      finalActualValue,
-      finalWorkerValue,
-      totalSold,
-    });
-
-    setLiveGame(prevState => ({
-      ...prevState,
-      carts: sortedCarts, // Update with sorted carts
-    }));
-  }
-}, [open, openSubmit, openConfirm, openEdit, loading]);
-
-
-  
-useEffect(() => {
-  const fetchGameAndCartData = async () => {
-    if (!game?.id) return; // Exit early if game ID is undefined
-
-    setLoading(true);
-    try {
-      const [gameData, cartData] = await Promise.all([
-        getOneGame(game.id),
-        cart?.id ? getOneCart(cart.id) : Promise.resolve(null), // Only fetch cart if ID exists
-      ]);
-
-      setLiveGame(gameData); // Update game state
-      setCart(cartData || null); // Set cart to fetched data or null if not found
-    } catch (e) {
-      setError("Failed to load data");
-      console.error(e);
-    } finally {
-      setLoading(false); // Always reset loading state
+    if (cartOrder === 'asc') {
+      setLiveGame((prev) => ({...prev, carts: sortedCarts}))
+    } else if (cartOrder === 'desc') {
+      setLiveGame((prev) => ({...prev, carts: [...sortedCarts].reverse()}))
     }
-  };
 
-  fetchGameAndCartData();
-}, [game?.id, cart?.id, open, openSubmit, openConfirm, openEdit]);
+    console.log(cartOrder)
 
-
+}, [cartOrder])
 
  
   // Format date as dd/mm/yyyy
@@ -220,6 +237,14 @@ useEffect(() => {
       <Box sx={{top:'50%', left:'50%', transform:'translate(-50%, -50%)', position:'absolute', textAlign:'center'}}>
         <CircularProgress sx={{color:'grey'}} thickness={10} />
         <Typography sx={{color:'grey'}}>Fetching Data...</Typography>
+      </Box>
+    )
+  }
+
+  if (dataLoading) {
+    return (
+      <Box sx={{top:'50%', left:'50%', transform:'translate(-50%, -50%)', position:'absolute', textAlign:'center'}}>
+        <Typography sx={{color:'grey', display:'flex', alignItems:'center'}}>Performing Action <ReactLoading type="bubbles" color="grey" height={50} width={50} /></Typography>
       </Box>
     )
   }
@@ -341,11 +366,19 @@ useEffect(() => {
             <Table sx={{ border: 'none', minWidth: 650 }}> {/* Set border to none for the table */}
               <TableHead>
                 <TableRow>
-                  <TableCell sx={{ border: 'none', fontWeight:'800', position: 'sticky', left: 0, zIndex: 10, background:'white' }}>Cart Number</TableCell>
+                  <TableCell sx={{ border: 'none', fontWeight:'800', position: 'sticky', left: 0, zIndex: 10, bgcolor: mode === 'dark' ? '#2D2D2D' : '#f5f5f5', display:'flex', cursor:'pointer'}}>Cart number
+                  <ArrowCircleUpIcon
+                      sx={{
+                        transform: cartOrder === 'asc' ? 'rotate(180deg)' : 'rotate(0)',
+                        transition: 'transform 0.3s ease'
+                      }}
+                      onClick={() => setCartOrder(cartOrder === 'desc' ? 'asc' : 'desc') }
+                    />
+                  </TableCell>
                   <TableCell sx={{ border: 'none', fontWeight:'800' }}>Quantities Start</TableCell>
                   <TableCell sx={{ border: 'none', fontWeight:'800', display:'flex', cursor:'pointer' }}>Final Quantity <Tooltip arrow title={`<strong>Final Quantity</strong> & <strong>Quantities Start</strong> should be equal to show stock movements correctly.`}><InfoIcon /></Tooltip></TableCell>
                   <TableCell sx={{ border: 'none', fontWeight:'800' }}>Final Returns</TableCell>
-                  <TableCell sx={{ border: 'none', fontWeight:'800' }}>Sold</TableCell>
+                  <TableCell sx={{ border: 'none', fontWeight:'800'}}>Sold</TableCell>
                   <TableCell sx={{ border: 'none', fontWeight:'800', display:'flex', cursor:'pointer' }}>Margin (£) <Tooltip arrow title={`<strong>Expected Value:</strong> Sold * 4<br><strong>Returned Value:</strong> What worker returned (- float)<br><strong>Margin:</strong> Worker Value - Expected Value`}><InfoIcon /></Tooltip></TableCell>
                   <TableCell sx={{ border: 'none', fontWeight:'800' }}>Worker(s)</TableCell>
                   {liveGame.complete_status === false && (
@@ -356,7 +389,7 @@ useEffect(() => {
               <TableBody>
                 {liveGame?.carts.map((cart) => (
                   <TableRow key={cart.id}>
-                    <TableCell sx={{ border: 'none', position: 'sticky', left: 0, zIndex: 10, background:'white' }}>{cart.cart_number}</TableCell>
+                    <TableCell sx={{ border: 'none', position: 'sticky', left: 0, zIndex: 10, bgcolor: mode === 'dark' ? '#2D2D2D' : '#f5f5f5'}}>{cart.cart_number}</TableCell>
                     <TableCell sx={{ border: 'none' }}>{cart.quantities_start} ({(cart.quantities_start / 45).toFixed(2)} boxes)</TableCell>
 
                       <TableCell sx={{border: 'none'}}>
@@ -410,7 +443,7 @@ useEffect(() => {
                   </TableRow>
                 ))}
                   <TableRow sx={{borderTop:"1px solid lightgrey"}}>
-                    <TableCell sx={{ border: 'none', position: 'sticky', left: 0, zIndex: 10, background:'white' }}>{uniqueCartNumbers.length}</TableCell>
+                    <TableCell sx={{ border: 'none', position: 'sticky', left: 0, zIndex: 10, bgcolor: mode === 'dark' ? '#2D2D2D' : '#f5f5f5' }}>{uniqueCartNumbers.length}</TableCell>
                     <TableCell sx={{ border: 'none' }}>{totalQuantities.totalStartedQuantities} ({(totalQuantities.totalStartedQuantities / 45).toFixed(2)} boxes)</TableCell>
                     <TableCell sx={{ border: 'none' }}>{totalQuantities.totalFinalQuantites}</TableCell>
                     <TableCell sx={{ border: 'none' }}>{totalQuantities.totalFinalReturns}</TableCell>

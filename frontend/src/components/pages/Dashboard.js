@@ -58,7 +58,7 @@ const Dashboard = () => {
         {/* Main Content Area */}
         <Box
           component="main"
-          sx={{ flexGrow: 1, p: 3, bgcolor: '#fafafa', minHeight: '100vh', maxWidth: 'calc(100vw - 50px)' }}
+          sx={{ flexGrow: 1, p: 3, bgcolor: 'background-default', minHeight: '100vh', maxWidth: 'calc(100vw - 50px)', margin:'auto auto' }}
         >
           {/* Render the selected section */}
           {renderSection()}

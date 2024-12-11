@@ -8,6 +8,7 @@ import TrendingUp from '@mui/icons-material/TrendingUp';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import CurrencyPoundIcon from '@mui/icons-material/CurrencyPound';
 import { formatMargin, formatCurrency, formatMonth, getMonthData, calculateWorkerTotal, calculateActualCartTotal, calculateCartValue, calculateWorkerValue, calculateMonthMetrics, onWatchlist, getComparisonData, processGameData, sortData, formatTotal, calculateBestMonth } from "../utils/AnalyticsFunctions";
+import { useThemeContext } from '../../context/ThemeContext'
 
 const Analytics = () => {
     const [workerData, setWorkerData] = useState([]);
@@ -49,6 +50,7 @@ const Analytics = () => {
       })
 
       const [pageLoading, setPageLoading] = useState(true)
+      const { mode } = useThemeContext()
 
         const fetchGames = async () => {
             const response = await fetchAllGames()
@@ -282,7 +284,7 @@ const Analytics = () => {
         <Box sx={{ mt: 3}}>
             <TableContainer sx={{maxHeight:570, mb:2, }} component={Paper}>
                 <Table stickyHeader sx={{ border: 'none'}}>
-                    <TableHead>
+                    <TableHead sx={{bgcolor: mode === 'dark' ? '#2D2D2D' : '#f5f5f5'}}>
                         <TableRow stickyHeader>
                             <TableCell sx={{ fontWeight: 800 }}>Worker</TableCell>
                             <TableCell sx={{ fontWeight: 800 }}>

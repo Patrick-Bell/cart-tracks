@@ -15,7 +15,7 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { IOSSwitch } from "../utils/Switch";
 import ClearIcon from '@mui/icons-material/Clear';
 import { getFixtures } from "../endpoints/Fixures";
-
+import {useThemeContext} from "../../context/ThemeContext";
 
 
 
@@ -40,7 +40,8 @@ const Games = () => {
   })
   const [pageLoading, setPageLoading] = useState(true)
   const [month, selectMonth] = useState("0")
-  
+  const { mode } = useThemeContext()
+
 
 const fetchFixtures = async () => {
   const response = await getFixtures()
@@ -70,9 +71,10 @@ const fetchFixtures = async () => {
       try {
         await fetchFixtures()
         const response = await fetchAllGames();
+        const sorted = response.sort((a, b) => new Date(a.date) - new Date(b.date));
         if (response) {
-          setGames(response); // Store the fetched games in state
-          setFilteredGames(response)
+          setGames(sorted); // Store the fetched games in state
+          setFilteredGames(sorted)
           setPageLoading(false)
         }
       } catch (error) {
@@ -98,7 +100,7 @@ const fetchFixtures = async () => {
   
 
   const handleOpenDeleteModal = async (game) => {
-    if(user?.user.access !== 'high') {
+    if(user?.user.access !== 'low') {
       toast.error(`You do not have permission for this action`, {
         description: `Today at ${new Date().toLocaleTimeString('en-GB').slice(0, 5)}`,
         duration: 5000
@@ -319,7 +321,7 @@ const fetchFixtures = async () => {
                 <Table sx={{ minWidth: 650 }}>
                   <TableHead>
                     <TableRow>
-                      <TableCell sx={{ position: 'sticky', left: 0, zIndex: 10, background:'white' }}>Event</TableCell>
+                      <TableCell sx={{ position: 'sticky', left: 0, zIndex: 10, bgcolor: mode === 'dark' ? '#2D2D2D' : '#f5f5f5' }}>Event</TableCell>
                       <TableCell>Date</TableCell>
                       <TableCell>Workers</TableCell>
                       <TableCell>Actions</TableCell>
@@ -328,7 +330,7 @@ const fetchFixtures = async () => {
                   <TableBody>
                     {filteredGames.map((game) => (
                       <TableRow key={game.id}>
-                        <TableCell sx={{ position: 'sticky', left: 0, zIndex: 10, background: 'white' }}>
+                        <TableCell sx={{ position: 'sticky', left: 0, zIndex: 10, bgcolor: mode === 'dark' ? '#2D2D2D' : '#f5f5f5'}}>
                         {extractAbbreviation(game.name)}
                     </TableCell>
                         <TableCell>{formatDate(game.date)}</TableCell>
@@ -339,7 +341,7 @@ const fetchFixtures = async () => {
                               variant="contained"
                               onClick={() => viewSelectedGame(game)} 
                               sx={{ background: "gold", color: 'black' }}>
-                              <VisibilityIcon />
+                              <VisibilityIcon/>
                             </Button>
                           </Tooltip>
                           {game.complete_status && (
@@ -373,7 +375,7 @@ const fetchFixtures = async () => {
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                 <Paper sx={{ p: 2 }}>
-          <FilterAltIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%' }} />
+          <FilterAltIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
           <Typography sx={{ fontWeight: 700, mt: 1 }}>Filtered Games</Typography>
           <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
            {filteredGames.length} of {games.length}
@@ -398,7 +400,7 @@ const fetchFixtures = async () => {
 
                 <Grid item xs={12}>
                 <Paper sx={{ p: 2 }}>
-          <FilterAltIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%' }} />
+          <FilterAltIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
           <Typography sx={{ fontWeight: 700, mt: 1 }}>Season Games</Typography>
           <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
            {games.length} of {fixtures.length}
@@ -423,7 +425,7 @@ const fetchFixtures = async () => {
 
                 <Grid item xs={12}>
                 <Paper sx={{ p: 2 }}>
-          <FilterAltIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%' }} />
+          <FilterAltIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px'}} />
           <Typography sx={{ fontWeight: 700, mt: 1 }}>Best Game</Typography>
           <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
            You must submit 5 games to activate this stat

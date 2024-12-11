@@ -1,8 +1,6 @@
 class ManagersController < ApplicationController
   before_action :set_manager, only: %i[ show update destroy ]
 
-
-
   # GET /managers
   def index
     # Include associated games but not the picture attachment
@@ -43,9 +41,53 @@ end
   end
 end
 
+def update_password
+  manager = Manager.find_by(id: params[:id])
+
+  if manager.nil?
+    render json: { error: 'Manager not found' }, status: :not_found
+    return
+  end
+
+  # Check if the current password matches
+  if manager.authenticate(params[:password])  # Check current password
+    if params[:newPassword] == params[:confirmPassword]
+      manager.password = params[:newPassword]
+      if manager.save
+        render json: { message: 'Password updated successfully' }, status: :ok
+      else
+        render json: { error: 'Failed to update password' }, status: :unprocessable_entity
+      end
+    else
+      render json: { error: 'New password and confirmation do not match' }, status: :unprocessable_entity
+    end
+  else
+    render json: { error: 'Incorrect current password' }, status: :unauthorized
+  end
+end
+
+def update_access
+  @manager = Manager.find_by(id: params[:id])
+
+  if @manager
+    @manager.access = params[:access]
+    if @manager.save
+      render json: { message: "Access updated successfully" }, status: :ok
+    else
+      render json: { error: @manager.errors.full_messages }, status: :unprocessable_entity
+    end
+  else
+    render json: { error: "Manager not found" }, status: :not_found
+  end
+end
+
+
+
+
 
   # PATCH/PUT /managers/1
   def update
+    Rails.logger.debug("Manager Params: #{manager_params.inspect}")
     if @manager.update(manager_params)
       render json: @manager
     else
@@ -57,6 +99,22 @@ end
   def destroy
     @manager.destroy!
   end
+
+  def toggle_theme
+    @manager = Manager.find_by(id: params[:id])
+  
+    if @manager.nil?
+      render json: { error: "Manager not found" }, status: :not_found and return
+    end
+  
+    @manager.mode = params[:mode]
+    if @manager.save
+      render json: { message: "Mode updated successfully", mode: @manager.mode }, status: :ok
+    else
+      render json: { error: @manager.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+  
 
 
 

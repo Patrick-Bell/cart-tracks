@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_04_132101) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_11_194856) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -127,6 +127,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_04_132101) do
     t.boolean "notifications", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "last_seen"
+    t.string "mode", default: "light"
   end
 
   create_table "messages", force: :cascade do |t|

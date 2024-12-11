@@ -1,4 +1,4 @@
-import { Modal, Box, Typography, Autocomplete, TextField, Select, MenuItem, Button, InputLabel } from "@mui/material";
+import { Dialog, DialogActions, DialogTitle, DialogContent, Box, Typography, Autocomplete, TextField, Select, MenuItem, Button, InputLabel } from "@mui/material";
 import { premierLeagueTeams } from "../utils/Teams";
 import { useState } from "react";
 import { addFixture } from "../endpoints/Fixures";
@@ -60,7 +60,7 @@ const GameModal = ({ open, handleClose }) => {
 
     return (
         <>
-        <Modal
+        <Dialog
             open={open}
             onClose={handleClose}
             sx={{
@@ -69,18 +69,9 @@ const GameModal = ({ open, handleClose }) => {
                 alignItems: 'center',
             }}
         >
-            <Box
-                sx={{
-                    backgroundColor: 'white',
-                    padding: 4,
-                    borderRadius: 2,
-                    maxWidth: 400,
-                    width: '90%',
-                }}
-            >
-                <Typography variant="h6" sx={{ marginBottom: 2 }}>
-                    Add Fixture
-                </Typography>
+            <DialogTitle>Add Fixture</DialogTitle>
+            <Box fullWidth sx={{minWidth:'500px'}}>
+            <DialogContent>
 
                 <Autocomplete
                     value={homeTeam}
@@ -150,14 +141,14 @@ const GameModal = ({ open, handleClose }) => {
                     fullWidth
                     sx={{ mb: 2 }}
                 />
-
-
-
+                </DialogContent>
+                <DialogActions>
                 <Button variant="contained" fullWidth onClick={handleSubmit}>
                     Add Fixture
                 </Button>
+                </DialogActions>
             </Box>
-        </Modal>
+        </Dialog>
         <Toaster/>
         </>
     );

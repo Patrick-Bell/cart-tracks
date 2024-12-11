@@ -100,7 +100,7 @@ const Sidebar = ({ setActiveSection, activeSection }) => {
           </Box>
 
           {/* List Items with Margin */}
-          <List sx={{ m: 2 }}>
+          <List sx={{ m: 2, }}>
             {[
               { text: 'Dashboard', icon: <DashboardIcon />, section: 'dashboard' },
               { text: 'Events', section: 'games' },

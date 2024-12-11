@@ -32,7 +32,17 @@ export const generateGameSummaryPDF = (game) => {
         return self.findIndex((c) => c.cart_number === cart.cart_number) === index;
     }) || [];
 
-    // AutoTable for carts
+    const cartNumbers = ["1", "2", "3", "4", "5", "7", "10", "Bridge 2", "11", "14", "15", "16", "17", "Gazebo 1", "Gazebo 2"];
+
+    // Sort the game.carts array according to the order in cartNumbers
+    const sortedCarts = game.carts.sort((a, b) => {
+        const indexA = cartNumbers.indexOf(a.cart_number);
+        const indexB = cartNumbers.indexOf(b.cart_number);
+        
+        return indexA - indexB;
+    });
+    
+    // Now pass the sorted carts to autoTable
     doc.autoTable({
         startY: yPosition,
         head: [
@@ -49,19 +59,21 @@ export const generateGameSummaryPDF = (game) => {
                 'Margin',
             ],
         ],
-        body: game.carts.map((cart) => {
+        body: sortedCarts.map((cart) => {
             const workerValue = (cart.worker_total || 0).toFixed(2);
             const expectedValue =
                 ((cart.final_quantity - cart.final_returns) * 4).toFixed(2);
             const margin = (workerValue - expectedValue).toFixed(2);
-            const workerNames = cart.workers && cart.workers.length > 0 ? cart.workers.map(worker => worker.name).join(', ') : "No workers assigned"
-            const movement = (cart.quantities_added - cart.quantities_minus)
-
+            const workerNames = cart.workers && cart.workers.length > 0
+                ? cart.workers.map(worker => worker.name).join(', ')
+                : "No workers assigned";
+            const movement = (cart.quantities_added - cart.quantities_minus) || 0;
+    
             return [
                 workerNames,
                 cart.cart_number,
                 cart.quantities_start || 0,
-                movement || 0,
+                movement,
                 cart.final_quantity || 0,
                 cart.final_returns || 0,
                 `£${cart.float || 0}`,
@@ -69,7 +81,7 @@ export const generateGameSummaryPDF = (game) => {
                 `£${expectedValue}`,
                 `£${margin}`,
             ];
-        }),
+        }),    
         theme: 'striped',
         styles: { fontSize: 10, textColor:'black', cellPadding: 2 },
         headStyles: { fillColor: ['gold'] }, // Greenish header

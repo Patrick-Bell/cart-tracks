@@ -14,8 +14,12 @@ Rails.application.routes.draw do
     post '/add-watching/:id', to: 'workers#add_watching', as: 'add_watching'
     post '/remove-watching/:id', to: 'workers#remove_watching', as: 'remove_watching'
 
+    patch '/update-password/:id', to: 'managers#update_password', as: 'update_password'
+    patch '/update-access/:id', to: 'managers#update_access', as: 'update_access'
+
     patch '/enable-notifications/:id', to: 'managers#enable_notifications', as: 'enable_notifications'
     patch '/disable-notifications/:id', to: 'managers#disable_notifications', as: 'disable_notifications'
+    patch '/toggle-theme/:id', to: 'managers#toggle_theme', as: 'toggle_theme'
 
     post '/login', to: 'sessions#create', as: 'create'
     delete '/logout/:id', to: 'sessions#destroy', as: 'destroy'

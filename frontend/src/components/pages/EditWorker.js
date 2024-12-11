@@ -90,6 +90,7 @@ const EditWorker = ({ selectedWorker, openEdit, closeEdit }) => {
       formData.append('worker[picture]', selectedFile)
     }
 
+
     try {
       const response = await editOneWorker(selectedWorker.id, formData);
       console.log(response);

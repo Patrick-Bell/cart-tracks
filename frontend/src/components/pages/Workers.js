@@ -39,6 +39,7 @@ import Diversity3Icon from '@mui/icons-material/Diversity3';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import StarIcon from '@mui/icons-material/Star';
 import Info from "@mui/icons-material/Info";
+import { useThemeContext } from "../../context/ThemeContext";
 
 
 const Workers = () => {
@@ -60,6 +61,7 @@ const Workers = () => {
 
  
   const { user, checkAuthStatus, authenticated } = useAuth()
+  const { mode } = useThemeContext()
 
   const handleOpen = () => {
     setOpen(true);
@@ -215,6 +217,7 @@ const Workers = () => {
 
 
   return (
+    <Box sx={{bgcolor: 'background.default', minHeight:'100vh'}}>
     <>
       {!selectedWorker && !emailWorker ? (
         <>
@@ -268,7 +271,7 @@ const Workers = () => {
         <Table sx={{ minWidth: 650 }}>
           <TableHead>
             <TableRow>
-              <TableCell sx={{ position: 'sticky', left: 0, zIndex: 10, background: 'white' }}>Name</TableCell>
+              <TableCell sx={{ position: 'sticky', left: 0, zIndex: 10, bgcolor: mode === 'dark' ? '#2D2D2D' : '#f5f5f5' }}>Name</TableCell>
               <TableCell>Joined</TableCell>
               <TableCell>Shifts</TableCell>
               <TableCell>Actions</TableCell>
@@ -277,7 +280,7 @@ const Workers = () => {
           <TableBody>
             {filteredWorkers.map((worker) => (
               <TableRow key={worker.id}>
-                <TableCell sx={{ position: 'sticky', left: 0, zIndex: 10, background: 'white', color: isWatching(worker)}}>
+                <TableCell sx={{ position: 'sticky', left: 0, zIndex: 10, color: isWatching(worker), bgcolor: mode === 'dark' ? '#2D2D2D' : '#f5f5f5'}}>
                   {worker.name} {worker.last_name.slice(0, 1)}
                   </TableCell>
                 <TableCell>{new Date(worker.created_at).toLocaleDateString('en-GB')}</TableCell>
@@ -357,7 +360,7 @@ const Workers = () => {
         {/* Watched Workers */}
         <Grid item xs={12}>
         <Paper sx={{ p: 2 }}>
-          <FilterAltIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%' }} />
+          <FilterAltIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
           <Typography sx={{ fontWeight: 700, mt: 1 }}>Filtered Workers</Typography>
           <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
             {filteredWorkers.length} of {workers.length}
@@ -383,7 +386,7 @@ const Workers = () => {
       {/* Total Workers */}
       <Grid item xs={12}>
         <Paper sx={{ p: 2 }}>
-          <Diversity3Icon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%' }} />
+          <Diversity3Icon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
           <Typography sx={{ fontWeight: 700, mt: 1 }}>Total Workers</Typography>
           <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
             {workers.length} of 100
@@ -407,7 +410,7 @@ const Workers = () => {
 
       <Grid item xs={12}>
         <Paper sx={{ p: 2 }}>
-          <VisibilityIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%' }} />
+          <VisibilityIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
           <Typography sx={{ fontWeight: 700, mt: 1 }}>Watched Workers</Typography>
           <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
             {watching?.length} of {workers.length}
@@ -433,7 +436,7 @@ const Workers = () => {
       {bestWorker?.margin !== 0 && (
       <Grid item xs={12}>
         <Paper sx={{ p: 2 }}>
-          <StarIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%' }} />
+          <StarIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
           <Typography sx={{ fontWeight: 700, mt: 1 }}>Best Worker</Typography>
           <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
             {bestWorker.name} - {formatCurrency(bestWorker.amount)} of {formatCurrency(bestWorker.expected)} {formatMargin(bestWorker.margin - 100)}
@@ -468,6 +471,7 @@ const Workers = () => {
         <WorkerDetails worker={selectedWorker} setSelectedWorker={setSelectedWorker} onBack={handleBackToList} />
       )}
     </>
+    </Box>
   );
 };
 

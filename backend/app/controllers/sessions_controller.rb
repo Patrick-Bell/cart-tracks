@@ -55,7 +55,7 @@ class SessionsController < ApplicationController
     
         if user
           # Update the user to set online to false
-          user.update(online: false)
+          user.update(online: false, last_seen: Time.now)
           # Clear the authentication token from cookies
           cookies.delete(:token)
           # Respond with a success message

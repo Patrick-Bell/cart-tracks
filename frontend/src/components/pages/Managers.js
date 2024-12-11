@@ -20,12 +20,17 @@ import ManagerDetails from "./ManagerDetails";
 import AddManager from "./AddManager";
 import { Toaster, toast } from "sonner";
 import { useAuth } from '../../context/AuthContext'
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import EditManager from "./EditManager";
+
 
 const Managers = () => {
   const [managers, setManagers] = useState([]);
   const [selectedManager, setSelectedManager] = useState(null); // Use `null` to check if a worker is selected
   const [open, setOpen] = useState(false)
   const [pageLoading, setPageLoading] = useState(true)
+  const [selectedEditManager, setSelectedEditManager] = useState(null)
+  const [openEdit, setOpenEdit] = useState(false)
 
   const { user } = useAuth()
 
@@ -43,7 +48,7 @@ const Managers = () => {
     };
 
     fetchManagers();
-  }, [open]);
+  }, [open, openEdit]);
 
   // Handler to reset selected worker and go back to list
   const handleBackToList = () => setSelectedManager(null);
@@ -62,6 +67,16 @@ const Managers = () => {
     setOpen(false);
   };
 
+  const closeEdit = () => {
+    setOpenEdit(false)
+  }
+
+  const handleEditOpen = (manager) => {
+    setSelectedEditManager(manager)
+    setOpenEdit(true)
+
+  }
+
 
   if (pageLoading) {
     return (
@@ -75,11 +90,12 @@ const Managers = () => {
   return (
     <>
 
+    <EditManager selectedManager={selectedEditManager} open={openEdit} onClose={closeEdit}/>
     
       {!selectedManager ? (
         <>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Typography variant="h4" sx={{ fontWeight: '800' }}>Managers</Typography>
+            <Typography variant="h4" sx={{ fontWeight: '800' }}></Typography>
 
             <Button onClick={handleOpen} variant='contained' sx={{ background: 'gold', color: 'black' }}>Add New Manager</Button>
           </Box>
@@ -87,9 +103,9 @@ const Managers = () => {
           <AddManager open={open} onClose={handleClose} />
           <Toaster />
 
-          <Box sx={{ mt: 3 }}>
-            <TableContainer component={Paper}>
-              <Table>
+          <Box sx={{ mt: 3, overflow:'auto' }}>
+            <TableContainer component={Paper} sx={{width:'100%'}}> 
+              <Table sx={{minWidth:'650px'}}>
                 <TableHead>
                   <TableRow>
                     <TableCell>Name</TableCell>
@@ -101,7 +117,7 @@ const Managers = () => {
                 <TableBody>
                   {managers.map((manager) => (
                     <TableRow key={manager.id}>
-                      <TableCell>{manager.name}</TableCell>
+                      <TableCell>{manager.name} {manager.last_name.slice(0, 1)}</TableCell>
                       <TableCell>{new Date(manager.created_at).toLocaleDateString('en-GB')}</TableCell>
                       <TableCell>{manager.games.length}</TableCell>
                       <TableCell>
@@ -112,6 +128,15 @@ const Managers = () => {
                           variant="contained"
                         >
                           <RemoveRedEyeIcon />
+                        </Button>
+                        </Tooltip>
+                        <Tooltip title='Edit Manager' arrow>
+                        <Button
+                          onClick={() => handleEditOpen(manager)}
+                          sx={{ background: 'gold', color: "black", ml:2 }}
+                          variant="contained"
+                        >
+                          <EditNoteIcon />
                         </Button>
                         </Tooltip>
                       </TableCell>

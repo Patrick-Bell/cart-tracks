@@ -9,6 +9,7 @@ import { useAuth } from "../../context/AuthContext"; // Assuming you're using co
 import FixtureCountDown from '../utils/FixtureCountDown'
 import InfoIcon from '@mui/icons-material/Info'
 import { IOSSwitch } from '../utils/Switch';
+import { ThemeToggleBtn } from '../utils/ThemeToggleBtn'
 import { enableNotifications, disableNotifications } from '../endpoints/ManagersRoutes';
 import { Toaster, toast } from 'sonner'
 import { getNextMonthGames } from '../endpoints/Fixures';
@@ -16,6 +17,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import LogoutIcon from '@mui/icons-material/Logout';
 import GameModal from './GameModal';
 import fallbackPic from '../assets/fallback-pic.png'
+import { useThemeContext } from '../../context/ThemeContext';
 
 
 const MainPage = () => {
@@ -31,10 +33,13 @@ const MainPage = () => {
     const { user } = useAuth();
     const [competition, setCompetition] = useState('')
     const [checked, setChecked] = useState(user?.user.notifications)
+    const [themeCheck, setThemeCheck] = useState(user?.user.mode)
     const [nextMonthGames, setNextMonthGames] = useState(0)
     const [homeGames, setHomeGames] = useState(0)
     const [incompleteGames, setInCompleteGames] = useState([])
     const [pageLoading, setPageLoading] = useState(true)
+
+    const { mode, toggleTheme } = useThemeContext()
 
     const link = 'https://www.google.co.uk/maps/place/London+Stadium/@51.5386778,-0.0190346,17z/data=!3m1!4b1!4m6!3m5!1s0x48761d6975e8b559:0xe7fca44605b6ce94!8m2!3d51.5386745!4d-0.0164597!16zL20vMDZzdGxx?entry=ttu&g_ep=EgoyMDI0MTExOS4yIKXMDSoASAFQAw%3D%3D'
 
@@ -111,6 +116,8 @@ const MainPage = () => {
 
                 setPageLoading(false)
 
+                setThemeCheck(mode)
+
 
             } catch (error) {
                 console.error("Error fetching fixtures:", error);
@@ -179,7 +186,7 @@ const MainPage = () => {
 {/* Watched Workers */}
 <Grid item xs={12} sm={4}>
 <Paper sx={{ p: 2 }}>
-  <VisibilityIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%' }} />
+  <VisibilityIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
   <Typography sx={{ fontWeight: 700, mt: 1 }}>Total Workers</Typography>
   <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
     {(workersWatch?.length)} of {workers.length} are being watched
@@ -205,7 +212,7 @@ const MainPage = () => {
 
 <Grid item xs={12} sm={4}>
 <Paper sx={{ p: 2 }}>
-  <VisibilityIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%' }} />
+  <VisibilityIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
   <Typography sx={{ fontWeight: 700, mt: 1 }}>Total Events</Typography>
   <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
     {(incompleteGames?.length)} of {games.length} games completed
@@ -232,7 +239,7 @@ const MainPage = () => {
 
 <Grid item xs={12} sm={4}>
 <Paper sx={{ p: 2 }}>
-  <VisibilityIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%' }} />
+  <VisibilityIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
   <Typography sx={{ fontWeight: 700, mt: 1 }}>Games Next Month</Typography>
   <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
     {(homeGames)} of {nextMonthGames} are home games
@@ -276,7 +283,6 @@ const MainPage = () => {
                                                 border: '1px solid #ccc',
                                                 padding: 2,
                                                 borderRadius: 2,
-                                                backgroundColor: 'white',
                                             }}
                                         >
                                             <Box
@@ -386,7 +392,7 @@ const MainPage = () => {
 
                 <Grid item xs={12} sm={8}>
                     
-                        <Grid sx={{}}>
+                        <Grid>
                             <Paper sx={{p:2}}>
                                 <Typography>Notifications</Typography>
                                 <Box sx={{mt:1, display:'flex', alignItems:'center', justifyContent:'space-between'}}>
@@ -397,6 +403,19 @@ const MainPage = () => {
                                 </Box>
                                 <FormControlLabel
                                     control={<IOSSwitch sx={{ m: 1 }} checked={checked} onChange={handleToggle} />}
+                                />
+                                </Box>
+                            </Paper>
+                        </Grid>
+
+                        <Grid sx={{mt:2}}>
+                            <Paper sx={{p:2}}>
+                                <Typography>Theme</Typography>
+                                <Box sx={{mt:1, display:'flex', alignItems:'center', justifyContent:'space-between'}}>
+                                <Box sx={{display:'flex'}}><Typography variant='subtitle2'>Toggle Theme</Typography> 
+                                </Box>
+                                <FormControlLabel
+                                    control={<ThemeToggleBtn sx={{ m: 1 }} checked={themeCheck === 'dark' ? true : false} onChange={toggleTheme} />}
                                 />
                                 </Box>
                             </Paper>
@@ -429,7 +448,6 @@ const MainPage = () => {
 
                 </Grid>
             </Grid>
-
             <GameModal open={open} handleClose={handleClose} />
             
         </Box>
