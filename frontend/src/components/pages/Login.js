@@ -31,7 +31,6 @@ const Login = () => {
   
     try {
       const response = await login(email, password); // Call login function
-      console.log(response);
   
       if (response.message === "Login Successful") {
         navigate('/dashboard'); // Redirect on successful login

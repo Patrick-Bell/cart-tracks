@@ -4,6 +4,11 @@ class Manager < ApplicationRecord
     has_secure_password
 
     after_create = :set_default_online
+    after_create = :set_default_access
+
+    def set_default_access
+      self.access = 'middle'
+    end
     
     # Method to return the picture URL
     def picture_url

@@ -50,7 +50,7 @@ end
     subject = params[:subject]
 
     emails.each do |email|
-      WorkerMailer.send_worker_email(email, email_body, subject).deliver_now
+      #WorkerMailer.send_worker_email(email, email_body, subject).deliver_now
     end
 
     render json: { message: "Email(s) sent successfully! YEAH!" }, status: :ok
@@ -99,6 +99,6 @@ end
 
     # Only allow a list of trusted parameters through.
     def worker_params
-      params.require(:worker).permit(:name, :last_name, :email, :phone_number, :picture, :address)
+      params.require(:worker).permit(:name, :last_name, :email, :phone_number, :picture, :address, :joined)
     end
 end

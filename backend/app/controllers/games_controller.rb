@@ -40,7 +40,7 @@ class GamesController < ApplicationController
     
       if @game.save
         # Return the updated game data with eager-loaded associations
-        GameMailer.game_complete(@game, @unique_carts).deliver_now
+        #GameMailer.game_complete(@game, @unique_carts).deliver_now
         render json: @game, include: { carts: { include: :workers }, manager: {} }
       else
         render json: @game.errors, status: :unprocessable_entity

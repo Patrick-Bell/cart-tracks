@@ -24,8 +24,6 @@ const Sidebar = ({ setActiveSection, activeSection }) => {
   const { user, logout, checkAuthStatus, expire } = useAuth();
 
   const userId = user?.user.id;  // Ensure user ID is being passed correctly
-  console.log('this is the user ID about to log out', userId);
-  console.log('this is the user', user);
 
   const handleSectionClick = (section) => {
     if (isXs) {

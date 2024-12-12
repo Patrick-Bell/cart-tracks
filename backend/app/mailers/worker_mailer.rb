@@ -7,9 +7,7 @@ class WorkerMailer < ApplicationMailer
         @body = email_body  # Set the email body to the HTML content
     
         # Send email with HTML body
-        mail(
-          to: email,
-          subject: subject,
+        mail(to: email,subject: subject,
         ) do |format|
           format.html { render html: @body.html_safe }  # Render the email body as HTML
           format.text { render plain: @body }            # Optionally, also send plain text for fallback

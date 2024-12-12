@@ -29,8 +29,8 @@ end
   if @manager.save
     if current_admin && current_admin.notifications
       # Send emails only if notifications are enabled
-      ManagerMailer.new_manager(@manager).deliver_now
-      ManagerMailer.new_manager_admin(@manager).deliver_now
+      #ManagerMailer.new_manager(@manager).deliver_now
+      #ManagerMailer.new_manager_admin(@manager).deliver_now
     else
       Rails.logger.debug "Notifications are disabled for the current admin. Emails were not sent."
     end
@@ -107,9 +107,9 @@ end
       render json: { error: "Manager not found" }, status: :not_found and return
     end
   
-    @manager.mode = params[:mode]
+    @manager.mode = params[:newMode]
     if @manager.save
-      render json: { message: "Mode updated successfully", mode: @manager.mode }, status: :ok
+      render json: { message: "Mode updated successfully", mode: params{:newMode}[:theme][:newMode] }, status: :ok
     else
       render json: { error: @manager.errors.full_messages }, status: :unprocessable_entity
     end

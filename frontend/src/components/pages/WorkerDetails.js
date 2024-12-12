@@ -4,6 +4,7 @@ import GameDetail from "./GameDetail";
 import { fetchAllGames } from '../endpoints/GamesRoutes';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import fallbackPic from '../assets/fallback-pic.png'
+import LastSeen  from '../utils/LastSeen'
 
 const WorkerDetails = ({ worker, setSelectedWorker }) => {
   // State to keep track of the selected game object
@@ -25,7 +26,7 @@ const WorkerDetails = ({ worker, setSelectedWorker }) => {
   const handleBackToDetails = () => setSelectedGame(null);
 
   return (
-    <Box sx={{ p: 3 }}>
+    <Box sx={{ p: 0 }}>
              <>
           {/* Personal Information Section */}
           <Card sx={{ mb: 3 }}>
@@ -38,7 +39,7 @@ const WorkerDetails = ({ worker, setSelectedWorker }) => {
                 />
                 <Box>
                   <Typography variant="h5" sx={{ fontWeight: "bold" }}>{worker.name} {worker.last_name}</Typography>
-                  <Typography color="textSecondary">Joined: {formatDate(worker.created_at)}</Typography>
+                  <Typography sx={{display:'flex'}} color="textSecondary">Joined: {(worker.joined !== null ? formatDate(worker.joined) : 'N/A')} <Typography sx={{ml:.5}}> |  <LastSeen date={worker.joined} /> </Typography></Typography>
                 </Box>
               </Box>
               <Typography variant='subtitle2'><strong>Email:</strong> {worker.email || "N/A"}</Typography>

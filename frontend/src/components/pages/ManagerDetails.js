@@ -20,7 +20,7 @@ const ManagerDetails = ({ manager, setSelectedManager }) => {
 
 
   return (
-    <Box sx={{ p: 3 }}>
+    <Box sx={{ p: 0 }}>
       {/* Personal Information Section */}
       <Card sx={{ mb: 3 }}>
         <CardContent>

@@ -2,6 +2,7 @@ import React, { createContext, useState, useMemo, useContext, useEffect } from "
 import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import { useAuth } from "./AuthContext";
 import { changeMode } from "../components/endpoints/ManagersRoutes";
+import { toast } from "sonner";
 
 const ThemeContext = createContext();
 
@@ -21,10 +22,16 @@ export const ThemeContextProvider = ({ children }) => {
   // Toggle theme and make an API call
   const toggleTheme = async () => {
     const newMode = mode === "light" ? "dark" : "light";
+    console.log(newMode)
 
     try {
-      const response = await changeMode(user?.user.id, newMode);
+      const response = await changeMode(user?.user.id, {newMode});
       console.log(response);
+      toast.success(`Theme updated to ${newMode} mode`, {
+        description: `Today at ${new Date().toLocaleTimeString().slice(0, 5)}`,
+        duration: 3000
+      })
+
 
       // Update local mode after successful API call
       setMode(newMode);
@@ -42,7 +49,7 @@ export const ThemeContextProvider = ({ children }) => {
           ...(mode === "dark"
             ? {
                 primary: {
-                  main: "#90caf9",
+                  main: "#d4af37", //90caf9
                 },
                 background: {
                   default: "#121212", // Dark background
@@ -52,7 +59,7 @@ export const ThemeContextProvider = ({ children }) => {
               }
             : {
                 primary: {
-                  main: "#1976d2",
+                  main: "#d4af37", //1976d2
                 },
                 background: {
                   default: "#ffffff", // Light background

@@ -1,10 +1,11 @@
-namespace :reminders do
+=begin
 
+namespace :reminders do
 
     desc "Send reminder emails for fixtures happening tomorrow"
     task send_game_reminders: :environment do
         start_date = Date.today
-        end_date = Date.today + 30.days
+        end_date = Date.today + 1.days
         fixtures = Fixture.where(home_team: "West Ham United", date: start_date..end_date)
           fixtures.each do |fixture|
         FixtureMailer.game_reminder(fixture).deliver_now
@@ -21,6 +22,8 @@ namespace :reminders do
       puts "All messages deleted"
     end
 
-
   end
+
+  =end
+
   

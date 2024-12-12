@@ -49,10 +49,10 @@ export const AuthenticateProvider = ({ children }) => {
         );
         setUser(response.data); // 
         setExpire(response.data.cookie.expires)
-        console.log(response.data.cookie.expires, 'test expire cookie')
+        //console.log(response.data.cookie.expires, 'test expire cookie')
         setToken(response.data.token)
-        console.log('data from login', response.data)
-        console.log('tets', response)
+        //console.log('data from login', response.data)
+        //console.log('tets', response)
         setAuthenticated(true);  
         return response.data;
       } catch (e) {
@@ -74,8 +74,6 @@ export const AuthenticateProvider = ({ children }) => {
             const response = await axios.delete(`${apiUrl}/api/logout/${id}`, { withCredentials: true })
             setAuthenticated(false)
             setUser(null)
-            console.log(id)
-            console.log(response.data)
             return response.data
         }catch(e){
             console.log(e)

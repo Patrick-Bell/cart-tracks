@@ -39,6 +39,7 @@ const EditWorker = ({ selectedWorker, openEdit, closeEdit }) => {
         address: selectedWorker.address || '',
         email: selectedWorker.email || '',
         phone_number: selectedWorker.phone_number || '',
+        joined: selectedWorker.joined || ""
       });
       console.log(selectedWorker, 'selected worker')
     }
@@ -85,6 +86,7 @@ const EditWorker = ({ selectedWorker, openEdit, closeEdit }) => {
     formData.append('worker[email]', workerData.email);
     formData.append('worker[phone_number]', workerData.phone_number);
     formData.append('worker[address]', workerData.address);
+    formData.append('worker[joined]', workerData.joined)
 
     if (selectedFile) {
       formData.append('worker[picture]', selectedFile)
@@ -194,6 +196,18 @@ const EditWorker = ({ selectedWorker, openEdit, closeEdit }) => {
                 type="text"
                 error={!!errors.phone_number}
                 helperText={errors.phone_number}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Joined"
+                name="joined"
+                value={workerData.joined}
+                onChange={handleChange}
+                variant="outlined"
+                type="date"
               />
             </Grid>
 

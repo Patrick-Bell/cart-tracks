@@ -64,6 +64,14 @@ const Workers = () => {
   const { mode } = useThemeContext()
 
   const handleOpen = () => {
+    if (user?.user?.access === 'low') {
+      toast.error(`You do not have permission for this action`, {
+        duration: `Today at ${new Date().toLocaleTimeString().slice(0, 5)}`,
+        duration: 3000
+      })
+      return
+    }
+
     setOpen(true);
   };
 
@@ -72,12 +80,14 @@ const Workers = () => {
   };
 
   const handleEditOpen = async (worker) => {
-    const isAuthenticated = await checkAuthStatus();  // Check if authenticated
-  
-      if (!isAuthenticated) {
-        console.log("User is not authenticated, aborting action.");
-        return; // Stop the function if the user is not authenticated
-      }
+
+    if (user?.user?.access === 'low') {
+      toast.error(`You do not have permission for this action`, {
+        duration: `Today at ${new Date().toLocaleTimeString().slice(0, 5)}`,
+        duration: 3000
+      })
+      return
+    }
 
     setSelectedWorkerEdit(worker);
     setOpenEdit(true);
@@ -105,6 +115,17 @@ const Workers = () => {
   };
 
   const startWatching = async (worker) => {
+
+    if (user?.user?.access === 'low') {
+      toast.error(`You do not have permission for this action`, {
+        duration: `Today at ${new Date().toLocaleTimeString().slice(0, 5)}`,
+        duration: 3000
+      })
+      return
+
+    }
+
+
     setWatchBtn(<CircularProgress size={24} sx={{ color: 'black', position: 'absolute' }} />);
     setLoading(true);
   
@@ -130,6 +151,16 @@ const Workers = () => {
   
 
   const stopWatching = async (worker) => {
+
+    if (user?.user?.access === 'low') {
+      toast.error(`You do not have permission for this action`, {
+        duration: `Today at ${new Date().toLocaleTimeString().slice(0, 5)}`,
+        duration: 3000
+      })
+      return
+
+    }
+    
     setUnwatchBtn(<CircularProgress size={24} sx={{ color: 'black', position: 'absolute' }} />);
     setLoading(true)
 
@@ -208,7 +239,14 @@ const Workers = () => {
 
   if (pageLoading) {
     return (
-      <Box sx={{top:'50%', left:'50%', transform:'translate(-50%, -50%)', position:'absolute', textAlign:'center'}}>
+      <Box
+        sx={{
+          top: '50%',
+          left: { xs: '50%', sm: 'calc(50% + 120px)' }, // Offset left for small screens, centered for larger screens
+          transform: 'translate(-50%, -50%)',
+          position: 'absolute',
+          textAlign: 'center',
+        }}>
         <CircularProgress sx={{color:'grey'}} thickness={10} />
         <Typography sx={{color:'grey'}}>Fetching Data...</Typography>
       </Box>
@@ -243,7 +281,7 @@ const Workers = () => {
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <Button sx={{ background: 'gold', color: 'black'}} disabled={input.length === 0} onClick={() => setInput('')}>
+              <Button sx={{ background: 'gold', color: 'black'}} onClick={() => setInput('')}>
                 {<ClearIcon/>}
               </Button>
             </InputAdornment>

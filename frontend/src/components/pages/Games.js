@@ -51,12 +51,15 @@ const fetchFixtures = async () => {
   
 
   const handleOpen = async () => {
-    const isAuthenticated = await checkAuthStatus();  // Check if authenticated
-  
-    if (!isAuthenticated) {
-      console.log("User is not authenticated, aborting action.");
-      return; // Stop the function if the user is not authenticated
+
+    if (user?.user?.access === 'low') {
+      toast.error(`You do not have permission for this action`, {
+        description: `Today at ${new Date().toLocaleTimeString().slice(0, 5)}`,
+        duration: 3000
+      })
+      return
     }
+  
     setOpen(true);
   };
 
@@ -100,10 +103,10 @@ const fetchFixtures = async () => {
   
 
   const handleOpenDeleteModal = async (game) => {
-    if(user?.user.access !== 'low') {
+    if(user?.user.access !== 'high') {
       toast.error(`You do not have permission for this action`, {
         description: `Today at ${new Date().toLocaleTimeString('en-GB').slice(0, 5)}`,
-        duration: 5000
+        duration: 3000
       })
       return
     }
@@ -227,7 +230,14 @@ const fetchFixtures = async () => {
 
   if (pageLoading) {
     return (
-      <Box sx={{top:'50%', left:'50%', transform:'translate(-50%, -50%)', position:'absolute', textAlign:'center'}}>
+      <Box
+        sx={{
+          top: '50%',
+          left: { xs: '50%', sm: 'calc(50% + 120px)' }, // Offset left for small screens, centered for larger screens
+          transform: 'translate(-50%, -50%)',
+          position: 'absolute',
+          textAlign: 'center',
+        }}>
         <CircularProgress sx={{color:'grey'}} thickness={10} />
         <Typography sx={{color:'grey'}}>Fetching Data...</Typography>
       </Box>

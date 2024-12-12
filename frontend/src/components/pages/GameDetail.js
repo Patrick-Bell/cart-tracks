@@ -21,6 +21,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ReactLoading from 'react-loading'
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import { useThemeContext } from "../../context/ThemeContext";
+import { useAuth } from "../../context/AuthContext";
 
 const GameDetail = ({ game, setSelectedGame }) => {
   const [open, setOpen] = useState(false);
@@ -40,6 +41,7 @@ const GameDetail = ({ game, setSelectedGame }) => {
   const [cartOrder, setCartOrder] = useState('asc')
 
   const {mode} = useThemeContext()
+  const {user} = useAuth()
 
   // Step 1: Get all cart numbers from the carts
 const diff = liveGame?.carts?.map(cart => cart.cart_number);
@@ -148,6 +150,13 @@ useEffect(() => {
 
   // Open the Add Cart Modal
   const handleOpen = () => {
+    if (user?.user?.access === 'low') {
+      toast.error(`You do not have permission for this action`, {
+        duration: `Today at ${new Date().toLocaleTimeString().slice(0, 5)}`,
+        duration: 3000
+      })
+      return
+    }
     setOpen(true);
   };
 
@@ -157,6 +166,13 @@ useEffect(() => {
   };
 
   const handleOpenSubmit = () => {
+    if (user?.user?.access === 'low') {
+      toast.error(`You do not have permission for this action`, {
+        duration: `Today at ${new Date().toLocaleTimeString().slice(0, 5)}`,
+        duration: 3000
+      })
+      return
+    }
     setOpenSubmit(true);
   };
 
@@ -177,6 +193,14 @@ useEffect(() => {
   };
 
   const handleOpenConfirmDelete = (id) => {
+    if (user?.user?.access === 'low') {
+      toast.error(`You do not have permission for this action`, {
+        duration: `Today at ${new Date().toLocaleTimeString().slice(0, 5)}`,
+        duration: 3000
+      })
+      return
+    }
+
     setSelectedCartId(id)
     setOpenConfirm(true)
   }
@@ -184,6 +208,14 @@ useEffect(() => {
   const onClose = () => setOpenConfirm(false);
 
   const handleEditOpen = (cart) => {
+    if (user?.user?.access === 'low') {
+      toast.error(`You do not have permission for this action`, {
+        duration: `Today at ${new Date().toLocaleTimeString().slice(0, 5)}`,
+        duration: 3000
+      })
+      return
+    }
+
     setCart(cart)
     setOpenEdit(true)
   }
@@ -211,7 +243,7 @@ useEffect(() => {
     setSubmitLoading(true)
     try{
       const response = await markGameAsComplete(liveGame.id)
-      toast.success(`The game ${liveGame.name} has been marked as complete! An email will be sent to the admin shortly.`, {
+      toast.success(`The game ${liveGame.name} has been marked as complete..`, {
         description: `Today at ${new Date().toLocaleTimeString('en-GB').slice(0, 5)}`,
         duration: 10000
       })
@@ -234,7 +266,14 @@ useEffect(() => {
   // Conditional rendering to handle loading and errors
   if (loading) {
     return (
-      <Box sx={{top:'50%', left:'50%', transform:'translate(-50%, -50%)', position:'absolute', textAlign:'center'}}>
+      <Box
+        sx={{
+          top: '50%',
+          left: { xs: '50%', sm: 'calc(50% + 120px)' }, // Offset left for small screens, centered for larger screens
+          transform: 'translate(-50%, -50%)',
+          position: 'absolute',
+          textAlign: 'center',
+        }}>
         <CircularProgress sx={{color:'grey'}} thickness={10} />
         <Typography sx={{color:'grey'}}>Fetching Data...</Typography>
       </Box>
@@ -243,8 +282,16 @@ useEffect(() => {
 
   if (dataLoading) {
     return (
-      <Box sx={{top:'50%', left:'50%', transform:'translate(-50%, -50%)', position:'absolute', textAlign:'center'}}>
-        <Typography sx={{color:'grey', display:'flex', alignItems:'center'}}>Performing Action <ReactLoading type="bubbles" color="grey" height={50} width={50} /></Typography>
+      <Box
+        sx={{
+          top: '50%',
+          left: { xs: '50%', md: 'calc(50% + 120px)' }, // Offset left for small screens, centered for larger screens
+          transform: 'translate(-50%, -50%)',
+          position: 'absolute',
+          textAlign: 'center',
+        }}
+      >  
+      <Typography sx={{color:'grey', display:'flex', alignItems:'center'}}>Performing Action <ReactLoading type="bubbles" color="grey" height={50} width={50} /></Typography>
       </Box>
     )
   }
@@ -332,7 +379,7 @@ useEffect(() => {
                       <AddShoppingCartIcon />
                     </Button>
                     </Tip>
-                      <Tip arrow title='Click to submit job. This will send an email to the admin and you will no longer to be able to edit the game. A downloadable PDF version will become available on the events page.'>
+                      <Tip arrow title='Click to submit job. A downloadable PDF version will become available on the events page.'>
                         <Button
                         variant="contained"
                           sx={{ background: 'gold', color: 'black', ml:2 }}

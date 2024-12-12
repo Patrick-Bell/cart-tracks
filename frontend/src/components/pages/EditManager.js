@@ -196,7 +196,7 @@ const EditManager = ({ selectedManager, open, onClose }) => {
   return (
     <Dialog open={open} onClose={onClose}>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <DialogTitle>Edit Manager <strong>{selectedManager?.name}</strong></DialogTitle>
+        <DialogTitle>Edit <strong>{selectedManager?.name}</strong></DialogTitle>
         <Box sx={{ mr: 1 }}>
           <Button
             className="custom-swiper-button-prev"
@@ -340,7 +340,9 @@ const EditManager = ({ selectedManager, open, onClose }) => {
           </DialogActions>
         </SwiperSlide>
 
+
         {/* Second Slide */}
+        { (user?.user?.name === selectedManager?.name || user?.user?.access === 'high') && (
         <SwiperSlide>
         <DialogTitle variant='bold'>Update Password</DialogTitle>
         <DialogContent sx={{minHeight:'290px', overflow:'scroll'}}>
@@ -417,6 +419,8 @@ const EditManager = ({ selectedManager, open, onClose }) => {
             </Button>
           </DialogActions>
         </SwiperSlide>
+         )}
+
 
          {/* Third Slide */}
          {user?.user?.access === 'high' && (
@@ -432,16 +436,20 @@ const EditManager = ({ selectedManager, open, onClose }) => {
           Access Information
         </AccordionSummary>
         <AccordionDetails>
-          <strong>Low</strong>: Users can create Workers & Events.<br></br>
-          <strong>Middle</strong>: Users can create, edit Workers & Events<br></br>
-          <strong>High</strong>: Users can create, edit, delete Workers, Events & Managers
+          <strong>Low</strong>: Users can <strong>read</strong> all data.<br></br>
+          <strong>Middle</strong>: Users can <strong>create</strong>, <strong>read</strong> & <strong>update</strong> <em>Workers</em> & <em>Events</em> <br></br>
+          <strong>High</strong>: Users can <strong>create</strong>, <strong>read</strong>, <strong>update</strong> & <strong>delete</strong> <em>Workers</em>, <em>Events</em> & <em>Managers</em>
         </AccordionDetails>
       </Accordion>
   <select
   labelId="access-label"
   value={managerData?.access} // Ensure a fallback value
   onChange={(e) => setManagerData({ ...managerData, access: e.target.value })}
-  style={{padding:'16.5px 14px', width:'calc(100% - 30px'}}
+  style={{padding:'16.5px 14px', width:'calc(100% - 30px',   
+    appearance: 'none', // Hide default arrow
+    WebkitAppearance: 'none', // For Safari
+    MozAppearance: 'none', // For Firefox
+  }}
 >
   <option value="high">High</option>
   <option value="middle">Middle</option>

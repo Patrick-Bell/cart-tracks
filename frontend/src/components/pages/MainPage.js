@@ -33,7 +33,7 @@ const MainPage = () => {
     const { user } = useAuth();
     const [competition, setCompetition] = useState('')
     const [checked, setChecked] = useState(user?.user.notifications)
-    const [themeCheck, setThemeCheck] = useState(user?.user.mode)
+    const [themeCheck, setThemeCheck] = useState('light')
     const [nextMonthGames, setNextMonthGames] = useState(0)
     const [homeGames, setHomeGames] = useState(0)
     const [incompleteGames, setInCompleteGames] = useState([])
@@ -106,7 +106,6 @@ const MainPage = () => {
                 setInCompleteGames(incomplete)
 
                 const notifications = user?.user.notifications
-                console.log(notifications, 'starting with')
                 setChecked(notifications)
 
                 const nextMonthFixtures = await getNextMonthGames()
@@ -117,6 +116,7 @@ const MainPage = () => {
                 setPageLoading(false)
 
                 setThemeCheck(mode)
+                console.log(mode)
 
 
             } catch (error) {
@@ -125,6 +125,10 @@ const MainPage = () => {
         };
         fetchFixtures(); // Call the function to fetch data
     }, []);
+
+    useEffect(() => {
+        setThemeCheck(mode)
+    }, [mode])
 
     const handleSubmit = async () => {
         const data = {
@@ -152,11 +156,18 @@ const MainPage = () => {
 
     if (pageLoading) {
         return (
-          <Box sx={{top:'50%', left:'50%', transform:'translate(-50%, -50%)', position:'absolute', textAlign:'center'}}>
-            <CircularProgress sx={{color:'grey'}} thickness={10} />
-            <Typography sx={{color:'grey'}}>Fetching Data...</Typography>
-          </Box>
-        )
+            <Box
+              sx={{
+                top: '50%',
+                left: { xs: '50%', sm: 'calc(50% + 120px)' }, // Offset left for small screens, centered for larger screens
+                transform: 'translate(-50%, -50%)',
+                position: 'absolute',
+                textAlign: 'center',
+              }}>
+              <CircularProgress sx={{color:'grey'}} thickness={10} />
+              <Typography sx={{color:'grey'}}>Fetching Data...</Typography>
+            </Box>
+          )
       }
     
     return (
@@ -402,7 +413,7 @@ const MainPage = () => {
                                 </Tooltip>
                                 </Box>
                                 <FormControlLabel
-                                    control={<IOSSwitch sx={{ m: 1 }} checked={checked} onChange={handleToggle} />}
+                                    control={<IOSSwitch sx={{ m: 1 }} checked={checked} disabled onChange={handleToggle} />}
                                 />
                                 </Box>
                             </Paper>
@@ -421,8 +432,8 @@ const MainPage = () => {
                             </Paper>
                         </Grid>
 
-                        <Grid>
-                        <Button fullWidth variant="contained" onClick={handleOpen} sx={{ background:'gold', color:'black', mt: 3, display: user.user.role === "super" ? "block" : "none" }}>
+                        <Grid sx={{mt:1}}>
+                        <Button fullWidth variant="contained" onClick={handleOpen} sx={{ background:'gold', color:'black', mt: 3, display: user?.user.role === "super" ? "block" : "none" }}>
                             Add Fixture
                         </Button>
                         </Grid>

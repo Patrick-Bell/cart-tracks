@@ -54,7 +54,7 @@ const Managers = () => {
   const handleBackToList = () => setSelectedManager(null);
 
   const handleOpen = () => {
-    if (user?.user.access !== "low") {
+    if (user?.user.access !== "high") {
       toast.error(`You do not have access to this!`)
       return
     }
@@ -72,15 +72,30 @@ const Managers = () => {
   }
 
   const handleEditOpen = (manager) => {
-    setSelectedEditManager(manager)
-    setOpenEdit(true)
+    if (user?.user.access === 'low' || user?.user?.access === 'middle' && user?.user?.name !== manager.name) { 
+      toast.error('You do not have permission for this action', {
+        description: `Today at ${new Date().toLocaleTimeString().slice(0, 5)}`,
+        duration: 3000
+      });
 
-  }
+    } else {
+      setSelectedEditManager(manager);
+      setOpenEdit(true);
+    }
+  };
+  
 
 
   if (pageLoading) {
     return (
-      <Box sx={{top:'50%', left:'50%', transform:'translate(-50%, -50%)', position:'absolute', textAlign:'center'}}>
+      <Box
+        sx={{
+          top: '50%',
+          left: { xs: '50%', sm: 'calc(50% + 120px)' }, // Offset left for small screens, centered for larger screens
+          transform: 'translate(-50%, -50%)',
+          position: 'absolute',
+          textAlign: 'center',
+        }}>
         <CircularProgress sx={{color:'grey'}} thickness={10} />
         <Typography sx={{color:'grey'}}>Fetching Data...</Typography>
       </Box>
@@ -117,7 +132,11 @@ const Managers = () => {
                 <TableBody>
                   {managers.map((manager) => (
                     <TableRow key={manager.id}>
-                      <TableCell>{manager.name} {manager.last_name.slice(0, 1)}</TableCell>
+                  <TableCell>
+                    {user?.user?.name === manager.name 
+                      ? `${manager.name} ${manager.last_name.slice(0, 1)} (You)` 
+                      : `${manager.name} ${manager.last_name.slice(0, 1)}`}
+                  </TableCell>
                       <TableCell>{new Date(manager.created_at).toLocaleDateString('en-GB')}</TableCell>
                       <TableCell>{manager.games.length}</TableCell>
                       <TableCell>

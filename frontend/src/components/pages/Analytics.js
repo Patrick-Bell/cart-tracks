@@ -104,7 +104,14 @@ const Analytics = () => {
 
     if (pageLoading) {
       return (
-        <Box sx={{top:'50%', left:'50%', transform:'translate(-50%, -50%)', position:'absolute', textAlign:'center'}}>
+        <Box
+          sx={{
+            top: '50%',
+            left: { xs: '50%', sm: 'calc(50% + 120px)' }, // Offset left for small screens, centered for larger screens
+            transform: 'translate(-50%, -50%)',
+            position: 'absolute',
+            textAlign: 'center',
+          }}>
           <CircularProgress sx={{color:'grey'}} thickness={10} />
           <Typography sx={{color:'grey'}}>Fetching Data...</Typography>
         </Box>
@@ -114,7 +121,7 @@ const Analytics = () => {
 
     return (
         <>
-{gameData[0]?.carts.length > 0 ? (
+{gameData.some(game => game.complete_status) ? (
     <>
 <Grid container spacing={2}>
   {/* Chart */}
@@ -351,7 +358,7 @@ const Analytics = () => {
         ) : (
             <>
             <Paper elevation={3} sx={{p:3}}>
-                <Typography>To view <span style={{fontWeight:'800'}}>Analytics</span>, you must add a game with a cart associated.</Typography>
+                <Typography>To view <span style={{fontWeight:'800'}}>Analytics</span>, you must submit at least one game.</Typography>
             </Paper>
             </>
         )}
