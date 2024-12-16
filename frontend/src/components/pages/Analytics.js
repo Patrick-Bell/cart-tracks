@@ -21,7 +21,7 @@ const Analytics = () => {
         margin: 'desc',
     });
     const [gameData, setGameData] = useState([])
-    const [selectedMonth, setSelectedMonth] = useState('All')
+    const [selectedMonth, setSelectedMonth] = useState('November 2024')
 
     const [monthlyData, setMonthlyData] = useState({
         workerTotal: [],
@@ -135,7 +135,6 @@ const Analytics = () => {
         </Typography>
         <FormControl sx={{ minWidth: '100px' }}>
           <Select value={selectedMonth} onChange={handleMonthChange}>
-            <MenuItem value="All">All</MenuItem>
             {monthlyData.months.map((month) => (
               <MenuItem key={month} value={month}>
                 {month}
@@ -180,7 +179,7 @@ const Analytics = () => {
       {/* Box 1 - Total Earnings */}
       <Grid item xs={12} sm={6}>
         <Paper sx={{ p: 2 }}>
-          <CurrencyPoundIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%' }} />
+          <CurrencyPoundIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
           <Typography sx={{ fontWeight: 700, mt: 1 }}>Total Earnings</Typography>
           <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
             £{(totals.workerTotal).toLocaleString()} of £{(totals.actualTotal).toLocaleString()} {formatMargin(totals.margin)}
@@ -202,7 +201,7 @@ const Analytics = () => {
 
       <Grid item xs={12} sm={6}>
         <Paper sx={{ p: 2 }}>
-          <TrendingUp sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%' }} />
+          <TrendingUp sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
           <Typography sx={{ fontWeight: 700, mt: 1 }}>Average Earnings</Typography>
           <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
             £{(totals.workerTotal / monthlyData.months.length).toLocaleString()} of £{(totals.actualTotal / monthlyData.months.length).toLocaleString()} {formatMargin(totals.margin / monthlyData.months.length)}
@@ -222,6 +221,8 @@ const Analytics = () => {
         </Paper>
       </Grid>
 
+
+{gameData.some(game => game.complete_status.length > 2  && (
       <Grid item xs={12} sm={6}>
   <Paper sx={{ p: 2 }}>
     <TrendingUp 
@@ -229,7 +230,7 @@ const Analytics = () => {
         p: 2, 
         background: 'lightyellow', 
         color: 'gold', 
-        borderRadius: '50%' 
+        borderRadius: '50%', fontSize:'50px'
       }} 
     />
     <Typography sx={{ fontWeight: 700, mt: 1 }}>Growth From Last Month</Typography>
@@ -259,12 +260,13 @@ const Analytics = () => {
     </Typography>
   </Paper>
 </Grid>
+))}
 
 
       {/* Box 4 - Additional Info 3 */}
       <Grid item xs={12} sm={6}>
         <Paper sx={{ p: 2 }}>
-          <CalendarMonthIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%' }} />
+          <CalendarMonthIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
           <Typography sx={{ fontWeight: 700, mt: 1 }}>Best Month</Typography>
           <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
             {bestMonth} {formatMargin(highestMargin)}

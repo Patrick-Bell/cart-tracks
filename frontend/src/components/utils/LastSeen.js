@@ -11,7 +11,7 @@ export default function LastSeen({ date }) {
   if (date) {
     
     return (
-        <ReactTimeAgo date={date} timeStyle="round" />
+        <span>About <ReactTimeAgo date={date} timeStyle="round" /></span>
     );
   } 
 }

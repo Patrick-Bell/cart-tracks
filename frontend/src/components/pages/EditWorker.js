@@ -208,6 +208,9 @@ const EditWorker = ({ selectedWorker, openEdit, closeEdit }) => {
                 onChange={handleChange}
                 variant="outlined"
                 type="date"
+                InputLabelProps={{
+                  shrink: true
+                }}
               />
             </Grid>
 

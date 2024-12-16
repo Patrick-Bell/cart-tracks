@@ -38,8 +38,9 @@ const Managers = () => {
     const fetchManagers = async () => {
       try {
         const response = await fetchAllManagers();
+        const filtered = response.filter(manager => manager.role !== 'super')
         if (response) {
-          setManagers(response);
+          setManagers(filtered);
           setPageLoading(false)
         }
       } catch (error) {
@@ -118,7 +119,7 @@ const Managers = () => {
           <AddManager open={open} onClose={handleClose} />
           <Toaster />
 
-          <Box sx={{ mt: 3, overflow:'auto' }}>
+          <Box sx={{ mt: 3, overflow:'auto', borderRadius:'10px' }}>
             <TableContainer component={Paper} sx={{width:'100%'}}> 
               <Table sx={{minWidth:'650px'}}>
                 <TableHead>

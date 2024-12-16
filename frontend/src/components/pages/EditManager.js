@@ -23,6 +23,7 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { useAuth } from "../../context/AuthContext";
 import LastSeen from '../utils/LastSeen';
 import CloseIcon from '@mui/icons-material/Close';
+import {useMediaQuery} from '@mui/material';
 
 
 const EditManager = ({ selectedManager, open, onClose }) => {
@@ -37,6 +38,9 @@ const EditManager = ({ selectedManager, open, onClose }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [password, setPassword] = useState('');
   const [selectedValue, setSelectedValue] = useState('')
+
+  const isXs = useMediaQuery('(max-width:500px)');  // This doesn't require the theme
+
 
   const { user } = useAuth()
 
@@ -196,7 +200,7 @@ const EditManager = ({ selectedManager, open, onClose }) => {
   return (
     <Dialog open={open} onClose={onClose}>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <DialogTitle>Edit <strong>{selectedManager?.name}</strong></DialogTitle>
+        <DialogTitle>Edit <strong>{isXs ? selectedManager?.name.slice(0, 7) + '...' : selectedManager?.name }</strong></DialogTitle>
         <Box sx={{ mr: 1 }}>
           <Button
             className="custom-swiper-button-prev"
@@ -233,7 +237,7 @@ const EditManager = ({ selectedManager, open, onClose }) => {
             <Box sx={{ padding: 2 }}>
               <Grid container spacing={2}>
                 {/* Form Fields */}
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
                     label="First Name"
@@ -247,7 +251,7 @@ const EditManager = ({ selectedManager, open, onClose }) => {
                   />
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
                     label="Last Name"

@@ -134,7 +134,7 @@ const Workers = () => {
       const response = await addToWatchList(worker.id);
       console.log(response);
   
-      toast.success(`${worker.name} has been added to the watchlist!`, {
+      toast.success(`${worker.name} has been added to the watchlist`, {
         description: `Today at ${new Date().toLocaleTimeString('en-GB').slice(0, 5)}`,
         duration: 5000,
       });
@@ -169,7 +169,7 @@ const Workers = () => {
     
       const response = await removeFromWatchList(worker.id)
       console.log(response)
-      toast.success(`${worker.name} has been removed from the watchlist!`, {
+      toast.success(`${worker.name} has been removed from the watchlist`, {
         description: `Todat at ${new Date().toLocaleTimeString('en-GB').slice(0, 5)}`,
         duration: 5000
       })
@@ -234,6 +234,11 @@ const Workers = () => {
     if (worker.watching) {
       return 'red'
     }
+  }
+
+  const selectTheWorker = (worker) => {
+    setSelectedWorker(worker)
+    window.scrollTo(0, 0)
   }
 
 
@@ -305,7 +310,7 @@ const Workers = () => {
 
 
     <Box sx={{ mt: 3, overflowX: 'auto' }}>
-      <TableContainer component={Paper} sx={{ width: '100%' }}>
+      <TableContainer component={Paper} sx={{ width: '100%', borderRadius:'10px' }}>
         <Table sx={{ minWidth: 650 }}>
           <TableHead>
             <TableRow>
@@ -327,7 +332,7 @@ const Workers = () => {
                   {/* Action Buttons */}
                   <Tooltip arrow title="View Profile">
                     <Button
-                      onClick={() => setSelectedWorker(worker)}
+                      onClick={() => selectTheWorker(worker)}
                       sx={{ background: 'gold', color: 'black' }}
                       variant="contained"
                     >
@@ -470,7 +475,7 @@ const Workers = () => {
         </Paper>
       </Grid>
 
-      {/* Best Worker */}
+      {/* Best Worker 
       {bestWorker?.margin !== 0 && (
       <Grid item xs={12}>
         <Paper sx={{ p: 2 }}>
@@ -496,6 +501,7 @@ const Workers = () => {
         </Paper>
       </Grid>
        )}
+      */}
     </Grid>
   </Grid>
 </Grid>   

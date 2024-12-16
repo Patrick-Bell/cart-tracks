@@ -319,7 +319,7 @@ useEffect(() => {
 
 
   return (
-    <Box sx={{ padding: 2 }}> {/* Adjust padding of the Box component */}
+    <Box sx={{ padding: 0 }}> {/* Adjust padding of the Box component */}
       {/* Add Cart Modal */}
       <AddCart open={open} onClose={handleClose} game={liveGame} setLiveGame={setLiveGame} />
       <EditCart game={cart} open={openEdit} onClose={handleEditClose} gameId={liveGame}/>
@@ -379,7 +379,7 @@ useEffect(() => {
                       <AddShoppingCartIcon />
                     </Button>
                     </Tip>
-                      <Tip arrow title='Click to submit job. A downloadable PDF version will become available on the events page.'>
+                      <Tip arrow title='Click to submit job. A downloadable PDF summary will become available on the events page.'>
                         <Button
                         variant="contained"
                           sx={{ background: 'gold', color: 'black', ml:2 }}

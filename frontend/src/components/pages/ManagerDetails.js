@@ -50,7 +50,12 @@ const ManagerDetails = ({ manager, setSelectedManager }) => {
         </CardContent>
       </Card>
 
-      <TableContainer component={Paper}>
+    {manager?.games.length === 0 ? (
+      <Paper sx={{p:2}}>
+      <Typography>{manager?.name} has no games yet.</Typography>
+      </Paper>
+       ) : (
+        <TableContainer component={Paper}>
       <Typography variant="h6" sx={{ fontWeight: "bold", mb: 2, p:2 }}>Events Worked</Typography>
         <Table>
           <TableHead>
@@ -71,8 +76,7 @@ const ManagerDetails = ({ manager, setSelectedManager }) => {
           </TableBody>
         </Table>
       </TableContainer>
-
-
+       )}
     </Box>
   );
 };

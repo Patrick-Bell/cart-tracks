@@ -286,14 +286,13 @@ const MainPage = () => {
                         <Grid container spacing={2}>
                             {fixtures.length > 0 ? (
                                 fixtures.map((fixture, index) => (
+                                    <>
                                     <Grid item xs={12} md={4} key={index}>
                                         <Box
                                             sx={{
                                                 alignItems: 'center',
                                                 m: 1,
-                                                border: '1px solid #ccc',
                                                 padding: 2,
-                                                borderRadius: 2,
                                             }}
                                         >
                                             <Box
@@ -387,6 +386,8 @@ const MainPage = () => {
                                             </Box>
                                         </Box>
                                     </Grid>
+                                    </>
+                                    
                                 ))
                             ) : (
                                 <Typography sx={{ textAlign: 'center', margin: 'auto auto' }}>

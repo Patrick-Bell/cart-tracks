@@ -16,6 +16,7 @@ import { IOSSwitch } from "../utils/Switch";
 import ClearIcon from '@mui/icons-material/Clear';
 import { getFixtures } from "../endpoints/Fixures";
 import {useThemeContext} from "../../context/ThemeContext";
+import SellIcon from '@mui/icons-material/Sell';
 
 
 
@@ -41,11 +42,14 @@ const Games = () => {
   const [pageLoading, setPageLoading] = useState(true)
   const [month, selectMonth] = useState("0")
   const { mode } = useThemeContext()
+  const [soldStats, setSoldStats] = useState({
+    sold: 0,
+    potentialSell: 0
+  })
 
 
 const fetchFixtures = async () => {
   const response = await getFixtures()
-  console.log(response, 'games fixtures abb')
   setFixtures(response.filter(match => match.home_team === "West Ham United"))
 }
   
@@ -76,7 +80,15 @@ const fetchFixtures = async () => {
         const response = await fetchAllGames();
         const sorted = response.sort((a, b) => new Date(a.date) - new Date(b.date));
         if (response) {
+          const totals = response.map((cart) => cart.carts.reduce((sum, cart) => sum + cart.sold, 0))
+          const totalSold = totals.reduce((sum, cart) => sum + cart, 0)
+          const potentialTotal = response.map((cart) => cart.carts.reduce((sum, cart) => sum + cart.quantities_start, 0))
+          const totalPotential = potentialTotal.reduce((sum, cart) => sum + cart, 0)
           setGames(sorted); // Store the fetched games in state
+          setSoldStats({
+            sold: totalSold,
+            potentialSell: totalPotential
+          })
           setFilteredGames(sorted)
           setPageLoading(false)
         }
@@ -326,7 +338,7 @@ const fetchFixtures = async () => {
               </Box>
             </Paper>
           </Box>
-            <Box sx={{ mt: 3, overflowX: 'auto'}}> {/* Horizontal scroll container */}
+            <Box sx={{ mt: 3, overflowX: 'auto', borderRadius:'10px'}}> {/* Horizontal scroll container */}
               <TableContainer component={Paper} sx={{ width: '100%'}}> {/* Keep table within the container */}
                 <Table sx={{ minWidth: 650 }}>
                   <TableHead>
@@ -433,16 +445,16 @@ const fetchFixtures = async () => {
 
                 </Grid>
 
-                <Grid item xs={12}>
-                <Paper sx={{ p: 2 }}>
-          <FilterAltIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px'}} />
-          <Typography sx={{ fontWeight: 700, mt: 1 }}>Best Game</Typography>
+            <Grid item xs={12}>
+              <Paper sx={{ p: 2 }}>
+          <SellIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
+          <Typography sx={{ fontWeight: 700, mt: 1 }}>Programmes Sold</Typography>
           <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
-           You must submit 5 games to activate this stat
+            {(soldStats.sold).toLocaleString()} of {(soldStats.potentialSell).toLocaleString()}
           </Typography>
           <LinearProgress
             variant="determinate"
-            value={(games.length / games.length) * 100}
+            value={(soldStats.sold / soldStats.potentialSell) * 100}
             sx={{
               mt: 2,
               height: 10,
@@ -452,11 +464,12 @@ const fetchFixtures = async () => {
             }}
           />
           <Typography sx={{ color: 'grey', textAlign: 'right', mt: 1 }} variant="subtitle2">
-            {((games.length / games.length) * 100).toFixed(2)}%
+            {((soldStats.sold / soldStats.potentialSell) * 100).toFixed(2)}%
           </Typography>
         </Paper>
 
                 </Grid>
+
 
 
 

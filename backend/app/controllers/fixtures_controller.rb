@@ -5,7 +5,9 @@ class FixturesController < ApplicationController
   def index
     @fixtures = Fixture.all
 
-    render json: @fixtures
+    @sorted_fixtures = @fixtures.sort_by(&:date)
+
+    render json: @sorted_fixtures
   end
 
   # GET /fixtures/1

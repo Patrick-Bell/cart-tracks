@@ -95,7 +95,6 @@ const Login = () => {
           borderRadius:'10px'
         }}
       >
-        <img style={{width:'250px'}} src={Logo}/>
         <Typography variant="h5" gutterBottom>
           Login
         </Typography>

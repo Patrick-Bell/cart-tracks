@@ -24,7 +24,8 @@ const AddGame = ({ open, onClose }) => {
 
   const fetchManagers = async () => {
     const response = await fetchAllManagers();
-    setManagers(response.map(manager => ({
+    const filtered = response.filter(manager => manager.role !== 'super')
+    setManagers(filtered.map(manager => ({
       manager_id: manager.id,
       name: manager.name,
     })));
