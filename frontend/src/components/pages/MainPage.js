@@ -136,8 +136,6 @@ const MainPage = () => {
             away_team: awayTeam.name,
             stadium: homeTeam.stadium,
             capacity: homeTeam.capacity,
-            home_icon: homeTeam.badge,
-            away_icon: awayTeam ? awayTeam.badge : null, // Safeguard in case awayTeam is not selected properly
             date: date,
             home_team_abb: homeTeam.abbreviation,
             away_team_abb: awayTeam.abbreviation,
@@ -152,6 +150,15 @@ const MainPage = () => {
             console.log(e);
         }
     };
+
+
+    const retrieveImage = (homeTeam) => {
+        const teams = premierLeagueTeams
+
+        const badge = teams.find(team => team.name === homeTeam)
+
+        return badge.badge
+    }
 
 
     if (pageLoading) {
@@ -309,7 +316,7 @@ const MainPage = () => {
                                                             margin: '0 5px',
                                                             maxWidth: '100%',
                                                         }}
-                                                        src={fixture.home_icon}
+                                                        src={retrieveImage(fixture.home_team)}
                                                         alt="Home Icon"
                                                     />
                                                     <Typography>{fixture.home_team_abb}</Typography>
@@ -323,7 +330,7 @@ const MainPage = () => {
                                                             margin: '0 5px',
                                                             maxWidth: '100%',
                                                         }}
-                                                        src={fixture.away_icon}
+                                                        src={retrieveImage(fixture.away_team)}
                                                         alt="Away Icon"
                                                     />
                                                 </Box>

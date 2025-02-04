@@ -36,8 +36,6 @@ const GameModal = ({ open, handleClose }) => {
             away_team: awayTeam.name,
             stadium: homeTeam.stadium,
             capacity: homeTeam.capacity,
-            home_icon: homeTeam.badge,
-            away_icon: awayTeam ? awayTeam.badge : null,
             date: date,
             home_team_abb: homeTeam.abbreviation,
             away_team_abb: awayTeam.abbreviation,

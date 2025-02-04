@@ -1,8 +1,39 @@
 class ApplicationController < ActionController::Base
-    
+  before_action :authenticate_user
   skip_before_action :verify_authenticity_token # Disables CSRF protection
 
+
   SESSION_KEY = ENV['SESSION_KEY']
+
+  def authenticate_user
+    token = cookies.signed[:token]  # Grab the token from cookies
+    return render_unauthorized("No token provided") unless token  # No token? Deny access.
+
+    begin
+      # Decode the JWT token and ensure it's valid and not expired
+      decoded_token = JWT.decode(token, SESSION_KEY, true, { algorithm: 'HS256' })
+      user_id = decoded_token[0]['user_id']
+      exp = decoded_token[0]['exp']  # Get expiration time
+
+      # Check if token is expired
+      if Time.at(exp) < Time.now
+        Rails.logger.error "JWT Token has expired"
+        return render_unauthorized("JWT Token has expired")
+      end
+
+      @current_user = Manager.find_by(id: user_id)  # Find the user by the decoded ID
+      return render_unauthorized("User not found") unless @current_user
+
+    rescue JWT::DecodeError => e
+      Rails.logger.error "JWT Decode Error: #{e.message}"
+      render_unauthorized("Invalid token")
+    end
+  end
+
+  def render_unauthorized(message)
+    render json: { error: message }, status: :unauthorized
+  end
+
 
   def current_user
     token = cookies.signed[:token]
@@ -74,6 +105,10 @@ def current_admin
     Rails.logger.error "JWT Decode Error: #{e.message}"  # Log the error message if decoding fails
     return nil
   end
+end
+
+def set_current_admin
+  @current_admin = current_admin  # Ensure it's stored in @current_admin
 end
 
 

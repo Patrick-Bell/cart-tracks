@@ -92,6 +92,8 @@ const Analytics = () => {
       };
 
 
+      console.log('monthlydata', monthlyData)
+
     const fetchWorkers = async () => {
         try {
             const response = await fetchAllWorkers();

@@ -99,6 +99,6 @@ end
 
     # Only allow a list of trusted parameters through.
     def worker_params
-      params.require(:worker).permit(:name, :last_name, :email, :phone_number, :picture, :address, :joined)
+      params.require(:worker).permit(:name, :last_name, :email, :phone_number, :picture, :address, :joined, :watching)
     end
 end

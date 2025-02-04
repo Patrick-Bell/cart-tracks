@@ -83,7 +83,7 @@ const Login = () => {
   
 
   return (
-    <Container maxWidth="sm">
+    <Container>
       <Box
         sx={{
           display: 'flex',
@@ -92,7 +92,8 @@ const Login = () => {
           top:'50%', left:'50%', position:'absolute', transform:'translate(-50%,-50%)',
           border:'1px solid lightgrey',
           p:2,
-          borderRadius:'10px'
+          borderRadius:'10px',
+          width: { xs: '90%', sm: '80%', md: '75%', lg: '40%'}
         }}
       >
         <Typography variant="h5" gutterBottom>

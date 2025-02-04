@@ -13,13 +13,13 @@ import {
   Grid,
   Tooltip,
   Divider,
-  LinearProgress,
+  LinearProgress,//
   TextField,
   InputAdornment,
   FormControlLabel,
   CircularProgress
 } from "@mui/material";
-import { fetchAllWorkers, addToWatchList, removeFromWatchList } from "../endpoints/WorkersRoutes";
+import { fetchAllWorkers, addToWatchList, removeFromWatchList, editOneWorker } from "../endpoints/WorkersRoutes";
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import WorkerDetails from "./WorkerDetails";
 import AddWorker from "./AddWorker";
@@ -116,7 +116,7 @@ const Workers = () => {
 
   const startWatching = async (worker) => {
 
-    if (user?.user?.access === 'low') {
+    if (user?.user?.access !== 'high') {
       toast.error(`You do not have permission for this action`, {
         duration: `Today at ${new Date().toLocaleTimeString().slice(0, 5)}`,
         duration: 3000
@@ -131,7 +131,7 @@ const Workers = () => {
   
     try {
    
-      const response = await addToWatchList(worker.id);
+      const response = await editOneWorker(worker.id, { watching: true});
       console.log(response);
   
       toast.success(`${worker.name} has been added to the watchlist`, {
@@ -152,7 +152,7 @@ const Workers = () => {
 
   const stopWatching = async (worker) => {
 
-    if (user?.user?.access === 'low') {
+    if (user?.user?.access !== 'high') {
       toast.error(`You do not have permission for this action`, {
         duration: `Today at ${new Date().toLocaleTimeString().slice(0, 5)}`,
         duration: 3000
@@ -167,7 +167,7 @@ const Workers = () => {
 
     try{
     
-      const response = await removeFromWatchList(worker.id)
+      const response = await editOneWorker(worker.id, { watching: false});
       console.log(response)
       toast.success(`${worker.name} has been removed from the watchlist`, {
         description: `Todat at ${new Date().toLocaleTimeString('en-GB').slice(0, 5)}`,
@@ -315,7 +315,7 @@ const Workers = () => {
           <TableHead>
             <TableRow>
               <TableCell sx={{ position: 'sticky', left: 0, zIndex: 10, bgcolor: mode === 'dark' ? '#2D2D2D' : '#f5f5f5' }}>Name</TableCell>
-              <TableCell>Joined</TableCell>
+              <TableCell>Created</TableCell>
               <TableCell>Shifts</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
@@ -324,7 +324,7 @@ const Workers = () => {
             {filteredWorkers.map((worker) => (
               <TableRow key={worker.id}>
                 <TableCell sx={{ position: 'sticky', left: 0, zIndex: 10, color: isWatching(worker), bgcolor: mode === 'dark' ? '#2D2D2D' : '#f5f5f5'}}>
-                  {worker.name} {worker.last_name.slice(0, 1)}
+                  {worker.name} {worker.last_name}
                   </TableCell>
                 <TableCell>{new Date(worker.created_at).toLocaleDateString('en-GB')}</TableCell>
                 <TableCell>{numOfShifts(worker)}</TableCell>

@@ -1,4 +1,3 @@
-=begin
 
 namespace :reminders do
 
@@ -24,6 +23,5 @@ namespace :reminders do
 
   end
 
-  =end
 
   

@@ -11,8 +11,8 @@ Rails.application.routes.draw do
     post '/completed-game/:id', to: 'games#completed_game', as: 'completed_game'
     post '/mark-as-watch/:id', to: 'workers#mark_as_watch', as: 'mark_as_watch'
     post '/send-workers-email', to: 'workers#send_email', as: 'send_email'
-    post '/add-watching/:id', to: 'workers#add_watching', as: 'add_watching'
-    post '/remove-watching/:id', to: 'workers#remove_watching', as: 'remove_watching'
+    patch '/add-watching/:id', to: 'workers#add_watching', as: 'add_watching'
+    patch '/remove-watching/:id', to: 'workers#remove_watching', as: 'remove_watching'
 
     patch '/update-password/:id', to: 'managers#update_password', as: 'update_password'
     patch '/update-access/:id', to: 'managers#update_access', as: 'update_access'

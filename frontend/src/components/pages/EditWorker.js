@@ -216,6 +216,7 @@ const EditWorker = ({ selectedWorker, openEdit, closeEdit }) => {
 
             <Grid item xs={12}>
               <input
+                disabled
                 accept="image/*"
                 id="upload-picture"
                 type="file"
@@ -224,7 +225,7 @@ const EditWorker = ({ selectedWorker, openEdit, closeEdit }) => {
                 onChange={handleFileChange}
               />
               <label htmlFor="upload-picture" style={{ display: 'flex', alignItems: 'center' }}>
-                <Button disabled={loading} variant="outlined" component="span" sx={{ marginRight: 2, border: errors.picture ? '1px solid red' : '' , color: errors.picture ? 'red' : ''}}>
+                <Button disabled variant="outlined" component="span" sx={{ marginRight: 2, border: errors.picture ? '1px solid red' : '' , color: errors.picture ? 'red' : ''}}>
                   Upload Picture
                   <FileUploadIcon />
                 </Button>

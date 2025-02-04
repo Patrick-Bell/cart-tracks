@@ -71,14 +71,14 @@ const WorkerDetails = ({ worker, setSelectedWorker }) => {
               <Typography variant='subtitle2'><strong>Shifts:</strong> {worker?.carts.length}</Typography>
               <Typography variant='subtitle2'><strong>Average Margin:</strong> {averageMargin(worker)}</Typography>
               <Typography variant='subtitle2'><strong>Programmes Sold:</strong> <span style={{color:'grey'}}>{(sold).toLocaleString()} ({(sold / 45).toFixed(2)} boxes)</span></Typography>
-              <Divider />
               </>
               )}
               {worker.watching && (
               <Typography sx={{color:'grey'}} variant='subtitle2'><strong>This worker is currently being watched</strong></Typography>
               )}
               </Box>
-              <Box sx={{display:'flex', justifyContent:'space-between', mt:0}}>
+              <Divider />
+              <Box sx={{display:'flex', justifyContent:'space-between', margin:"5px 0"}}>
                 <Typography variant='subtitle2'><strong>Actions</strong></Typography>
               <Button onClick={handleClose} variant="contained" sx={{ background: 'gold', color: 'black', mt:'5px' }}>Go Back</Button>
               </Box>

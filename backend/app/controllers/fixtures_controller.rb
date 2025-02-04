@@ -83,6 +83,6 @@ class FixturesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def fixture_params
-      params.require(:fixture).permit(:home_team, :away_team, :stadium, :capacity, :home_icon, :away_icon, :date, :home_team_abb, :away_team_abb, :competition)
+      params.require(:fixture).permit(:home_team, :away_team, :stadium, :capacity, :date, :home_team_abb, :away_team_abb, :competition)
     end
 end

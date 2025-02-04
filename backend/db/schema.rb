@@ -92,8 +92,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_16_140108) do
     t.string "away_team"
     t.string "stadium"
     t.integer "capacity"
-    t.string "home_icon"
-    t.string "away_icon"
     t.datetime "date"
     t.string "home_team_abb"
     t.string "away_team_abb"

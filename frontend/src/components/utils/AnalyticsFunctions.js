@@ -141,33 +141,41 @@ export const formatMonth = (date) => {
       });
     });
 
-    // Prepare data for the chart and calculate margins
-    const months = Object.keys(monthsMap);
-const workerTotal = months.map((month) => monthsMap[month].workerTotal);
-const actualTotal = months.map((month) => monthsMap[month].actualTotal);
+    // Define the chronological order of months
+    const monthOrder = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+    ];
 
-const margin = months.map((month) => {
-    const workerTotalMonth = monthsMap[month].workerTotal;
-    const actualTotalMonth = monthsMap[month].actualTotal;
-    
-    // Calculate margin for each month
-    const monthMargin = ((workerTotalMonth - actualTotalMonth) / actualTotalMonth) * 100;
-    monthsMap[month].margin = monthMargin.toFixed(2); // Storing margin in the map
+    // Sort the months based on the chronological order
+    const months = Object.keys(monthsMap).sort((a, b) => {
+        return monthOrder.indexOf(a) - monthOrder.indexOf(b);
+    });
 
-    return monthMargin; // Return the margin for each month
-});
+    const workerTotal = months.map((month) => monthsMap[month].workerTotal);
+    const actualTotal = months.map((month) => monthsMap[month].actualTotal);
 
-const progress = months.map((month) => {
-    const workerTotalMonth = monthsMap[month].workerTotal;
-    const actualTotalMonth = monthsMap[month].actualTotal;
-    
-    // Calculate progress for each month
-    const monthProgress = ((workerTotalMonth / actualTotalMonth) * 100).toFixed(2); // Correct progress formula
-    monthsMap[month].progress = monthProgress; // Store progress in monthsMap
+    const margin = months.map((month) => {
+        const workerTotalMonth = monthsMap[month].workerTotal;
+        const actualTotalMonth = monthsMap[month].actualTotal;
+        
+        // Calculate margin for each month
+        const monthMargin = ((workerTotalMonth - actualTotalMonth) / actualTotalMonth) * 100;
+        monthsMap[month].margin = monthMargin.toFixed(2); // Storing margin in the map
 
-    return monthProgress; // Return the margin for each month
-});
+        return monthMargin; // Return the margin for each month
+    });
 
+    const progress = months.map((month) => {
+        const workerTotalMonth = monthsMap[month].workerTotal;
+        const actualTotalMonth = monthsMap[month].actualTotal;
+        
+        // Calculate progress for each month
+        const monthProgress = ((workerTotalMonth / actualTotalMonth) * 100).toFixed(2); // Correct progress formula
+        monthsMap[month].progress = monthProgress; // Store progress in monthsMap
+
+        return monthProgress; // Return the margin for each month
+    });
 
     // Prepare monthly data for the chart
     setMonthlyData({
@@ -193,6 +201,7 @@ const progress = months.map((month) => {
         progress: progressPercentage,
     });
 };
+
 
 
 

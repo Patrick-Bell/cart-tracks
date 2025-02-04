@@ -32,13 +32,15 @@ export const sendEmailToWorkers = async (data) => {
 }
 
 export const addToWatchList = async (id) => {
-    const response = await axios.post(`${apiUrl}/api/add-watching/${id}`, {withCredentials: true})
+    const response = await axios.patch(`${apiUrl}/api/add-watching/${id}`, {withCredentials: true})
     //console.log(response.data)
     return response.data
 }
 
 export const removeFromWatchList = async (id) => {
-    const response = await axios.post(`${apiUrl}/api/remove-watching/${id}`, {withCredentials: true})
+    const response = await axios.patch(`${apiUrl}/api/remove-watching/${id}`, {withCredentials: true})
     //console.log(response.data)
     return response.data
 }
+
+//

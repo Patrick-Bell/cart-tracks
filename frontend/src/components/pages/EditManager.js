@@ -295,6 +295,7 @@ const EditManager = ({ selectedManager, open, onClose }) => {
 
                 <Grid item xs={12}>
                   <input
+                  disabled
                     accept="image/*"
                     id="upload-picture"
                     type="file"
@@ -303,7 +304,7 @@ const EditManager = ({ selectedManager, open, onClose }) => {
                     onChange={handleFileChange}
                   />
                   <label htmlFor="upload-picture" style={{ display: 'flex', alignItems: 'center' }}>
-                    <Button disabled={loading} variant="outlined" component="span" sx={{ marginRight: 2 }}>
+                    <Button disabled variant="outlined" component="span" sx={{ marginRight: 2 }}>
                       Upload Picture
                       <FileUploadIcon />
                     </Button>

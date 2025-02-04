@@ -2,6 +2,9 @@
 class SessionsController < ApplicationController
     include ActionController::Cookies
 
+    skip_before_action :authenticate_user, only: [:create, :destroy]
+
+
 
     SESSION_KEY = ENV['SESSION_KEY']
   

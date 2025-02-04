@@ -17,6 +17,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import { getFixtures } from "../endpoints/Fixures";
 import {useThemeContext} from "../../context/ThemeContext";
 import SellIcon from '@mui/icons-material/Sell';
+import { premierLeagueTeams } from "../utils/Teams";
 
 
 
@@ -216,9 +217,9 @@ const fetchFixtures = async () => {
     if (match) {
       return (
         <Box sx={{display:'flex', alignItems:'center'}}>
-          <img src={match.home_icon} alt={`${match.home_team_abb} icon`} style={{ width: 30, height: 30, marginRight: 5,}} />
+          <img src={retrieveImage(match.home_team)} alt={`${match.home_team_abb} icon`} style={{ width: 30, height: 30, marginRight: 5,}} />
           <span>{match.home_team_abb} <span style={{margin: '0 5px'}}>v</span> {match.away_team_abb}</span>
-          <img src={match.away_icon} alt={`${match.away_team_abb} icon`} style={{ width: 30, height: 30, marginLeft: 5 }} />
+          <img src={retrieveImage(match.away_team)} alt={`${match.away_team_abb} icon`} style={{ width: 30, height: 30, marginLeft: 5 }} />
         </Box>
       );
     }
@@ -239,6 +240,14 @@ const fetchFixtures = async () => {
   const totalMatches = games.reduce((acc, game) => acc + game.carts.length, 0);
   const totalWorkers = games.reduce((acc, game) => acc + getWorkersCount(game), 0);
   const totalManagers = 8; // You can adjust this based on your data, or fetch it dynamically
+
+  const retrieveImage = (homeTeam) => {
+    const teams = premierLeagueTeams
+
+    const badge = teams.find(team => team.name === homeTeam)
+
+    return badge.badge
+}
 
   if (pageLoading) {
     return (
