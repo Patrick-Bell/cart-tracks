@@ -9,7 +9,7 @@ def index
     carts: { 
       include: [:cart_workers, :game]  # Include both cart_workers and game for each cart
     } 
-  }, methods: [:picture_url])
+  })
 end
 
 
@@ -18,7 +18,7 @@ end
   def show
     @workers = Worker.includes(:carts).all
 
-    render json: @workers.as_json(include: :carts, methods: [:picture_url])
+    render json: @workers.as_json(include: :carts)
   end
 
   # POST /workers

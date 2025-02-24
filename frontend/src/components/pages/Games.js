@@ -47,6 +47,7 @@ const Games = () => {
     sold: 0,
     potentialSell: 0
   })
+  const [year, setYear] = useState(new Date().getFullYear())
 
 
 const fetchFixtures = async () => {
@@ -78,7 +79,7 @@ const fetchFixtures = async () => {
     const fetchGames = async () => {
       try {
         await fetchFixtures()
-        const response = await fetchAllGames();
+        const response = await fetchAllGames(year);
         const sorted = response.sort((a, b) => new Date(a.date) - new Date(b.date));
         if (response) {
           const totals = response.map((cart) => cart.carts.reduce((sum, cart) => sum + cart.sold, 0))
@@ -99,7 +100,7 @@ const fetchFixtures = async () => {
     };
 
     fetchGames(); // Call the fetch function when the component mounts
-  }, [open, selectedGame, deleteGameModal]); // Empty dependency array ensures this runs only once on mount
+  }, [open, selectedGame, deleteGameModal, year]); // Empty dependency array ensures this runs only once on mount
 
   const getWorkersCount = (game) => {
     let workerCount = 0;
@@ -125,7 +126,6 @@ const fetchFixtures = async () => {
     }
 
     setGame(game)
-    console.log(game)
     setDeleteGameModal(true)
   }
 
@@ -188,12 +188,13 @@ const fetchFixtures = async () => {
           (game) => new Date(game.date).getMonth() + 1 === selectedMonth
         );
       }
-  
+
+
       setFilteredGames(filtered);
     };
   
     applyFilters();
-  }, [input, checked, games, month]); // Trigger filtering whenever input, toggles, or games change
+  }, [input, checked, games, month, year]); // Trigger filtering whenever input, toggles, or games change
 
 
   const handleReset = () => {
@@ -217,9 +218,9 @@ const fetchFixtures = async () => {
     if (match) {
       return (
         <Box sx={{display:'flex', alignItems:'center'}}>
-          <img src={retrieveImage(match.home_team)} alt={`${match.home_team_abb} icon`} style={{ width: 30, height: 30, marginRight: 5,}} />
+          <img loading="lazy" src={retrieveImage(match.home_team)} alt={`${match.home_team_abb} icon`} style={{ width: 30, height: 30, marginRight: 5,}} />
           <span>{match.home_team_abb} <span style={{margin: '0 5px'}}>v</span> {match.away_team_abb}</span>
-          <img src={retrieveImage(match.away_team)} alt={`${match.away_team_abb} icon`} style={{ width: 30, height: 30, marginLeft: 5 }} />
+          <img loading="lazy" src={retrieveImage(match.away_team)} alt={`${match.away_team_abb} icon`} style={{ width: 30, height: 30, marginLeft: 5 }} />
         </Box>
       );
     }
@@ -231,9 +232,11 @@ const fetchFixtures = async () => {
 
   const handleMonthChange = (e) => {
     selectMonth(e.target.value)
-    console.log(e.target.value)
   }
   
+  const handleYearChange = (e) => {
+    setYear(e.target.value)
+  }
   
 
   // Calculate total stats for "Total Matches", "Total Workers", "Total Managers"
@@ -329,7 +332,7 @@ const fetchFixtures = async () => {
         </Box>
         <Box sx={{display:'flex', alignItems:'center', justifyContent:'space-between', mt:1, ml:1}}>
           <Typography variant="subtitle2" sx={{color:'grey'}}>Show Month</Typography>
-          <select value={month} onChange={handleMonthChange} style={{ padding: '4px', borderRadius: '4px' }}>
+          <select value={month} onChange={handleMonthChange} style={{ padding: '4px', borderRadius: '4px', width:"100px" }}>
                         <option value="0">All</option>
                         <option value="1">January</option>
                         <option value="2">February</option>
@@ -343,6 +346,14 @@ const fetchFixtures = async () => {
                         <option value="10">October</option>
                         <option value="11">November</option>
                         <option value="12">December</option>
+                    </select>
+              </Box>
+              <Box sx={{display:'flex', alignItems:'center', justifyContent:'space-between', mt:1, ml:1}}>
+          <Typography variant="subtitle2" sx={{color:'grey'}}>Show Year</Typography>
+          <select value={year} onChange={handleYearChange} style={{ padding: '4px', borderRadius: '4px', width:'100px' }}>
+                        <option value="0">All</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
                     </select>
               </Box>
             </Paper>
@@ -501,3 +512,6 @@ const fetchFixtures = async () => {
 }
 
 export default Games;
+
+
+//

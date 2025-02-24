@@ -41,11 +41,9 @@ const GameModal = ({ open, handleClose }) => {
             away_team_abb: awayTeam.abbreviation,
             competition: competition,
         };
-        console.log(data);
 
         try {
             const response = await addFixture(data);
-            console.log(response);
             toast.success(`${response.home_team} v ${response.away_team} (${response.competition}) successfully added!`, {
                 description: `Today at ${new Date().toLocaleTimeString().slice(0, 5)}`,
                 duration:5000

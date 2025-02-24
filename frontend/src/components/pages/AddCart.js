@@ -313,10 +313,10 @@ const cartNumbers = ["1", "2", "3", "4", "5", "7", "10", "Bridge 2", "11", "14",
             <Table>
               <TableHead sx={{background:'gold'}}>
                 <TableRow>
-                  <TableCell>Cart</TableCell>
-                  <TableCell>Boxes</TableCell>
-                  <TableCell>Busy</TableCell>
-                  <TableCell>Workers</TableCell>
+                  <TableCell sx={{color:'black', fontWeight:700}}>Cart</TableCell>
+                  <TableCell sx={{color:'black', fontWeight:700}}>Boxes</TableCell>
+                  <TableCell sx={{color:'black', fontWeight:700}}>Busy</TableCell>
+                  <TableCell sx={{color:'black', fontWeight:700}}>Workers</TableCell>
                 </TableRow>
               </TableHead>
               {gazebo_1.map(cart => (
@@ -337,10 +337,10 @@ const cartNumbers = ["1", "2", "3", "4", "5", "7", "10", "Bridge 2", "11", "14",
             <Table>
               <TableHead sx={{background:'gold'}}>
                 <TableRow>
-                  <TableCell>Cart</TableCell>
-                  <TableCell>Boxes</TableCell>
-                  <TableCell>Busy</TableCell>
-                  <TableCell>Workers</TableCell>
+                  <TableCell sx={{color:'black', fontWeight:700}}>Cart</TableCell>
+                  <TableCell sx={{color:'black', fontWeight:700}}>Boxes</TableCell>
+                  <TableCell sx={{color:'black', fontWeight:700}}>Busy</TableCell>
+                  <TableCell sx={{color:'black', fontWeight:700}}>Workers</TableCell>
                 </TableRow>
               </TableHead>
               {gazebo_2.map(cart => (

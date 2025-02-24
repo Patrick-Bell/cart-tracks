@@ -6,8 +6,10 @@ class Manager < ApplicationRecord
     after_create = :set_default_online
     after_create = :set_default_access
 
+    validates :email, presence: true, uniqueness: true
+
     def set_default_access
-      self.access = 'middle'
+      self.access = 'high'
     end
     
     # Method to return the picture URL

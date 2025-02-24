@@ -2,7 +2,7 @@ import Logo from '../assets/Logo.png';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
-export const generateGameSummaryPDF = (game) => {
+export const generateGameSummaryPDF = async (game) => {
     const doc = new jsPDF();
 
     const pageWidth = doc.internal.pageSize.width;
@@ -11,6 +11,8 @@ export const generateGameSummaryPDF = (game) => {
     let yPosition = 10; // Initial Y position (going downwards)
 
     doc.addImage(Logo, 'PNG', margin / 2, 1, 40, 20); // Adjust width and height as needed
+
+
 
     doc.setFontSize(10); // Adjust the size as needed
     doc.setTextColor(128, 128, 128); // RGB values for grey color
@@ -32,7 +34,7 @@ export const generateGameSummaryPDF = (game) => {
         return self.findIndex((c) => c.cart_number === cart.cart_number) === index;
     }) || [];
 
-    const cartNumbers = ["1", "2", "3", "4", "5", "7", "10", "Bridge 2", "11", "14", "15", "16", "17", "Gazebo 1", "Gazebo 2"];
+    const cartNumbers = ["1", "2", "3", "4", "5", "7", "10", "BR2", "11", "14", "15", "16", "17", "Gazebo 1", "Gazebo 2"];
 
     // Sort the game.carts array according to the order in cartNumbers
     const sortedCarts = game.carts.sort((a, b) => {

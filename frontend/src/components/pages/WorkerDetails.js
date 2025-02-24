@@ -98,6 +98,7 @@ const WorkerDetails = ({ worker, setSelectedWorker }) => {
                 <TableRow>
                   <TableCell><strong>Event Date</strong></TableCell>
                   <TableCell><strong>Cart Worked</strong></TableCell>
+                  <TableCell><strong>Sold</strong></TableCell>
                   <TableCell><strong>Returns (£)</strong></TableCell>
                 </TableRow>
               </TableHead>
@@ -114,6 +115,7 @@ const WorkerDetails = ({ worker, setSelectedWorker }) => {
                       </Tooltip>
                     </TableCell>
                     <TableCell sx={{border:'none'}}>{cart.cart_number}</TableCell>
+                    <TableCell sx={{border:'none'}}>{cart.sold} / {cart.final_quantity}</TableCell>
                     <Tip title={`${cart.game?.name.split('v ')[1]}<hr>Returned: £${(cart.worker_total).toLocaleString()}<br>Expected: £${(cart.total_value).toLocaleString()}`} arrow position='left'>
                     <TableCell sx={{border:'none', cursor:'pointer'}}>{formatTotal(cart.total_value, cart.worker_total)}</TableCell>
                     </Tip>

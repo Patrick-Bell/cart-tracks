@@ -22,7 +22,6 @@ const EditCart = ({ open, onClose, game, gameId }) => {
   const [selectedWorker, setSelectedWorker] = useState(null);
 
   useEffect(() => {
-    console.log(game, 'game gathered it this');
     if (game) {
       setLiveGame({
         id: game?.id,
@@ -37,15 +36,10 @@ const EditCart = ({ open, onClose, game, gameId }) => {
         worker_total: game.worker_total + game.float
       });
     } else {
-      console.log('No valid carts or workers data in the game object');
     }
   }, [game, open]); // Adjusted dependencies
   
 
-  console.log(liveGame.id, 'checking the diff ids')
-
-
-  console.log('live game editing', liveGame)
 
 
   const handleChange = (e) => {
@@ -66,7 +60,6 @@ const EditCart = ({ open, onClose, game, gameId }) => {
 
     try {
       const response = await updateOneCart(game.id, formData);
-      console.log(response);
 
       toast.message(`Cart: ${response.cart_number} has been updated!`, {
         description: `Today at ${new Date().toLocaleTimeString('en-GB').slice(0, 5)}`,

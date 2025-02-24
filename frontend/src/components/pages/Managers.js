@@ -73,6 +73,7 @@ const Managers = () => {
   }
 
   const handleEditOpen = (manager) => {
+
     if (user?.user.access === 'low' || user?.user?.access === 'middle' && user?.user?.name !== manager.name) { 
       toast.error('You do not have permission for this action', {
         description: `Today at ${new Date().toLocaleTimeString().slice(0, 5)}`,

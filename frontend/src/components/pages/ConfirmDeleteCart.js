@@ -4,11 +4,8 @@ const ConfirmDeleteCart = ({ onClose, openConfirm, deleteOneCart, selectedCartId
 
 
     return (
-
-
         <>
-
-<Dialog open={openConfirm} onClose={onClose}>
+    <Dialog open={openConfirm} onClose={onClose}>
       <DialogTitle>Delete Cart</DialogTitle>
       <DialogContent>
         <Typography>Are you sure you want to delete this cart? This action <strong>CANNOT</strong> be undone.</Typography>

@@ -41,7 +41,6 @@ const EditWorker = ({ selectedWorker, openEdit, closeEdit }) => {
         phone_number: selectedWorker.phone_number || '',
         joined: selectedWorker.joined || ""
       });
-      console.log(selectedWorker, 'selected worker')
     }
   }, [selectedWorker]);
 
@@ -95,7 +94,6 @@ const EditWorker = ({ selectedWorker, openEdit, closeEdit }) => {
 
     try {
       const response = await editOneWorker(selectedWorker.id, formData);
-      console.log(response);
       toast.message(`Worker: ${workerData.name} (ID: ${workerData.id}) has been updated!`, {
         description: `Today at ${new Date().toLocaleTimeString('en-GB').slice(0, 5)}`,
         duration: 5000,

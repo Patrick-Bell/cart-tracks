@@ -64,7 +64,9 @@ const Sidebar = ({ setActiveSection, activeSection }) => {
           top: 16,
           left: 16,
           zIndex: 1000, // Keep the button on top of the content
-          background:'gold'
+          background:'gold',
+          color: 'black',
+          ":hover": {background:'gold'}
         }}
       >
         <ListIcon />
@@ -92,7 +94,7 @@ const Sidebar = ({ setActiveSection, activeSection }) => {
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '10px' }}>
             <Box sx={{ height: '50px' }} component='img' src='https://www.bandstandmerch.com/wp-content/uploads/2022/01/BMSLogo.png' />
             {/* Use ListIcon to toggle the sidebar */}
-            <IconButton sx={{background:"gold", color:'black', zIndex:100}} onClick={toggleSidebar}>
+            <IconButton sx={{background:"gold", color:'black', zIndex:100, ":hover":{background:'gold'}}} onClick={toggleSidebar}>
               <ListIcon />
             </IconButton>
           </Box>
@@ -128,8 +130,8 @@ const Sidebar = ({ setActiveSection, activeSection }) => {
           {/* Space between main content and bottom section */}
           <Box sx={{ marginTop: 'auto' }}>
             <Box sx={{m:2, background:'#EBB866', borderRadius:'4px', p:2}}>
-              <Typography sx={{textAlign:'center'}}>Your session expires in </Typography>
-            <Typography sx={{margin:'0px 0', textAlign:'center'}}><CountDown date={new Date(expire)}/></Typography>
+              <Typography sx={{textAlign:'center', color:'black'}}>Your session expires in </Typography>
+            <Typography sx={{margin:'0px 0', textAlign:'center', color:'black'}}><CountDown date={new Date(expire)}/></Typography>
             </Box>
 
             <Divider />

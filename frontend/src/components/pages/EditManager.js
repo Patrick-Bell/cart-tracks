@@ -135,7 +135,6 @@ const EditManager = ({ selectedManager, open, onClose }) => {
 
     try {
       const response = await updateOneManager(managerData?.id, formData);
-      console.log(response, 'formdata test update manager')
       toast.success(`Manager updated: ${managerData.name}`, {
         description: `Today at ${new Date().toLocaleTimeString('en-GB').slice(0, 5)}`,
         duration: 5000
@@ -163,7 +162,6 @@ const EditManager = ({ selectedManager, open, onClose }) => {
   
     try {
       const response = await updatePassword(selectedManager.id, payload);
-      console.log(response);
       toast.success('Password changed successfully');
       onClose()
       setPassword('')
@@ -185,7 +183,6 @@ const EditManager = ({ selectedManager, open, onClose }) => {
     const access = managerData?.access
     try{ 
       const response = await updateAccess(id, access)
-      console.log(response)
       toast.success(`Access updated to ${managerData?.access} for ${selectedManager?.name}`, {
         description: `Today at ${new Date().toLocaleTimeString().slice(0, 5)}`,
         duration: 5000

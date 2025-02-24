@@ -15,8 +15,6 @@ export const findBestWorker = (workers) => {
   
     const bestWorker = workerData.sort((a, b) => b.margin - a.margin)[0];
   
-    console.log("All Workers' Data:", workerData);
-    console.log("Best Worker:", bestWorker);
   
     return bestWorker;
   };

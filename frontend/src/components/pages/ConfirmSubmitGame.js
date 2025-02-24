@@ -13,9 +13,10 @@ const ConfirmSubmitGame = ({ onClose, openSubmit, liveGame, gameId, submitGame, 
         <Dialog open={openSubmit} onClose={onClose}>
       <DialogTitle>Submit Game</DialogTitle>
       <DialogContent>
-        <Typography>Are you sure you want to submit this game? This action <strong>CANNOT</strong> be undone unless you contact an admin.</Typography>
+        <Typography>Are you sure you want to submit this game?</Typography>
         <Typography sx={{mt:2}}>{doubleCheck()}</Typography>
         <Typography sx={{mt:2}}>You will be submitting the game <strong>{liveGame.name}</strong> ({new Date(liveGame.date).toLocaleDateString('en-GB')}).</Typography>
+        <Typography sx={{mt:2}}>A PDF summary will become available on the <strong>Events Page</strong>.</Typography>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} variant="outlined" sx={{ color: 'gold', border: '1px solid gold' }}>

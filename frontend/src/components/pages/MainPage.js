@@ -18,6 +18,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import GameModal from './GameModal';
 import fallbackPic from '../assets/fallback-pic.png'
 import { useThemeContext } from '../../context/ThemeContext';
+import Calendar from 'react-awesome-calendar'
 
 
 const MainPage = () => {
@@ -49,7 +50,6 @@ const MainPage = () => {
       const handleToggle = async (event) => {
         const newValue = event.target.checked;
         const userId = user?.user.id
-        console.log('what is it', checked, 'what it is changing to', newValue)
         if (checked !== newValue) {
           setChecked(newValue); // Optimistically update state immediately to reflect the change
       
@@ -71,7 +71,6 @@ const MainPage = () => {
       
             // Check if the response is successful and proceed accordingly
             if (response) {
-              console.log("Notifications updated successfully!");
               setChecked(newValue);  // Update state based on the response
             } else {
               console.error("Failed to update notifications:", response.errors || response.message);
@@ -116,7 +115,6 @@ const MainPage = () => {
                 setPageLoading(false)
 
                 setThemeCheck(mode)
-                console.log(mode)
 
 
             } catch (error) {
@@ -141,11 +139,9 @@ const MainPage = () => {
             away_team_abb: awayTeam.abbreviation,
             competition: competition
         };
-        console.log(data);
 
         try {
             const response = await addFixture(data);
-            console.log(response);
         } catch (e) {
             console.log(e);
         }

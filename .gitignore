@@ -51,6 +51,8 @@
 /backend/**/.rspec
 /backend/.rspec_status
 /backend/.idea/
+/backend/rspec
+/backend/spec
 
 # Ignore vendor cache
 /backend/vendor/bundle

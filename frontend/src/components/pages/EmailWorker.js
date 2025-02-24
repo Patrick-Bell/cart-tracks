@@ -52,7 +52,6 @@ const EmailWorker = ({ onBack, selectedWorker }) => {
       subject: subject              // Email subject
     };
 
-    console.log('data', data)
   
     // Check if no workers are selected and show an appropriate message
     if (data.emails.length === 0) {

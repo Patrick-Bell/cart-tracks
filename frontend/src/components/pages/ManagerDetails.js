@@ -12,7 +12,6 @@ const ManagerDetails = ({ manager, setSelectedManager }) => {
   };
 
 
-  console.log(manager)
   
   const handleClose = () => {
     setSelectedManager(null)

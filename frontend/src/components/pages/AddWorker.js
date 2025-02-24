@@ -56,7 +56,6 @@ const AddWorker = ({ open, onClose }) => {
 
     try {
       const response = await addNewWorker(formData);
-      console.log(response);
       toast.message(`New Worker Added: ${workerData.name}`, {
         description: `Today at ${new Date().toLocaleTimeString('en-GB').slice(0, 5)}`,
         duration: 5000

@@ -43,6 +43,8 @@ const GameDetail = ({ game, setSelectedGame }) => {
   const {mode} = useThemeContext()
   const {user} = useAuth()
 
+console.log(game, 'game')
+
   // Step 1: Get all cart numbers from the carts
 const diff = liveGame?.carts?.map(cart => cart.cart_number);
 
@@ -115,7 +117,7 @@ useEffect(() => {
 
   if (!liveGame?.carts) return; // Exit early if liveGame or liveGame.carts is null or undefined
 
-  const cartNumbers = ["1", "2", "3", "4", "5", "7", "10", "Bridge 2", "11", "14", "15", "16", "17", "Gazebo 1", "Gazebo 2"];
+  const cartNumbers = ["1", "2", "3", "4", "5", "7", "10", "BR2", "11", "14", "15", "16", "17", "Gazebo 1", "Gazebo 2"];
 
     // Create a map for quick lookup of cart_number index in cartNumbers array
     const cartNumberIndexMap = cartNumbers.reduce((acc, cartNumber, index) => {
@@ -137,7 +139,6 @@ useEffect(() => {
       setLiveGame((prev) => ({...prev, carts: [...sortedCarts].reverse()}))
     }
 
-    console.log(cartOrder)
 
 }, [cartOrder])
 

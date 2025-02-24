@@ -1,6 +1,7 @@
-import { Box, Typography } from "@mui/material"
+import { Box, selectClasses, Typography } from "@mui/material"
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp"
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"
+import { getFixtures } from "../endpoints/Fixures"
 
 export const formatMargin = (margin) => {
     if (margin >= 0) {
@@ -272,7 +273,54 @@ export const calculateBestMonth = (monthlyData) => {
     });
 
     // Return the best month and its margin, along with the progress
-    console.log(bestMonth, highestMargin, highestProgress);
     return { bestMonth, highestMargin: highestMargin.toFixed(2), highestProgress };
 };
+
+
+
+export const totalNumberOfProgrammes = (games) => {
+
+
+
+  const carts = games.map(game => game.carts)
+
+  const sold = carts.flat().reduce((sum, cart) => sum + cart.sold, 0)
+
+  return sold
+};
+
+
+export const getNumberOfGamesInMonth = async (selectedMonth) => {
+  try {
+    const fixtures = await getFixtures()
+
+    if (!Array.isArray(fixtures)) {
+      console.error('Fixtures is not an array:', fixtures);
+      return 0;  // Return 0 games if fixtures is invalid
+    }
+
+    const homeOnly = fixtures.filter(fixture => fixture.home_team_abb === 'WHU')
+    
+    const monthsInFixtures = homeOnly.map(fixture => {
+      const monthIndex = new Date(fixture.date)
+      const month = getMonthName(monthIndex)
+      const year = new Date(fixture.date).getFullYear()
+      return `${month} ${year}`
+    })    
+
+    const gamesInSelectedMonth = monthsInFixtures.filter(monthYear => monthYear === selectedMonth).length;
+
+    return gamesInSelectedMonth
+
+
+  } catch(e){
+    console.log(e)
+  }
+}
+
+export const getMonthName = (date) => {
+  const options = { month: 'long' }; // 'long' gives the full month name, 'short' gives abbreviated name
+  return date.toLocaleString('en-US', options);
+};
+
 

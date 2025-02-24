@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_16_140108) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_19_141520) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -128,6 +128,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_16_140108) do
     t.datetime "last_seen"
     t.string "mode", default: "light"
     t.boolean "show", default: true
+    t.index ["email"], name: "index_managers_on_email", unique: true
   end
 
   create_table "messages", force: :cascade do |t|

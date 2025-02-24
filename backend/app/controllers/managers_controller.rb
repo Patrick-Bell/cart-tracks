@@ -7,7 +7,7 @@ class ManagersController < ApplicationController
     @managers = Manager.includes(:games).all
   
     # Render the managers with games and picture_url
-    render json: @managers.as_json(include: :games, methods: [:picture_url])
+    render json: @managers.as_json(include: :games)
   end
   
 
@@ -16,7 +16,7 @@ class ManagersController < ApplicationController
 def show
   @managers = Manager.includes(:games).all
   
-  render json: @managers.as_json(include: :games, methods: [:picture_url])
+  render json: @managers.as_json(include: :games)
 
 end
 

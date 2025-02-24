@@ -132,7 +132,6 @@ const Workers = () => {
     try {
    
       const response = await editOneWorker(worker.id, { watching: true});
-      console.log(response);
   
       toast.success(`${worker.name} has been added to the watchlist`, {
         description: `Today at ${new Date().toLocaleTimeString('en-GB').slice(0, 5)}`,
@@ -168,7 +167,6 @@ const Workers = () => {
     try{
     
       const response = await editOneWorker(worker.id, { watching: false});
-      console.log(response)
       toast.success(`${worker.name} has been removed from the watchlist`, {
         description: `Todat at ${new Date().toLocaleTimeString('en-GB').slice(0, 5)}`,
         duration: 5000
@@ -187,7 +185,6 @@ const Workers = () => {
     const fetchWorkers = async () => {
       try {
         const response = await fetchAllWorkers();
-        console.log(response, 'workers');
         if (response) {
           setWorkers(response.sort((a, b) => a.id - b.id));
           const bestWorker = findBestWorker(response)
@@ -196,7 +193,6 @@ const Workers = () => {
           setWatching(watching)
           setFilteredWorkers(response)
           setPageLoading(false)
-          console.log(response, 'watching')
         }
       } catch (error) {
         console.error("Error fetching workers:", error);
@@ -315,7 +311,6 @@ const Workers = () => {
           <TableHead>
             <TableRow>
               <TableCell sx={{ position: 'sticky', left: 0, zIndex: 10, bgcolor: mode === 'dark' ? '#2D2D2D' : '#f5f5f5' }}>Name</TableCell>
-              <TableCell>Created</TableCell>
               <TableCell>Shifts</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
@@ -326,7 +321,6 @@ const Workers = () => {
                 <TableCell sx={{ position: 'sticky', left: 0, zIndex: 10, color: isWatching(worker), bgcolor: mode === 'dark' ? '#2D2D2D' : '#f5f5f5'}}>
                   {worker.name} {worker.last_name}
                   </TableCell>
-                <TableCell>{new Date(worker.created_at).toLocaleDateString('en-GB')}</TableCell>
                 <TableCell>{numOfShifts(worker)}</TableCell>
                 <TableCell>
                   {/* Action Buttons */}

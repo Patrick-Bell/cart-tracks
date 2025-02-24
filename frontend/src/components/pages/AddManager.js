@@ -98,7 +98,6 @@ const AddManager = ({ open, onClose }) => {
 
     try {
       const response = await addNewManager(formData);
-      console.log(response);
       toast.success(`New Manager Added: ${managerData.name}`, {
         description: `Today at ${new Date().toLocaleTimeString('en-GB').slice(0, 5)}`,
         duration: 5000
@@ -108,6 +107,17 @@ const AddManager = ({ open, onClose }) => {
       setLoading(false);
     } catch (e) {
       console.log(e);
+      if (e.response.data.email) {
+        toast.error('Email already exists', {
+          description: `Today at ${new Date().toLocaleTimeString('en-GB').slice(0, 5)}`,
+        });
+        setManagerData({ ...managerData, email: '' });
+      }
+
+      setTimeout(() => {
+        setButton('Add Manager');
+        setLoading(false);
+      }, 2000);
     }
   };
 
@@ -257,7 +267,8 @@ const AddManager = ({ open, onClose }) => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            position: 'relative'
+            position: 'relative',
+            cursor: loading ? 'not-allowed' : 'pointer'
           }}
           onClick={handleSubmit}
           disabled={loading}

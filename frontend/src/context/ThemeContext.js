@@ -22,11 +22,9 @@ export const ThemeContextProvider = ({ children }) => {
   // Toggle theme and make an API call
   const toggleTheme = async () => {
     const newMode = mode === "light" ? "dark" : "light";
-    console.log(newMode)
 
     try {
       const response = await changeMode(user?.user.id, {newMode});
-      console.log(response);
       toast.success(`Theme updated to ${newMode} mode`, {
         description: `Today at ${new Date().toLocaleTimeString().slice(0, 5)}`,
         duration: 3000

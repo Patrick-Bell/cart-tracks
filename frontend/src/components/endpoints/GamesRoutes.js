@@ -2,10 +2,12 @@ import axios from 'axios'
 const apiUrl = process.env.REACT_APP_API_URL
 
 
-export const fetchAllGames = async () => {
-    const response = await axios.get(`${apiUrl}/api/games`, {withCredentials: true})
-    //console.log(response.data)
-    return response.data
+export const fetchAllGames = async (year) => {
+    const response = await axios.get(`${apiUrl}/api/games`, {
+        params: { year: year },
+        withCredentials: true
+    });
+    return response.data;
 }
 
 export const addCartToGame = async (cartData) => {
@@ -47,6 +49,7 @@ What to do to make it complete
 [] - For the adding cart, set the error messages to stay for 3 seconds
 [] - See if I can make the cart info page a little bigger
 [] - Change Arrows to actual icons as on phone they show up as emojis
+ //
 
 
 */
