@@ -173,115 +173,101 @@ const MainPage = () => {
           )
       }
     
-    return (
-        <Box>
-    <Paper sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb:2 }} elevation={1}>
-  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent:'space-between' }}>
-    {/* User Avatar */}
-    <Avatar 
-      src={user?.picture_url || fallbackPic} 
-      alt={user?.user.name} 
-      sx={{ width: 40, height: 40, mr: 2 }} 
-    />
-    
-    {/* User Info */}
-    <Typography variant="body1">
-      Currently logged in as <strong>{user?.user.name} {user?.user.last_name}</strong>
-    </Typography>
+                 return (
+                                    <Box>
+                                <Paper sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb:2 }} elevation={1}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent:'space-between' }}>
+                                {/* User Avatar */}
+                                <Avatar 
+                                src={user?.picture_url || fallbackPic} 
+                                alt={user?.user.name} 
+                                sx={{ width: 40, height: 40, mr: 2 }} 
+                                />
+                                
+                                {/* User Info */}
+                                <Typography variant="body1">
+                                Currently logged in as <strong>{user?.user.name} {user?.user.last_name}</strong>
+                                </Typography>
 
-  </Box>
-</Paper>
-
-
+                            </Box>
+                            </Paper>
 
 
-
-<Grid container spacing={2}>
-{/* Watched Workers */}
-<Grid item xs={12} sm={4}>
-<Paper sx={{ p: 2 }}>
-  <VisibilityIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
-  <Typography sx={{ fontWeight: 700, mt: 1 }}>Total Workers</Typography>
-  <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
-    {(workersWatch?.length)} of {workers.length} are being watched
-  </Typography>
-  <LinearProgress
-    variant="determinate"
-    value={((workersWatch.length) / workers.length) * 100}
-    sx={{
-      mt: 2,
-      height: 10,
-      borderRadius: '10px',
-      background: 'lightyellow',
-      '& .MuiLinearProgress-bar': { backgroundColor: 'gold' },
-    }}
-  />
-  <Typography sx={{ color: 'grey', textAlign: 'right', mt: 1 }} variant="subtitle2">
-  {(((workersWatch.length) / workers.length) * 100).toFixed(2)} %
-  </Typography>
-</Paper>
-</Grid>
+                        <Grid container spacing={2}>
+                        {/* Watched Workers */}
+                        <Grid item xs={12} sm={4}>
+                        <Paper sx={{ p: 2 }}>
+                        <VisibilityIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
+                        <Typography sx={{ fontWeight: 700, mt: 1 }}>Total Workers</Typography>
+                        <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
+                            {(workersWatch?.length)} of {workers.length} are being watched
+                        </Typography>
+                        <LinearProgress
+                            variant="determinate"
+                            value={((workersWatch.length) / workers.length) * 100}
+                            sx={{
+                            mt: 2,
+                            height: 10,
+                            borderRadius: '10px',
+                            background: 'lightyellow',
+                            '& .MuiLinearProgress-bar': { backgroundColor: 'gold' },
+                            }}
+                        />
+                        <Typography sx={{ color: 'grey', textAlign: 'right', mt: 1 }} variant="subtitle2">
+                        {(((workersWatch.length) / workers.length) * 100).toFixed(2)} %
+                        </Typography>
+                        </Paper>
+                        </Grid>
 
 
 
-<Grid item xs={12} sm={4}>
-<Paper sx={{ p: 2 }}>
-  <VisibilityIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
-  <Typography sx={{ fontWeight: 700, mt: 1 }}>Total Events</Typography>
-  <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
-    {(incompleteGames?.length)} of {games.length} games completed
-  </Typography>
-  <LinearProgress
-    variant="determinate"
-    value={((incompleteGames.length) / games.length) * 100}
-    sx={{
-      mt: 2,
-      height: 10,
-      borderRadius: '10px',
-      background: 'lightyellow',
-      '& .MuiLinearProgress-bar': { backgroundColor: 'gold' },
-    }}
-  />
-  <Typography sx={{ color: 'grey', textAlign: 'right', mt: 1 }} variant="subtitle2">
-  {(((incompleteGames.length) / games.length) * 100).toFixed(2)} %
-  </Typography>
-</Paper>
-</Grid>
+                    <Grid item xs={12} sm={4}>
+                    <Paper sx={{ p: 2 }}>
+                    <VisibilityIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
+                    <Typography sx={{ fontWeight: 700, mt: 1 }}>Total Events</Typography>
+                    <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
+                        {(incompleteGames?.length)} of {games.length} games completed
+                    </Typography>
+                    <LinearProgress
+                        variant="determinate"
+                        value={((incompleteGames.length) / games.length) * 100}
+                        sx={{
+                        mt: 2,
+                        height: 10,
+                        borderRadius: '10px',
+                        background: 'lightyellow',
+                        '& .MuiLinearProgress-bar': { backgroundColor: 'gold' },
+                        }}
+                    />
+                    <Typography sx={{ color: 'grey', textAlign: 'right', mt: 1 }} variant="subtitle2">
+                    {(((incompleteGames.length) / games.length) * 100).toFixed(2)} %
+                    </Typography>
+                    </Paper>
+                    </Grid>
 
-
-
-
-<Grid item xs={12} sm={4}>
-<Paper sx={{ p: 2 }}>
-  <VisibilityIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
-  <Typography sx={{ fontWeight: 700, mt: 1 }}>Games Next Month</Typography>
-  <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
-    {(homeGames)} of {nextMonthGames} are home games
-  </Typography>
-  <LinearProgress
-    variant="determinate"
-    value={((homeGames) / nextMonthGames) * 100}
-    sx={{
-      mt: 2,
-      height: 10,
-      borderRadius: '10px',
-      background: 'lightyellow',
-      '& .MuiLinearProgress-bar': { backgroundColor: 'gold' },
-    }}
-  />
-  <Typography sx={{ color: 'grey', textAlign: 'right', mt: 1 }} variant="subtitle2">
-  {(((homeGames) / nextMonthGames) * 100).toFixed(2)} %
-  </Typography>
-</Paper>
-</Grid>
-
-
-
-
-
-
-
-               
+                    <Grid item xs={12} sm={4}>
+                    <Paper sx={{ p: 2 }}>
+                    <VisibilityIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
+                    <Typography sx={{ fontWeight: 700, mt: 1 }}>Games Next Month</Typography>
+                    <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
+                        {(homeGames)} of {nextMonthGames} are home games
+                    </Typography>
+                    <LinearProgress
+                        variant="determinate"
+                        value={((homeGames) / nextMonthGames) * 100}
+                        sx={{
+                        mt: 2,
+                        height: 10,
+                        borderRadius: '10px',
+                        background: 'lightyellow',
+                        '& .MuiLinearProgress-bar': { backgroundColor: 'gold' },
+                        }}
+                    />
+                    <Typography sx={{ color: 'grey', textAlign: 'right', mt: 1 }} variant="subtitle2">
+                    {(((homeGames) / nextMonthGames) * 100).toFixed(2)} %
+                    </Typography>
+                    </Paper>
+                    </Grid>
 
                 {/* Upcoming Fixtures Section */}
                 <Grid item xs={12}>
@@ -406,8 +392,19 @@ const MainPage = () => {
 
 
                 <Grid item xs={12} sm={8}>
+
+                <Grid sx={{mt:2}}>
+                            <Paper sx={{p:2}}>
+                                <Typography>Fixtures</Typography>
+                                <Box sx={{mt:1, display:'flex', alignItems:'center', justifyContent:'space-between'}}>
+                                <Box sx={{display:'flex'}}><Typography variant='subtitle2'>View all fixtures</Typography> 
+                                </Box>
+                                <Typography sx={{m:1}} variant='subtitle2'>Click here</Typography>
+                                </Box>
+                            </Paper>
+                        </Grid>
                     
-                        <Grid>
+                        <Grid sx={{mt:2}}>
                             <Paper sx={{p:2}}>
                                 <Typography>Notifications</Typography>
                                 <Box sx={{mt:1, display:'flex', alignItems:'center', justifyContent:'space-between'}}>
@@ -435,15 +432,14 @@ const MainPage = () => {
                                 </Box>
                             </Paper>
                         </Grid>
+                        
 
                         <Grid sx={{mt:1}}>
                         <Button fullWidth variant="contained" onClick={handleOpen} sx={{ background:'gold', color:'black', mt: 3, display: user?.user.role === "super" ? "block" : "none" }}>
                             Add Fixture
                         </Button>
                         </Grid>
-
                 </Grid>
-
                 <Grid item xs={12} sm={4}>
                     <Paper sx={{padding: 2}}>
                     <img style={{width:'100%'}} src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSniRMFZLCXc9MiqwcK-SqSxQQYMqstQ9VaaQ&s' />
