@@ -10,7 +10,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
 
   # Production: Allow the production frontend URL to make requests
   allow do
-    origins 'https://cart-tracks.onrender.com'  # For production frontend
+    origins 'https://whu-tracker-8a7906f4de54.herokuapp.com'  # For production frontend
 
     resource "*",
       headers: :any,
