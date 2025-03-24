@@ -7,6 +7,7 @@ import Logo from '../assets/Logo.png';
 import ProtectedRoute from './ProtectedRoute';
 import { useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import TestPage from '../pages/TestPage';
 
 const AppContent = () => {
     const { checkAuthStatus, authenticated } = useAuth();
@@ -38,6 +39,7 @@ const AppContent = () => {
 
             <Routes>
                 <Route path="/" element={<Login />} />
+                <Route path='/test' element={<TestPage />}></Route>
                 
                 <Route
                     path="/dashboard"
