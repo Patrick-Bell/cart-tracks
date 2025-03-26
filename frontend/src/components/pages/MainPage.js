@@ -19,6 +19,9 @@ import GameModal from './GameModal';
 import fallbackPic from '../assets/fallback-pic.png'
 import { useThemeContext } from '../../context/ThemeContext';
 import Calendar from 'react-awesome-calendar'
+import FixturesPage from './FixturesPage';
+import SendIcon from '@mui/icons-material/Send';
+
 
 
 const MainPage = () => {
@@ -39,6 +42,7 @@ const MainPage = () => {
     const [homeGames, setHomeGames] = useState(0)
     const [incompleteGames, setInCompleteGames] = useState([])
     const [pageLoading, setPageLoading] = useState(true)
+    const [showFixtures, setShowFixtures] = useState(false)
 
     const { mode, toggleTheme } = useThemeContext()
 
@@ -173,295 +177,304 @@ const MainPage = () => {
           )
       }
     
-                 return (
-                                    <Box>
-                                <Paper sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb:2 }} elevation={1}>
-                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent:'space-between' }}>
-                                {/* User Avatar */}
-                                <Avatar 
-                                src={user?.picture_url || fallbackPic} 
-                                alt={user?.user.name} 
-                                sx={{ width: 40, height: 40, mr: 2 }} 
-                                />
-                                
-                                {/* User Info */}
-                                <Typography variant="body1">
-                                Currently logged in as <strong>{user?.user.name} {user?.user.last_name}</strong>
-                                </Typography>
-
-                            </Box>
-                            </Paper>
-
-
-                        <Grid container spacing={2}>
-                        {/* Watched Workers */}
-                        <Grid item xs={12} sm={4}>
-                        <Paper sx={{ p: 2 }}>
-                        <VisibilityIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
-                        <Typography sx={{ fontWeight: 700, mt: 1 }}>Total Workers</Typography>
-                        <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
-                            {(workersWatch?.length)} of {workers.length} are being watched
-                        </Typography>
-                        <LinearProgress
-                            variant="determinate"
-                            value={((workersWatch.length) / workers.length) * 100}
-                            sx={{
-                            mt: 2,
-                            height: 10,
-                            borderRadius: '10px',
-                            background: 'lightyellow',
-                            '& .MuiLinearProgress-bar': { backgroundColor: 'gold' },
-                            }}
-                        />
-                        <Typography sx={{ color: 'grey', textAlign: 'right', mt: 1 }} variant="subtitle2">
-                        {(((workersWatch.length) / workers.length) * 100).toFixed(2)} %
-                        </Typography>
-                        </Paper>
-                        </Grid>
-
-
-
-                    <Grid item xs={12} sm={4}>
-                    <Paper sx={{ p: 2 }}>
-                    <VisibilityIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
-                    <Typography sx={{ fontWeight: 700, mt: 1 }}>Total Events</Typography>
-                    <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
-                        {(incompleteGames?.length)} of {games.length} games completed
-                    </Typography>
-                    <LinearProgress
-                        variant="determinate"
-                        value={((incompleteGames.length) / games.length) * 100}
-                        sx={{
-                        mt: 2,
-                        height: 10,
-                        borderRadius: '10px',
-                        background: 'lightyellow',
-                        '& .MuiLinearProgress-bar': { backgroundColor: 'gold' },
-                        }}
+            return (
+                <>
+                {showFixtures ? (
+                    <>
+                    <FixturesPage setShowFixture={setShowFixtures} />
+                    </>
+                ):(
+                    <Box>
+                    <Paper sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb:2 }} elevation={1}>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent:'space-between' }}>
+                    {/* User Avatar */}
+                    <Avatar 
+                    src={user?.picture_url || fallbackPic} 
+                    alt={user?.user.name} 
+                    sx={{ width: 40, height: 40, mr: 2 }} 
                     />
-                    <Typography sx={{ color: 'grey', textAlign: 'right', mt: 1 }} variant="subtitle2">
-                    {(((incompleteGames.length) / games.length) * 100).toFixed(2)} %
-                    </Typography>
-                    </Paper>
-                    </Grid>
-
-                    <Grid item xs={12} sm={4}>
-                    <Paper sx={{ p: 2 }}>
-                    <VisibilityIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
-                    <Typography sx={{ fontWeight: 700, mt: 1 }}>Games Next Month</Typography>
-                    <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
-                        {(homeGames)} of {nextMonthGames} are home games
-                    </Typography>
-                    <LinearProgress
-                        variant="determinate"
-                        value={((homeGames) / nextMonthGames) * 100}
-                        sx={{
-                        mt: 2,
-                        height: 10,
-                        borderRadius: '10px',
-                        background: 'lightyellow',
-                        '& .MuiLinearProgress-bar': { backgroundColor: 'gold' },
-                        }}
-                    />
-                    <Typography sx={{ color: 'grey', textAlign: 'right', mt: 1 }} variant="subtitle2">
-                    {(((homeGames) / nextMonthGames) * 100).toFixed(2)} %
-                    </Typography>
-                    </Paper>
-                    </Grid>
-
-                {/* Upcoming Fixtures Section */}
-                <Grid item xs={12}>
-                    <Paper sx={{ padding: 2 }}>
-                        <Grid container spacing={2}>
-                            {fixtures.length > 0 ? (
-                                fixtures.map((fixture, index) => (
-                                    <>
-                                    <Grid item xs={12} md={4} key={index}>
-                                        <Box
-                                            sx={{
-                                                alignItems: 'center',
-                                                m: 1,
-                                                padding: 2,
-                                            }}
-                                        >
-                                            <Box
-                                                sx={{
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'space-between',
-                                                }}
-                                            >
-                                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                                    <img
-                                                        style={{
-                                                            height: '40px',
-                                                            margin: '0 5px',
-                                                            maxWidth: '100%',
-                                                        }}
-                                                        src={retrieveImage(fixture.home_team)}
-                                                        alt="Home Icon"
-                                                    />
-                                                    <Typography>{fixture.home_team_abb}</Typography>
-                                                </Box>
-                                                <Box>V</Box>
-                                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                                    <Typography>{fixture.away_team_abb}</Typography>
-                                                    <img
-                                                        style={{
-                                                            height: '40px',
-                                                            margin: '0 5px',
-                                                            maxWidth: '100%',
-                                                        }}
-                                                        src={retrieveImage(fixture.away_team)}
-                                                        alt="Away Icon"
-                                                    />
-                                                </Box>
-                                            </Box>
-                                            <Divider sx={{ width: '100%', mt: 1 }} />
-                                            <Box
-                                                sx={{
-                                                    display: 'flex',
-                                                    flexWrap: 'wrap',
-                                                    justifyContent: 'space-between',
-                                                    mt: 1,
-                                                }}
-                                            >
-                                                <Typography variant="subtitle2">Date</Typography>
-                                                <Typography variant="subtitle2">
-                                                    {new Date(fixture.date).toLocaleDateString('en-GB').slice(0, 10)}
-                                                </Typography>
-                                            </Box>
-                                            <Box
-                                                sx={{
-                                                    display: 'flex',
-                                                    flexWrap: 'wrap',
-                                                    justifyContent: 'space-between',
-                                                }}
-                                            >
-                                                <Typography variant="subtitle2">Time</Typography>
-                                                <Typography variant="subtitle2">
-                                                    {new Date(fixture.date).toLocaleTimeString('en-GB').slice(0, 5)}
-                                                </Typography>
-                                            </Box>
-                                            <Box
-                                                sx={{
-                                                    display: 'flex',
-                                                    flexWrap: 'wrap',
-                                                    justifyContent: 'space-between',
-                                                }}
-                                            >
-                                                <Typography variant="subtitle2">Stadium</Typography>
-                                                <Typography variant="subtitle2">{fixture.stadium}</Typography>
-                                            </Box>
-                                            <Box
-                                                sx={{
-                                                    display: 'flex',
-                                                    flexWrap: 'wrap',
-                                                    justifyContent: 'space-between',
-                                                }}
-                                            >
-                                                <Typography variant="subtitle2">Competition</Typography>
-                                                <Typography variant="subtitle2">{fixture.competition}</Typography>
-                                            </Box>
-                                            <Box
-                                                sx={{
-                                                    display: 'flex',
-                                                    flexWrap: 'wrap',
-                                                    justifyContent: 'space-between',
-                                                }}
-                                            >
-                                                <Typography variant="subtitle2">Time Left</Typography>
-                                                <Typography variant="subtitle2"> <FixtureCountDown date={fixture.date} /></Typography>
-                                            </Box>
-                                        </Box>
-                                    </Grid>
-                                    </>
-                                    
-                                ))
-                            ) : (
-                                <Typography sx={{ textAlign: 'center', margin: 'auto auto' }}>
-                                    No upcoming fixtures.
-                                </Typography>
-                            )}
-                        </Grid>
-                    </Paper>
-                </Grid>
-
                     
-                    <Toaster />
+                    {/* User Info */}
+                    <Typography variant="body1">
+                    Currently logged in as <strong>{user?.user.name} {user?.user.last_name}</strong>
+                    </Typography>
+
+                </Box>
+                </Paper>
 
 
-                <Grid item xs={12} sm={8}>
-
-                <Grid sx={{mt:2}}>
-                            <Paper sx={{p:2}}>
-                                <Typography>Fixtures</Typography>
-                                <Box sx={{mt:1, display:'flex', alignItems:'center', justifyContent:'space-between'}}>
-                                <Box sx={{display:'flex'}}><Typography variant='subtitle2'>View all fixtures</Typography> 
-                                </Box>
-                                <Typography sx={{m:1}} variant='subtitle2'>Click here</Typography>
-                                </Box>
-                            </Paper>
-                        </Grid>
-                    
-                        <Grid sx={{mt:2}}>
-                            <Paper sx={{p:2}}>
-                                <Typography>Notifications</Typography>
-                                <Box sx={{mt:1, display:'flex', alignItems:'center', justifyContent:'space-between'}}>
-                                <Box sx={{display:'flex'}}><Typography variant='subtitle2'>Email Notifications</Typography> 
-                                <Tooltip arrow placement='right' title='Emails include: Upcoming Fixtures Reminders, New Managers Added, Completed Games Reports, Monthly Summary Reports'>
-                                <InfoIcon sx={{marginLeft:'5px'}} fontSize='small' />
-                                </Tooltip>
-                                </Box>
-                                <FormControlLabel
-                                    control={<IOSSwitch sx={{ m: 1 }} checked={checked} disabled onChange={handleToggle} />}
-                                />
-                                </Box>
-                            </Paper>
-                        </Grid>
-
-                        <Grid sx={{mt:2}}>
-                            <Paper sx={{p:2}}>
-                                <Typography>Theme</Typography>
-                                <Box sx={{mt:1, display:'flex', alignItems:'center', justifyContent:'space-between'}}>
-                                <Box sx={{display:'flex'}}><Typography variant='subtitle2'>Toggle Theme</Typography> 
-                                </Box>
-                                <FormControlLabel
-                                    control={<ThemeToggleBtn sx={{ m: 1 }} checked={themeCheck === 'dark' ? true : false} onChange={toggleTheme} />}
-                                />
-                                </Box>
-                            </Paper>
-                        </Grid>
-                        
-
-                        <Grid sx={{mt:1}}>
-                        <Button fullWidth variant="contained" onClick={handleOpen} sx={{ background:'gold', color:'black', mt: 3, display: user?.user.role === "super" ? "block" : "none" }}>
-                            Add Fixture
-                        </Button>
-                        </Grid>
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                    <Paper sx={{padding: 2}}>
-                    <img style={{width:'100%'}} src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSniRMFZLCXc9MiqwcK-SqSxQQYMqstQ9VaaQ&s' />
-                    <Box sx={{display:'flex', alignItems:'center', justifyContent:'space-between', mt:1}}>
-                        <Typography variant='subtitle2'>Venue</Typography>
-                        <Typography variant='subtitle2'>London Stadium</Typography>
-                    </Box>
-                    <Box sx={{display:'flex', alignItems:'center', justifyContent:'space-between'}}>
-                        <Typography variant='subtitle2'>Capacity</Typography>
-                        <Typography variant='subtitle2'>60,000</Typography>
-                    </Box>
-                    <Box sx={{display:'flex', alignItems:'center', justifyContent:'space-between'}}>
-                        <Typography variant='subtitle2'>Directions</Typography>
-                        <Typography variant="subtitle2" component="span">Click <Box component="a" href={link} target='_blank' display="inline">here</Box></Typography>
-                    </Box>
-                    </Paper>
-
-                </Grid>
+            <Grid container spacing={2}>
+            {/* Watched Workers */}
+            <Grid item xs={12} sm={4}>
+            <Paper sx={{ p: 2 }}>
+            <VisibilityIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
+            <Typography sx={{ fontWeight: 700, mt: 1 }}>Total Workers</Typography>
+            <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
+                {(workersWatch?.length)} of {workers.length} are being watched
+            </Typography>
+            <LinearProgress
+                variant="determinate"
+                value={((workersWatch.length) / workers.length) * 100}
+                sx={{
+                mt: 2,
+                height: 10,
+                borderRadius: '10px',
+                background: 'lightyellow',
+                '& .MuiLinearProgress-bar': { backgroundColor: 'gold' },
+                }}
+            />
+            <Typography sx={{ color: 'grey', textAlign: 'right', mt: 1 }} variant="subtitle2">
+            {(((workersWatch.length) / workers.length) * 100).toFixed(2)} %
+            </Typography>
+            </Paper>
             </Grid>
-            <GameModal open={open} handleClose={handleClose} />
+
+
+
+        <Grid item xs={12} sm={4}>
+        <Paper sx={{ p: 2 }}>
+        <VisibilityIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
+        <Typography sx={{ fontWeight: 700, mt: 1 }}>Total Events</Typography>
+        <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
+            {(incompleteGames?.length)} of {games.length} games completed
+        </Typography>
+        <LinearProgress
+            variant="determinate"
+            value={((incompleteGames.length) / games.length) * 100}
+            sx={{
+            mt: 2,
+            height: 10,
+            borderRadius: '10px',
+            background: 'lightyellow',
+            '& .MuiLinearProgress-bar': { backgroundColor: 'gold' },
+            }}
+        />
+        <Typography sx={{ color: 'grey', textAlign: 'right', mt: 1 }} variant="subtitle2">
+        {(((incompleteGames.length) / games.length) * 100).toFixed(2)} %
+        </Typography>
+        </Paper>
+        </Grid>
+
+        <Grid item xs={12} sm={4}>
+        <Paper sx={{ p: 2 }}>
+        <VisibilityIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
+        <Typography sx={{ fontWeight: 700, mt: 1 }}>Games Next Month</Typography>
+        <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
+            {(homeGames)} of {nextMonthGames} are home games
+        </Typography>
+        <LinearProgress
+            variant="determinate"
+            value={((homeGames) / nextMonthGames) * 100}
+            sx={{
+            mt: 2,
+            height: 10,
+            borderRadius: '10px',
+            background: 'lightyellow',
+            '& .MuiLinearProgress-bar': { backgroundColor: 'gold' },
+            }}
+        />
+        <Typography sx={{ color: 'grey', textAlign: 'right', mt: 1 }} variant="subtitle2">
+        {(((homeGames) / nextMonthGames) * 100).toFixed(2)} %
+        </Typography>
+        </Paper>
+        </Grid>
+
+    {/* Upcoming Fixtures Section */}
+    <Grid item xs={12}>
+        <Paper sx={{ padding: 2 }}>
+            <Grid container spacing={2}>
+                {fixtures.length > 0 ? (
+                    fixtures.map((fixture, index) => (
+                        <>
+                        <Grid item xs={12} md={4} key={index}>
+                            <Box
+                                sx={{
+                                    alignItems: 'center',
+                                    m: 1,
+                                    padding: 2,
+                                }}
+                            >
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between',
+                                    }}
+                                >
+                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                        <img
+                                            style={{
+                                                height: '40px',
+                                                margin: '0 5px',
+                                                maxWidth: '100%',
+                                            }}
+                                            src={retrieveImage(fixture.home_team)}
+                                            alt="Home Icon"
+                                        />
+                                        <Typography>{fixture.home_team_abb}</Typography>
+                                    </Box>
+                                    <Box>V</Box>
+                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                        <Typography>{fixture.away_team_abb}</Typography>
+                                        <img
+                                            style={{
+                                                height: '40px',
+                                                margin: '0 5px',
+                                                maxWidth: '100%',
+                                            }}
+                                            src={retrieveImage(fixture.away_team)}
+                                            alt="Away Icon"
+                                        />
+                                    </Box>
+                                </Box>
+                                <Divider sx={{ width: '100%', mt: 1 }} />
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        flexWrap: 'wrap',
+                                        justifyContent: 'space-between',
+                                        mt: 1,
+                                    }}
+                                >
+                                    <Typography variant="subtitle2">Date</Typography>
+                                    <Typography variant="subtitle2">
+                                        {new Date(fixture.date).toLocaleDateString('en-GB').slice(0, 10)}
+                                    </Typography>
+                                </Box>
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        flexWrap: 'wrap',
+                                        justifyContent: 'space-between',
+                                    }}
+                                >
+                                    <Typography variant="subtitle2">Time</Typography>
+                                    <Typography variant="subtitle2">
+                                        {new Date(fixture.date).toLocaleTimeString('en-GB').slice(0, 5)}
+                                    </Typography>
+                                </Box>
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        flexWrap: 'wrap',
+                                        justifyContent: 'space-between',
+                                    }}
+                                >
+                                    <Typography variant="subtitle2">Stadium</Typography>
+                                    <Typography variant="subtitle2">{fixture.stadium}</Typography>
+                                </Box>
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        flexWrap: 'wrap',
+                                        justifyContent: 'space-between',
+                                    }}
+                                >
+                                    <Typography variant="subtitle2">Competition</Typography>
+                                    <Typography variant="subtitle2">{fixture.competition}</Typography>
+                                </Box>
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        flexWrap: 'wrap',
+                                        justifyContent: 'space-between',
+                                    }}
+                                >
+                                    <Typography variant="subtitle2">Time Left</Typography>
+                                    <Typography variant="subtitle2"> <FixtureCountDown date={fixture.date} /></Typography>
+                                </Box>
+                            </Box>
+                        </Grid>
+                        </>
+                        
+                    ))
+                ) : (
+                    <Typography sx={{ textAlign: 'center', margin: 'auto auto' }}>
+                        No upcoming fixtures.
+                    </Typography>
+                )}
+            </Grid>
+        </Paper>
+    </Grid>
+
+        
+        <Toaster />
+
+
+    <Grid item xs={12} sm={8}>
+
+    <Grid sx={{mt:2}}>
+                <Paper sx={{p:2}}>
+                    <Typography>Fixtures</Typography>
+                    <Box sx={{mt:1, display:'flex', alignItems:'center', justifyContent:'space-between'}}>
+                    <Box sx={{display:'flex'}}><Typography variant='subtitle2'>View all fixtures</Typography> 
+                    </Box>
+                    <Typography onClick={() => setShowFixtures(true)} sx={{m:1, cursor:'pointer', "&:hover":{ color:'#d4af37'}}} variant='subtitle2'><SendIcon /></Typography>
+                    </Box>
+                </Paper>
+            </Grid>
+        
+            <Grid sx={{mt:2}}>
+                <Paper sx={{p:2}}>
+                    <Typography>Notifications</Typography>
+                    <Box sx={{mt:1, display:'flex', alignItems:'center', justifyContent:'space-between'}}>
+                    <Box sx={{display:'flex'}}><Typography variant='subtitle2'>Email Notifications</Typography> 
+                    <Tooltip arrow placement='right' title='Emails include: Upcoming Fixtures Reminders, New Managers Added, Completed Games Reports, Monthly Summary Reports'>
+                    <InfoIcon sx={{marginLeft:'5px'}} fontSize='small' />
+                    </Tooltip>
+                    </Box>
+                    <FormControlLabel
+                        control={<IOSSwitch sx={{ m: 1 }} checked={checked} disabled onChange={handleToggle} />}
+                    />
+                    </Box>
+                </Paper>
+            </Grid>
+
+            <Grid sx={{mt:2}}>
+                <Paper sx={{p:2}}>
+                    <Typography>Theme</Typography>
+                    <Box sx={{mt:1, display:'flex', alignItems:'center', justifyContent:'space-between'}}>
+                    <Box sx={{display:'flex'}}><Typography variant='subtitle2'>Toggle Theme</Typography> 
+                    </Box>
+                    <FormControlLabel
+                        control={<ThemeToggleBtn sx={{ m: 1 }} checked={themeCheck === 'dark' ? true : false} onChange={toggleTheme} />}
+                    />
+                    </Box>
+                </Paper>
+            </Grid>
             
+
+            <Grid sx={{mt:1}}>
+            <Button fullWidth variant="contained" onClick={handleOpen} sx={{ background:'gold', color:'black', mt: 3, display: user?.user.role === "super" ? "block" : "none" }}>
+                Add Fixture
+            </Button>
+            </Grid>
+    </Grid>
+    <Grid item xs={12} sm={4}>
+        <Paper sx={{padding: 2}}>
+        <img style={{width:'100%'}} src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSniRMFZLCXc9MiqwcK-SqSxQQYMqstQ9VaaQ&s' />
+        <Box sx={{display:'flex', alignItems:'center', justifyContent:'space-between', mt:1}}>
+            <Typography variant='subtitle2'>Venue</Typography>
+            <Typography variant='subtitle2'>London Stadium</Typography>
         </Box>
+        <Box sx={{display:'flex', alignItems:'center', justifyContent:'space-between'}}>
+            <Typography variant='subtitle2'>Capacity</Typography>
+            <Typography variant='subtitle2'>60,000</Typography>
+        </Box>
+        <Box sx={{display:'flex', alignItems:'center', justifyContent:'space-between'}}>
+            <Typography variant='subtitle2'>Directions</Typography>
+            <Typography variant="subtitle2" component="span">Click <Box component="a" href={link} target='_blank' display="inline">here</Box></Typography>
+        </Box>
+        </Paper>
+
+    </Grid>
+</Grid>
+<GameModal open={open} handleClose={handleClose} />
+
+</Box>
+                )}
+                       
+        </>
     );
 };
 
