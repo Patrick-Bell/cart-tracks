@@ -60,13 +60,13 @@ const FixturesPage = ({ setShowFixture }) => {
         <Grid container alignItems="center" justifyContent="center" spacing={2}>
           
           {/* Home Team */}
-          <Grid item xs={3}>
+          <Grid item xs={12} md={4}>
             <Avatar src={retrieveImage(nextGame.home_team)} sx={{ width: 64, height: 64, mx: 'auto', mb:1 }} />
             <Typography variant="body1" sx={{ fontWeight: "bold", mb: 1 }}>{nextGame.home_team}</Typography>
           </Grid>
       
           {/* Match Details */}
-          <Grid item xs={6}>
+          <Grid item xs={12} md={4}>
             <Typography variant="body2" color="text.secondary">{new Date(nextGame.date).toLocaleString()}</Typography>
             <Typography variant="body2" color="text.secondary">{nextGame.stadium}</Typography>
             <Typography variant="body2" color="text.secondary">{nextGame.competition}</Typography>
@@ -74,7 +74,7 @@ const FixturesPage = ({ setShowFixture }) => {
           </Grid>
       
           {/* Away Team */}
-          <Grid item xs={3}>
+          <Grid item xs={12} md={4}>
             <Avatar src={retrieveImage(nextGame.away_team)} sx={{ width: 64, height: 64, mx: 'auto', mb:1 }} />
             <Typography variant="body1" sx={{ fontWeight: "bold", mb: 1 }}>{nextGame.away_team}</Typography>
           </Grid>
