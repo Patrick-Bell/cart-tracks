@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_19_141520) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_02_131315) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -119,10 +119,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_19_141520) do
     t.string "password_digest"
     t.string "phone_number"
     t.string "last_name"
-    t.string "access"
-    t.string "role"
+    t.string "access", default: "high"
+    t.string "role", default: "admin"
     t.boolean "online"
-    t.boolean "notifications", default: true
+    t.boolean "notifications", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "last_seen"

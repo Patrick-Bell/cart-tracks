@@ -8,6 +8,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Toaster, toast } from 'sonner'
 import ReactLoading from 'react-loading'
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -80,6 +81,16 @@ const Login = () => {
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
+  const handleTestLogin = async () => {
+    try {
+      setEmail('test123@gmail.com')
+      setPassword('test123!')
+      const response = await login(email, password)
+    }catch(e){
+      console.log(e)
+    }
+  }
   
 
   return (
@@ -99,6 +110,10 @@ const Login = () => {
         <Typography variant="h5" gutterBottom>
           Login
         </Typography>
+        <Box onClick={() => handleTestLogin()} sx={{display:'flex'}}>
+          <AccountBoxIcon sx={{color:'red'}} />
+          <Typography sx={{color:'red', fontWeight:800, cursor:'pointer'}}>Click here to use test account.</Typography>
+        </Box>
         <Box component="form" onSubmit={handleSubmit}>
           <TextField
             margin="normal"
