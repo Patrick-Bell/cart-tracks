@@ -56,7 +56,7 @@ const FixturesPage = ({ setShowFixture }) => {
       {/* Next Match Section */}
       {nextGame && (
         <Paper elevation={0} sx={{ p: 3, mb: 4, borderRadius: '12px', textAlign: 'center' }}>
-        <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2, textAlign:'center' }}>{nextGame.competition}</Typography>
+        <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2, textAlign:'center' }}>Upcoming Fixture</Typography>
         <Grid container alignItems="center" justifyContent="center" spacing={2}>
           
           {/* Home Team */}
@@ -67,9 +67,9 @@ const FixturesPage = ({ setShowFixture }) => {
       
           {/* Match Details */}
           <Grid item xs={12} md={4}>
-            <Typography variant="body2" color="text.secondary">{new Date(nextGame.date).toLocaleString()}</Typography>
-            <Typography variant="body2" color="text.secondary">{nextGame.stadium}</Typography>
             <Typography variant="body2" color="text.secondary">{nextGame.competition}</Typography>
+            <Typography variant="body2" color="text.secondary">{nextGame.stadium}</Typography>
+            <Typography variant="body2" color="text.secondary">{new Date(nextGame.date).toLocaleString()}</Typography>
             <Typography variant="body2" color="text.secondary"> <FixtureCountDown date={nextGame.date} /></Typography>
           </Grid>
       
@@ -86,11 +86,13 @@ const FixturesPage = ({ setShowFixture }) => {
 
       {/* Grouped Fixtures */}
       <Box sx={{ p: 2 }}>
-        {Object.entries(groupedFixtures).map(([monthYear, games]) => (
+        {Object.entries(groupedFixtures)
+        .reverse()
+        .map(([monthYear, games]) => (
           <Box key={monthYear} sx={{ mb: 4 }}>
-            <Box sx={{display:'flex', alignItems:'center', justifyContent:'space-between'}}>
-            <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2 }}>{monthYear.split('-')[0]}</Typography>
+            <Box sx={{display:'flex', gap:'10px'}}>
             <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2 }}>{monthYear.split('-')[1]}</Typography>
+            <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2 }}>{monthYear.split('-')[0]}</Typography>
             </Box>
             <Grid container spacing={2}>
               {games.map((fixture) => (

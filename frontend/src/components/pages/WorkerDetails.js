@@ -45,7 +45,7 @@ const WorkerDetails = ({ worker, setSelectedWorker }) => {
     <Box sx={{ p: 0}}>
              <>
           {/* Personal Information Section */}
-          <Card sx={{ mb: 3 }}>
+          <Card elevation={0} sx={{ mb: 3, borderRadius:'10px'}}>
             <CardContent>
               <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
                 <Avatar
@@ -87,11 +87,11 @@ const WorkerDetails = ({ worker, setSelectedWorker }) => {
 
           {/* Table for Games Worked On */}
           {worker?.carts.length === 0 ? (
-            <Paper sx={{p:2}}>
+            <Paper elevation={0} sx={{p:2, borderRadius:'10px'}}>
             <Typography>{worker?.name} has no games yet.</Typography>
           </Paper>
           ) : (
-            <TableContainer component={Paper}>
+            <TableContainer sx={{borderRadius:'10px'}} elevation={0} component={Paper}>
             <Typography variant="h6" sx={{ fontWeight: "bold", mb: 2, p:2 }}>Events Worked On</Typography>
             <Table>
               <TableHead>

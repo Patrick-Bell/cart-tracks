@@ -287,7 +287,7 @@ const fetchFixtures = async () => {
               <Grid item xs={12} lg={8}>
 
               <Box sx={{mt:3}}>
-      <Paper elevation={3} sx={{p:3}}>
+      <Paper elevation={0} sx={{p:3, borderRadius:'10px'}}>
       <TextField
   fullWidth
   placeholder="Enter Game Name"
@@ -416,7 +416,7 @@ const fetchFixtures = async () => {
             <Grid item xs={12} lg={4} sx={{mt:3}}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                <Paper sx={{ p: 2 }}>
+                <Paper elevation={0} sx={{ p: 2, borderRadius:'10px' }}>
           <FilterAltIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
           <Typography sx={{ fontWeight: 700, mt: 1 }}>Filtered Games</Typography>
           <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
@@ -441,7 +441,7 @@ const fetchFixtures = async () => {
                 </Grid>
 
                 <Grid item xs={12}>
-                <Paper sx={{ p: 2 }}>
+                <Paper elevation={0} sx={{ p: 2, borderRadius:'10px'  }}>
           <FilterAltIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
           <Typography sx={{ fontWeight: 700, mt: 1 }}>Season Games</Typography>
           <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
@@ -466,7 +466,7 @@ const fetchFixtures = async () => {
                 </Grid>
 
             <Grid item xs={12}>
-              <Paper sx={{ p: 2 }}>
+              <Paper elevation={0} sx={{ p: 2, borderRadius:'10px'  }}>
           <SellIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
           <Typography sx={{ fontWeight: 700, mt: 1 }}>Programmes Sold</Typography>
           <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>

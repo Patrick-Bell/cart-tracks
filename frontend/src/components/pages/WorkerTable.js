@@ -10,8 +10,8 @@ const WorkerTable = ({ sortConfig, setSortConfig, workerData, setFilteredWorkers
 
     return (
 
-        <Box sx={{ mt: 3}}>
-            <TableContainer sx={{maxHeight:570, mb:2, }} component={Paper}>
+        <Box sx={{ mt: 3,}}>
+            <TableContainer sx={{maxHeight:570, mb:2, borderRadius:'10px' }} component={Paper} elevation={0}>
                 <Table stickyHeader sx={{ border: 'none'}}>
                     <TableHead sx={{bgcolor: mode === 'dark' ? '#2D2D2D' : '#f5f5f5'}}>
                         <TableRow stickyHeader>

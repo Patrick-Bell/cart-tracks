@@ -275,7 +275,7 @@ const Workers = () => {
   <Grid item xs={12} lg={8}>
 
     <Box sx={{mt:3}}>
-      <Paper elevation={3} sx={{p:3}}>
+      <Paper elevation={0} sx={{p:3, borderRadius:'10px'}}>
         <TextField disabled={checked} fullWidth placeholder="Enter Worker Name" type="text" value={input} onChange={(e) => setInput(e.target.value)}
         error={filteredWorkers.length === 0}
         helperText={filteredWorkers.length === 0 ? 'No workers found, please refine your search' : ''}
@@ -396,7 +396,7 @@ const Workers = () => {
 
         {/* Watched Workers */}
         <Grid item xs={12}>
-        <Paper sx={{ p: 2 }}>
+        <Paper elevation={0} sx={{ p: 2, borderRadius:'10px' }}>
           <FilterAltIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
           <Typography sx={{ fontWeight: 700, mt: 1 }}>Filtered Workers</Typography>
           <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
@@ -422,8 +422,8 @@ const Workers = () => {
 
       {/* Total Workers */}
       <Grid item xs={12}>
-        <Paper sx={{ p: 2 }}>
-          <Diversity3Icon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
+      <Paper elevation={0} sx={{ p: 2, borderRadius:'10px' }}>
+      <Diversity3Icon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
           <Typography sx={{ fontWeight: 700, mt: 1 }}>Total Workers</Typography>
           <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
             {workers.length} of 100
@@ -446,8 +446,8 @@ const Workers = () => {
       </Grid>
 
       <Grid item xs={12}>
-        <Paper sx={{ p: 2 }}>
-          <VisibilityIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
+      <Paper elevation={0} sx={{ p: 2, borderRadius:'10px' }}>
+      <VisibilityIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
           <Typography sx={{ fontWeight: 700, mt: 1 }}>Watched Workers</Typography>
           <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
             {watching?.length} of {workers.length}

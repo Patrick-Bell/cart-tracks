@@ -66,9 +66,19 @@ export const ThemeContextProvider = ({ children }) => {
                 text: { primary: '#000' }, // Ensure text color is readable
               }),
         },
+        components: {
+          MuiPaper: {
+            styleOverrides: {
+              root: {
+                elevation: 0, // Set elevation to 0
+              },
+            },
+          },
+        },
       }),
     [mode]
   );
+  
 
   return (
     <ThemeContext.Provider value={{ mode, toggleTheme }}>

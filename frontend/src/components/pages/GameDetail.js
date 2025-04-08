@@ -331,14 +331,14 @@ useEffect(() => {
       <Toaster/>
 
       {/* Game Information Table */}
-      <Card sx={{ marginBottom: 3 }}>
+      <Card elevation={0} sx={{ marginBottom: 3, borderRadius:'10px' }}>
         <CardContent>
           <Box sx={{display:'flex', alignItems:'center', justifyContent:'space-between', m:1}}>
           <Typography variant="h6" color="textSecondary" gutterBottom>Game Summary</Typography>
           <Button variant="contained" onClick={showGames} sx={{right:'10px', background:'gold', color:'black'}}>Go Back</Button>
           </Box>
           <Box sx={{ mt: 3, overflowX: 'auto'}}> {/* Horizontal scroll container */}
-          <TableContainer sx={{width: '100%'}} component={Paper}>
+          <TableContainer sx={{width: '100%', borderRadius:'10px'}} component={Paper} elevation={0}>
             <Table sx={{ border: 'none' }}> {/* Set border to none for the table */}
               <TableHead>
                 <TableRow>
@@ -406,15 +406,16 @@ useEffect(() => {
 
       {/* Cart Information Table */}
       {liveGame.carts.length > 0 ? (
-      <Card sx={{ marginBottom: 3 }}>
+      <Card elevation={0} sx={{ marginBottom: 3, borderRadius:'10px' }}>
         <Typography sx={{ p: 2, display:'flex', alignItems:'center' }} variant="h6" gutterBottom>Cart Information</Typography>
         <CardContent>
-        <Box sx={{overflowX: 'auto'}}> {/* Horizontal scroll container */}
-        <TableContainer sx={{width:'100%'}}>
-            <Table sx={{ border: 'none', minWidth: 650 }}> {/* Set border to none for the table */}
-              <TableHead>
+        <Box sx={{overflowX: 'auto', borderRadius:'10px'}}> {/* Horizontal scroll container */}
+        <TableContainer sx={{width:'100%', alignItems:'center'}}>
+            <Table sx={{ border: 'none', minWidth: 650, alignItems:'center' }}> {/* Set border to none for the table */}
+              <TableHead sx={{background: mode === 'dark' ? '#2D2D2D' : '#f0f0f0'}}>
                 <TableRow>
-                  <TableCell sx={{ border: 'none', fontWeight:'800', position: 'sticky', left: 0, zIndex: 10, bgcolor: mode === 'dark' ? '#2D2D2D' : '#f5f5f5', display:'flex', cursor:'pointer'}}>Cart number
+                  <TableCell sx={{ border: 'none', fontWeight:'800', position: 'sticky', left: 0, zIndex: 10, background: mode === 'dark' ? '#2D2D2D' : '#f0f0f0', display:'flex', cursor:'pointer', margin: 0}}>
+                    Cart Number
                   <ArrowCircleUpIcon
                       sx={{
                         transform: cartOrder === 'asc' ? 'rotate(180deg)' : 'rotate(0)',
@@ -424,7 +425,7 @@ useEffect(() => {
                     />
                   </TableCell>
                   <TableCell sx={{ border: 'none', fontWeight:'800' }}>Quantities Start</TableCell>
-                  <TableCell sx={{ border: 'none', fontWeight:'800', display:'flex', cursor:'pointer' }}>Final Quantity <Tooltip arrow title={`<strong>Final Quantity</strong> & <strong>Quantities Start</strong> should be equal to show stock movements correctly.`}><InfoIcon /></Tooltip></TableCell>
+                  <TableCell sx={{ border: 'none', fontWeight:'800', display:'flex', cursor:'pointer' }}>Final Quantity </TableCell>
                   <TableCell sx={{ border: 'none', fontWeight:'800' }}>Final Returns</TableCell>
                   <TableCell sx={{ border: 'none', fontWeight:'800'}}>Sold</TableCell>
                   <TableCell sx={{ border: 'none', fontWeight:'800', display:'flex', cursor:'pointer' }}>Margin (£) <Tooltip arrow title={`<strong>Expected Value:</strong> Sold * 4<br><strong>Returned Value:</strong> What worker returned (- float)<br><strong>Margin:</strong> Worker Value - Expected Value`}><InfoIcon /></Tooltip></TableCell>
@@ -437,7 +438,7 @@ useEffect(() => {
               <TableBody>
                 {liveGame?.carts.map((cart) => (
                   <TableRow key={cart.id}>
-                    <TableCell sx={{ border: 'none', position: 'sticky', left: 0, zIndex: 10, bgcolor: mode === 'dark' ? '#2D2D2D' : '#f5f5f5'}}>{cart.cart_number}</TableCell>
+                    <TableCell sx={{ margin:0, border: 'none', position: 'sticky', left: 0, zIndex: 10, background: mode === 'dark' ? '#2D2D2D' : '#f0f0f0'}}>{cart.cart_number}</TableCell>
                     <TableCell sx={{ border: 'none' }}>{cart.quantities_start} ({(cart.quantities_start / 45).toFixed(2)} boxes)</TableCell>
 
                       <TableCell sx={{border: 'none'}}>
@@ -491,7 +492,7 @@ useEffect(() => {
                   </TableRow>
                 ))}
                   <TableRow sx={{borderTop:"1px solid lightgrey"}}>
-                    <TableCell sx={{ border: 'none', position: 'sticky', left: 0, zIndex: 10, bgcolor: mode === 'dark' ? '#2D2D2D' : '#f5f5f5' }}>{uniqueCartNumbers.length}</TableCell>
+                    <TableCell sx={{ border: 'none', position: 'sticky', left: 0, zIndex: 10, background: mode === 'dark' ? '#2D2D2D' : '#f0f0f0' }}>{uniqueCartNumbers.length}</TableCell>
                     <TableCell sx={{ border: 'none' }}>{totalQuantities.totalStartedQuantities} ({(totalQuantities.totalStartedQuantities / 45).toFixed(2)} boxes)</TableCell>
                     <TableCell sx={{ border: 'none' }}>{totalQuantities.totalFinalQuantites}</TableCell>
                     <TableCell sx={{ border: 'none' }}>{totalQuantities.totalFinalReturns}</TableCell>
@@ -518,7 +519,7 @@ useEffect(() => {
       </Card>
       ) : (
         <Box>
-          <Paper elevation={3}>
+          <Paper elevation={0}>
           <Typography sx={{p:3}}>Please click <Button onClick={handleOpen} sx={{background:'gold', color:'black'}}>here</Button> to add a new cart</Typography>
           </Paper>
         </Box>

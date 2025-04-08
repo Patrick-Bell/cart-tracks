@@ -127,7 +127,7 @@ const Analytics = () => {
     <Grid container spacing={2}>
 
      <Grid item xs={12}>
-      <Paper sx={{p:2}}>
+      <Paper elevation={0} sx={{p:2, borderRadius:'10px'}}>
       <Typography sx={{ fontWeight: 700, mt: 1, mb:1 }}>Analytics</Typography>
       <Box sx={{display:'flex', alignItems:'center', justifyContent:'space-between', p:1}}>
         <Typography variant="subtitle2">Total Workers</Typography>
@@ -150,7 +150,7 @@ const Analytics = () => {
 
 
      <Grid item xs={12} sm={6}>
-        <Paper sx={{ p: 2 }}>
+        <Paper elevation={0} sx={{ p: 2, borderRadius:'10px' }}>
           <CalendarMonthIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
           <Typography sx={{ fontWeight: 700, mt: 1 }}>{selectedMonth}</Typography>
           <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
@@ -176,7 +176,7 @@ const Analytics = () => {
 
       {/* Box 4 - Additional Info 3 */}
       <Grid item xs={12} sm={6}>
-        <Paper sx={{ p: 2 }}>
+        <Paper elevation={0} sx={{ p: 2, borderRadius:'10px' }}>
           <CalendarMonthIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
           <Typography sx={{ fontWeight: 700, mt: 1 }}>Best Month</Typography>
           <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
@@ -205,7 +205,7 @@ const Analytics = () => {
         </>
         ) : (
             <>
-            <Paper elevation={3} sx={{p:3}}>
+            <Paper elevation={0} sx={{p:3, borderRadius:'10px'}}>
                 <Typography>To view <span style={{fontWeight:'800'}}>Analytics</span>, you must submit at least one game.</Typography>
             </Paper>
             </>

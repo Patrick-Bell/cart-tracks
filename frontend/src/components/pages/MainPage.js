@@ -185,7 +185,7 @@ const MainPage = () => {
                     </>
                 ):(
                     <Box>
-                    <Paper sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb:2 }} elevation={1}>
+                    <Paper elevation={0} sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb:2, borderRadius:'10px'}}>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent:'space-between' }}>
                     {/* User Avatar */}
                     <Avatar 
@@ -206,7 +206,7 @@ const MainPage = () => {
             <Grid container spacing={2}>
             {/* Watched Workers */}
             <Grid item xs={12} sm={4}>
-            <Paper sx={{ p: 2 }}>
+            <Paper elevation={0} sx={{ p: 2, borderRadius:'10px' }}>
             <VisibilityIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
             <Typography sx={{ fontWeight: 700, mt: 1 }}>Total Workers</Typography>
             <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
@@ -232,7 +232,7 @@ const MainPage = () => {
 
 
         <Grid item xs={12} sm={4}>
-        <Paper sx={{ p: 2 }}>
+        <Paper elevation={0} sx={{ p: 2, borderRadius:'10px' }}>
         <VisibilityIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
         <Typography sx={{ fontWeight: 700, mt: 1 }}>Total Events</Typography>
         <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
@@ -256,7 +256,7 @@ const MainPage = () => {
         </Grid>
 
         <Grid item xs={12} sm={4}>
-        <Paper sx={{ p: 2 }}>
+        <Paper elevation={0} sx={{ p: 2, borderRadius:'10px' }}>
         <VisibilityIcon sx={{ p: 2, background: 'lightyellow', color: 'gold', borderRadius: '50%', fontSize:'50px' }} />
         <Typography sx={{ fontWeight: 700, mt: 1 }}>Games Next Month</Typography>
         <Typography variant="subtitle2" sx={{ color: 'grey', display: 'flex' }}>
@@ -281,7 +281,7 @@ const MainPage = () => {
 
     {/* Upcoming Fixtures Section */}
     <Grid item xs={12}>
-        <Paper sx={{ padding: 2 }}>
+        <Paper elevation={0} sx={{ padding: 2, borderRadius:'10px' }}>
             <Grid container spacing={2}>
                 {fixtures.length > 0 ? (
                     fixtures.map((fixture, index) => (
@@ -389,7 +389,7 @@ const MainPage = () => {
                         
                     ))
                 ) : (
-                    <Typography sx={{ textAlign: 'center', margin: 'auto auto' }}>
+                    <Typography sx={{ textAlign: 'center', margin: 'auto auto', borderRadius:'10px' }}>
                         No upcoming fixtures.
                     </Typography>
                 )}
@@ -404,7 +404,7 @@ const MainPage = () => {
     <Grid item xs={12} sm={8}>
 
     <Grid sx={{mt:2}}>
-                <Paper sx={{p:2}}>
+                <Paper elevation={0} sx={{p:2, borderRadius:'10px'}}>
                     <Typography>Fixtures</Typography>
                     <Box sx={{mt:1, display:'flex', alignItems:'center', justifyContent:'space-between'}}>
                     <Box sx={{display:'flex'}}><Typography variant='subtitle2'>View all fixtures</Typography> 
@@ -415,7 +415,7 @@ const MainPage = () => {
             </Grid>
         
             <Grid sx={{mt:2}}>
-                <Paper sx={{p:2}}>
+                <Paper elevation={0} sx={{p:2, borderRadius:'10px'}}>
                     <Typography>Notifications</Typography>
                     <Box sx={{mt:1, display:'flex', alignItems:'center', justifyContent:'space-between'}}>
                     <Box sx={{display:'flex'}}><Typography variant='subtitle2'>Email Notifications</Typography> 
@@ -431,7 +431,7 @@ const MainPage = () => {
             </Grid>
 
             <Grid sx={{mt:2}}>
-                <Paper sx={{p:2}}>
+                <Paper elevation={0} sx={{p:2, borderRadius:'10px'}}>
                     <Typography>Theme</Typography>
                     <Box sx={{mt:1, display:'flex', alignItems:'center', justifyContent:'space-between'}}>
                     <Box sx={{display:'flex'}}><Typography variant='subtitle2'>Toggle Theme</Typography> 
@@ -451,7 +451,7 @@ const MainPage = () => {
             </Grid>
     </Grid>
     <Grid item xs={12} sm={4}>
-        <Paper sx={{padding: 2}}>
+        <Paper elevation={0} sx={{padding: 2, borderRadius:'10px'}}>
         <img style={{width:'100%'}} src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSniRMFZLCXc9MiqwcK-SqSxQQYMqstQ9VaaQ&s' />
         <Box sx={{display:'flex', alignItems:'center', justifyContent:'space-between', mt:1}}>
             <Typography variant='subtitle2'>Venue</Typography>

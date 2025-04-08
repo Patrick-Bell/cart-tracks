@@ -36,7 +36,7 @@ const Chart = ({ gameData, filteredData, selectedMonth, setSelectedMonth }) => {
         <>
 
 <Grid item xs={12} sm={6}>
-    <Paper elevation={3} sx={{ maxWidth: "100%", overflowX: "auto", padding: 2 }}>
+    <Paper elevation={0} sx={{ maxWidth: "100%", overflowX: "auto", padding: 2, borderRadius:'10px' }}>
       <Box sx={{ textAlign: "center", marginBottom: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Typography variant="h6" component="div" gutterBottom>
           {selectedMonth === "All"
